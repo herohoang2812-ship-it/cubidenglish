@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Cupid English - Tặng em bé của anh</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght=400;500;600;700&family=Playfair+Display:ital,wght=0,600;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js" type="module"></script>
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .serif-italic {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        /* Custom scrollbar for mobile */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fecdd3;
+            border-radius: 10px;
+        }
+        /* Safe area padding for iPhones with notches */
+        .safe-pb {
+            padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+        }
+        .safe-pt {
+            padding-top: env(safe-area-inset-top);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-rose-50 via-pink-50 to-violet-50 h-full flex flex-col overflow-hidden text-slate-800">
+
+    <!-- APP HEADER -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-rose-100 px-6 py-4 safe-pt flex flex-col items-center justify-center shrink-0 shadow-sm relative z-10">
+        <div class="flex items-center gap-2">
+            <span class="text-rose-500 text-xl animate-pulse"><i class="fa-solid fa-heart"></i></span>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-rose-500 to-violet-600 bg-clip-text text-transparent">Cupid English</h1>
+            <span class="text-violet-500 text-xl animate-pulse"><i class="fa-solid fa-sparkles"></i></span>
+        </div>
+        <p class="text-xs text-rose-400 font-medium tracking-wide mt-0.5 serif-italic">Tặng em bé của anh ❤️</p>
+    </header>
+
+    <!-- MAIN APP CONTENT -->
+    <main id="app-container" class="flex-1 overflow-y-auto px-4 py-4 pb-24 relative">
+        
+        <!-- ================= SECTION 1: VOCABULARY ================= -->
+        <div id="section-vocab" class="tab-content space-y-4">
+            <!-- Search and Filter Bar -->
+            <div class="bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-sm border border-rose-50 flex flex-col gap-2">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-rose-400">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="vocab-search" placeholder="Tìm kiếm từ vựng..." class="w-full pl-9 pr-4 py-2 bg-rose-50/50 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm transition">
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1" id="category-filters">
+                    <button onclick="filterVocab('all')" class="category-btn active px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-rose-500 text-white shadow-sm transition">Tất cả</button>
+                    <button onclick="filterVocab('nature')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Thiên nhiên 🌲</button>
+                    <button onclick="filterVocab('life')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Cuộc sống 🏠</button>
+                    <button onclick="filterVocab('emotions')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Cảm xúc ❤️</button>
+                    <button onclick="filterVocab('custom')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Đã thêm ✏️</button>
+                </div>
+            </div>
+
+            <!-- Vocab Cards Grid -->
+            <div class="grid grid-cols-2 gap-3" id="vocab-grid">
+                <!-- Cards will render dynamically -->
+            </div>
+
+            <!-- Floating Add Button -->
+            <button onclick="openModal('add-vocab-modal')" class="fixed right-6 bottom-24 bg-gradient-to-r from-rose-400 to-pink-500 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-20">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <!-- ================= SECTION 2: SENTENCES ================= -->
+        <div id="section-sentences" class="tab-content hidden space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-quote-left text-rose-400"></i> Luyện Câu Giao Tiếp
+                </h2>
+                <button onclick="openModal('add-sentence-modal')" class="bg-rose-100 text-rose-600 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-rose-200 transition flex items-center gap-1">
+                    <i class="fa-solid fa-plus"></i> Thêm câu mới
+                </button>
+            </div>
+
+            <!-- Sentences List -->
+            <div class="space-y-3" id="sentence-list">
+                <!-- Sentences render here -->
+            </div>
+        </div>
+
+        <!-- ================= SECTION 3: IPA PRONUNCIATION ================= -->
+        <div id="section-ipa" class="tab-content hidden space-y-4">
+            <div class="bg-white/90 backdrop-blur-sm p-4 rounded-3xl shadow-sm border border-rose-50 space-y-3 text-center">
+                <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto text-rose-500 text-2xl">
+                    <i class="fa-solid fa-microphone-lines animate-bounce"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">Luyện Phát Âm Chuẩn IPA</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Em bé hãy chọn một từ hoặc câu bên dưới để nghe cách phát âm bản xứ chuẩn xác nhất, sau đó có thể luyện đọc theo nhé!</p>
+            </div>
+
+            <div class="bg-white/90 p-4 rounded-3xl shadow-sm border border-rose-100 space-y-4">
+                <h4 class="text-sm font-bold text-slate-700 border-b pb-2"><i class="fa-solid fa-music text-rose-400 mr-2"></i>Thử phát âm nhanh</h4>
+                <div class="flex gap-2">
+                    <input type="text" id="quick-pronounce-input" placeholder="Nhập từ hoặc câu tiếng Anh..." class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                    <button onclick="speakText(document.getElementById('quick-pronounce-input').value)" class="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-4 rounded-xl text-sm font-bold active:scale-95 transition">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- IPA Chart Helper -->
+            <div class="space-y-3">
+                <h3 class="text-sm font-bold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-violet-400"></i> Bảng Nguyên Âm IPA Phổ Biến
+                </h3>
+                <div class="grid grid-cols-4 gap-2" id="ipa-grid">
+                    <!-- Custom Quick IPA cards -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SECTION 4: TEST/PRACTICE ================= -->
+        <div id="section-test" class="tab-content hidden space-y-4">
+            <!-- Setup Stage -->
+            <div id="test-setup" class="space-y-4">
+                <div class="bg-white/90 backdrop-blur-sm p-5 rounded-3xl shadow-sm border border-rose-50 text-center space-y-2">
+                    <div class="w-14 h-14 bg-violet-100 rounded-full flex items-center justify-center mx-auto text-violet-500 text-xl">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">Đấu Trường Trí Tuệ</h3>
+                    <p class="text-xs text-slate-500">Cùng em bé kiểm tra lại những kiến thức đã học để nâng cao trình độ nhé!</p>
+                </div>
+
+                <!-- Mode Selection -->
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-rose-100 space-y-3">
+                    <h4 class="text-sm font-bold text-slate-700">1. Chọn dạng kiểm tra:</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectTestType('mcq')" id="btn-test-mcq" class="test-type-btn active p-4 border-2 border-rose-400 bg-rose-50/50 rounded-2xl text-center space-y-1 transition">
+                            <i class="fa-solid fa-list-check text-rose-500 text-lg"></i>
+                            <div class="text-xs font-bold text-slate-800">Trắc nghiệm</div>
+                            <div class="text-[10px] text-slate-500">Chọn đáp án đúng</div>
+                        </button>
+                        <button onclick="selectTestType('write')" id="btn-test-write" class="test-type-btn p-4 border border-slate-200 bg-white rounded-2xl text-center space-y-1 transition">
+                            <i class="fa-solid fa-keyboard text-slate-500 text-lg"></i>
+                            <div class="text-xs font-bold text-slate-800">Tự ghi từ</div>
+                            <div class="text-[10px] text-slate-500">Tự nhập tay tiếng Anh</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Target selection (Vocab or Sentences) -->
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-rose-100 space-y-3">
+                    <h4 class="text-sm font-bold text-slate-700">2. Phạm vi kiểm tra:</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="selectTestSource('vocab')" id="btn-source-vocab" class="test-source-btn active p-3 border-2 border-rose-400 bg-rose-50/50 rounded-2xl text-xs font-bold text-slate-800 transition">
+                            Từ Vựng Có Sẵn
+                        </button>
+                        <button onclick="selectTestSource('sentences')" id="btn-source-sentences" class="test-source-btn p-3 border border-slate-200 bg-white rounded-2xl text-xs font-bold text-slate-800 transition">
+                            Mẫu Câu Giao Tiếp
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="startTest()" class="w-full py-3.5 bg-gradient-to-r from-rose-400 to-pink-500 text-white rounded-2xl font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition">
+                    Bắt Đầu Kiểm Tra ✨
+                </button>
+            </div>
+
+            <!-- Active Test Stage -->
+            <div id="test-active" class="hidden space-y-4">
+                <div class="flex items-center justify-between bg-white px-4 py-2.5 rounded-full border border-rose-100">
+                    <button onclick="quitTest()" class="text-slate-400 text-xs hover:text-rose-500"><i class="fa-solid fa-circle-xmark mr-1"></i> Thoát</button>
+                    <div class="text-xs font-bold text-rose-500" id="test-progress">Câu 1/10</div>
+                    <div class="text-xs font-bold text-emerald-500" id="test-score">Điểm: 0</div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 text-center space-y-4 min-h-[160px] flex flex-col justify-center items-center">
+                    <span class="text-xs font-semibold px-3 py-1 bg-violet-100 text-violet-600 rounded-full" id="question-direction">Dịch sang tiếng Anh:</span>
+                    <h3 class="text-xl font-bold text-slate-800" id="question-text">Từ/Câu mẫu ở đây</h3>
+                </div>
+
+                <!-- Answer Zone: MCQ -->
+                <div id="answer-zone-mcq" class="space-y-2.5">
+                    <!-- 4 options will render here -->
+                </div>
+
+                <!-- Answer Zone: Writing -->
+                <div id="answer-zone-write" class="hidden space-y-3">
+                    <input type="text" id="write-answer-input" placeholder="Nhập câu trả lời bằng Tiếng Anh..." class="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-rose-400 font-medium text-center text-lg">
+                    <button onclick="submitWriteAnswer()" class="w-full py-3.5 bg-rose-500 text-white rounded-2xl font-bold shadow-md active:scale-95 transition">
+                        Nộp câu trả lời <i class="fa-solid fa-circle-check ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test Result Stage -->
+            <div id="test-result" class="hidden text-center space-y-6 py-6">
+                <div class="space-y-2">
+                    <div id="result-emoji" class="text-6xl">🎉</div>
+                    <h3 class="text-xl font-bold text-slate-800" id="result-title">Tuyệt vời quá em bé ơi!</h3>
+                    <p class="text-xs text-slate-500" id="result-subtitle">Em bé đã hoàn thành xuất sắc bài kiểm tra hôm nay.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 inline-block px-10">
+                    <div class="text-4xl font-extrabold text-rose-500" id="result-score-display">10 / 10</div>
+                    <div class="text-xs text-slate-400 mt-1">Đúng tối đa</div>
+                </div>
+
+                <button onclick="resetTest()" class="w-full py-3.5 bg-gradient-to-r from-rose-400 to-pink-500 text-white rounded-2xl font-bold shadow-md transition">
+                    Làm Bài Mới 💫
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ================= MODALS ================= -->
+    
+    <!-- Detail Word Modal (Centered screen popup) -->
+    <div id="vocab-detail-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeModal('vocab-detail-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+            
+            <div class="p-6 text-center space-y-4">
+                <span class="text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 bg-rose-100 text-rose-600 rounded-full inline-block" id="detail-category">Chủ đề</span>
+                <h3 class="text-3xl font-extrabold text-slate-800 tracking-tight" id="detail-english">Apple</h3>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-sm font-semibold text-violet-500" id="detail-ipa">/ˈæp.əl/</span>
+                    <button onclick="speakCurrentDetailWord()" class="w-7 h-7 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs active:scale-90 transition">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+                <div class="h-[1px] bg-rose-100 w-1/2 mx-auto"></div>
+                <div>
+                    <p class="text-xs text-slate-400">Ý nghĩa tiếng Việt</p>
+                    <p class="text-lg font-bold text-slate-700 mt-0.5" id="detail-vietnamese">Quả táo</p>
+                </div>
+                <div class="bg-rose-50/50 p-3 rounded-2xl text-left" id="detail-note-box">
+                    <p class="text-[10px] text-rose-400 font-bold">Ghi chú của em:</p>
+                    <p class="text-xs text-slate-600 mt-1" id="detail-note">Trái cây ngọt ngào tốt cho sức khỏe.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Vocab Modal -->
+    <div id="add-vocab-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative">
+            <button onclick="closeModal('add-vocab-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-pen-nib text-rose-500 mr-2"></i>Thêm từ vựng mới</h3>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="text-xs font-bold text-slate-500">Từ tiếng Anh <span class="text-rose-500">*</span></label>
+                    <input type="text" id="add-v-eng" placeholder="E.g., Sunflower" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-slate-500">Phiên âm IPA (Nếu có)</label>
+                    <input type="text" id="add-v-ipa" placeholder="E.g., /ˈsʌnˌflɑʊ·ər/" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-slate-500">Nghĩa tiếng Việt <span class="text-rose-500">*</span></label>
+                    <input type="text" id="add-v-vie" placeholder="E.g., Hoa hướng dương" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-slate-500">Ghi chú câu/ví dụ</label>
+                    <textarea id="add-v-note" placeholder="E.g., Sunflowers are beautiful." class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm h-16"></textarea>
+                </div>
+                <button onclick="saveNewVocab()" class="w-full py-2.5 bg-rose-500 text-white font-bold rounded-xl active:scale-95 transition text-sm">Lưu vào bộ nhớ ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Sentence Modal -->
+    <div id="add-sentence-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative">
+            <button onclick="closeModal('add-sentence-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-quote-left text-rose-500 mr-2"></i>Thêm câu giao tiếp mới</h3>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="text-xs font-bold text-slate-500">Câu tiếng Anh <span class="text-rose-500">*</span></label>
+                    <input type="text" id="add-s-eng" placeholder="E.g., I love you to the moon and back" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-slate-500">Nghĩa tiếng Việt <span class="text-rose-500">*</span></label>
+                    <input type="text" id="add-s-vie" placeholder="E.g., Anh yêu em nhiều vô tận" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                </div>
+                <button onclick="saveNewSentence()" class="w-full py-2.5 bg-rose-500 text-white font-bold rounded-xl active:scale-95 transition text-sm">Lưu câu mẫu ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM TAB NAVIGATION -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-lg border-t border-rose-100 flex justify-around items-center py-2 safe-pb z-30 shadow-[0_-4px_24px_rgba(244,63,94,0.06)]">
+        <button onclick="switchTab('vocab', this)" class="nav-tab-btn active flex flex-col items-center gap-0.5 text-rose-500 transition">
+            <div class="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center transition">
+                <i class="fa-solid fa-book-open text-base"></i>
+            </div>
+            <span class="text-[10px] font-bold">Từ Vựng</span>
+        </button>
+        <button onclick="switchTab('sentences', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-slate-400 transition">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-comments text-base"></i>
+            </div>
+            <span class="text-[10px] font-bold">Câu Dài</span>
+        </button>
+        <button onclick="switchTab('ipa', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-slate-400 transition">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-microphone-lines text-base"></i>
+            </div>
+            <span class="text-[10px] font-bold">Phát Âm</span>
+        </button>
+        <button onclick="switchTab('test', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-slate-400 transition">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-trophy text-base"></i>
+            </div>
+            <span class="text-[10px] font-bold">Kiểm Tra</span>
+        </button>
+    </nav>
+
+    <!-- CUSTOM MESSAGE TOAST -->
+    <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-lg z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+        Thông báo ở đây!
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script type="module">
+        // Import Firebase components
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global state
+        let db, auth;
+        let user = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'cupid-english-default';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+
+        // Default Vocab (Approx. Nature & Surrounding Life)
+        const defaultVocab = [
+            // Nature
+            { id: "v1", english: "Mountain", ipa: "/ˈmaʊn.tɪn/", vietnamese: "Ngọn núi", category: "nature", note: "The mountain is covered with snow." },
+            { id: "v2", english: "Forest", ipa: "/ˈfɒr.ɪst/", vietnamese: "Khu rừng", category: "nature", note: "Let's go for a walk in the forest." },
+            { id: "v3", english: "River", ipa: "/ˈrɪv.ər/", vietnamese: "Dòng sông", category: "nature", note: "A cold beautiful river flowing down." },
+            { id: "v4", english: "Ocean", ipa: "/ˈəʊ.ʃən/", vietnamese: "Đại dương", category: "nature", note: "The ocean breeze makes me relaxed." },
+            { id: "v5", english: "Sunflower", ipa: "/ˈsʌnˌflaʊ.ər/", vietnamese: "Hoa hướng dương", category: "nature", note: "Sunflowers always face the sun." },
+            { id: "v6", english: "Rainbow", ipa: "/ˈreɪn.bəʊ/", vietnamese: "Cầu vồng", category: "nature", note: "A beautiful rainbow after the rain." },
+            { id: "v7", english: "Butterfly", ipa: "/ˈbʌt.ə.flaɪ/", vietnamese: "Con bướm", category: "nature", note: "Butterflies are landing on flowers." },
+            { id: "v8", english: "Waterfall", ipa: "/ˈwɔː.tə.fɔːl/", vietnamese: "Thác nước", category: "nature", note: "A great waterfall in the jungle." },
+            
+            // Daily Life
+            { id: "v9", english: "Kitchen", ipa: "/ˈkɪtʃ.ən/", vietnamese: "Nhà bếp", category: "life", note: "Cooking sweet food in the kitchen." },
+            { id: "v10", english: "Garden", ipa: "/ˈɡɑː.dən/", vietnamese: "Khu vườn", category: "life", note: "Our garden is full of fresh roses." },
+            { id: "v11", english: "Blanket", ipa: "/ˈblæŋ.kɪt/", vietnamese: "Chiếc chăn", category: "life", note: "Keep warm with this soft blanket." },
+            { id: "v12", english: "Pillow", ipa: "/ˈpɪl.əʊ/", vietnamese: "Chiếc gối", category: "life", note: "A comfortable pillow for sweet dreams." },
+            { id: "v13", english: "Coffee", ipa: "/ˈkɒf.i/", vietnamese: "Cà phê", category: "life", note: "A hot cup of coffee in the morning." },
+            { id: "v14", english: "Bicycle", ipa: "/ˈbaɪ.sɪ.kl̩/", vietnamese: "Xe đạp", category: "life", note: "Riding a bicycle around the lake." },
+
+            // Emotions
+            { id: "v15", english: "Happiness", ipa: "/ˈhæp.i.nəs/", vietnamese: "Sự hạnh phúc", category: "emotions", note: "Being with you is pure happiness." },
+            { id: "v16", english: "Grateful", ipa: "/ˈɡreɪt.fəl/", vietnamese: "Biết ơn", category: "emotions", note: "I am grateful for every moment with you." },
+            { id: "v17", english: "Affection", ipa: "/əˈfek.ʃən/", vietnamese: "Sự yêu thương", category: "emotions", note: "Holding hands shows deep affection." },
+            { id: "v18", english: "Comfortable", ipa: "/ˈkʌm.fə.tə.bəl/", vietnamese: "Thoải mái, dễ chịu", category: "emotions", note: "I feel comfortable when I'm home." }
+        ];
+
+        // Default sentences
+        const defaultSentences = [
+            { id: "s1", english: "You make my heart skip a beat.", vietnamese: "Em làm trái tim anh lỡ nhịp." },
+            { id: "s2", english: "No matter where I go, I always find my way back to you.", vietnamese: "Dù đi đâu, anh vẫn luôn tìm đường về bên em." },
+            { id: "s3", english: "The scenery is beautiful, but you are still my favorite view.", vietnamese: "Phong cảnh rất đẹp, nhưng em vẫn là khung cảnh anh thích nhất." },
+            { id: "s4", english: "Thank you for bringing sunshine into my life.", vietnamese: "Cảm ơn em đã mang ánh nắng ấm áp vào cuộc đời anh." }
+        ];
+
+        // Dynamic State
+        let vocabList = [...defaultVocab];
+        let sentenceList = [...defaultSentences];
+        let activeCategory = 'all';
+        let currentDetailWord = null;
+
+        // Test State
+        let testType = 'mcq'; // 'mcq' or 'write'
+        let testSource = 'vocab'; // 'vocab' or 'sentences'
+        let testQuestions = [];
+        let currentQuestionIndex = 0;
+        let testScore = 0;
+
+        // Initialize Firebase & Auth
+        const initFirebase = async () => {
+            if (firebaseConfig) {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                // Auth
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token).catch(() => signInAnonymously(auth));
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                onAuthStateChanged(auth, async (currUser) => {
+                    if (currUser) {
+                        user = currUser;
+                        await loadUserData();
+                    }
+                });
+            } else {
+                // Fallback to offline localstorage if Firestore configs aren't supplied
+                loadOfflineData();
+            }
+        };
+
+        // Load Offline Local Storage Fallback
+        const loadOfflineData = () => {
+            const savedVocab = localStorage.getItem('custom_vocab');
+            const savedSentences = localStorage.getItem('custom_sentences');
+            if (savedVocab) vocabList = JSON.parse(savedVocab);
+            if (savedSentences) sentenceList = JSON.parse(savedSentences);
+            renderVocab();
+            renderSentences();
+        };
+
+        // Load Cloud Data from Firestore
+        const loadUserData = async () => {
+            if (!user || !db) return;
+            // SỬA LỖI: Thêm segment 'main' để tạo thành đường dẫn tài liệu chẵn (6 segments)
+            const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'userdata', 'main');
+            try {
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.vocabList) vocabList = data.vocabList;
+                    if (data.sentenceList) sentenceList = data.sentenceList;
+                } else {
+                    // Initialize empty cloud record
+                    await setDoc(docRef, { vocabList, sentenceList });
+                }
+            } catch (err) {
+                console.error("Firebase error, fallback to local:", err);
+                loadOfflineData();
+            }
+            renderVocab();
+            renderSentences();
+        };
+
+        // Save Data Helper
+        const saveData = async () => {
+            if (user && db) {
+                // SỬA LỖI: Thêm segment 'main' để tạo thành đường dẫn tài liệu chẵn (6 segments)
+                const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'userdata', 'main');
+                await setDoc(docRef, { vocabList, sentenceList }).catch(err => {
+                    console.error("Cloud save failed:", err);
+                });
+            } else {
+                localStorage.setItem('custom_vocab', JSON.stringify(vocabList));
+                localStorage.setItem('custom_sentences', JSON.stringify(sentenceList));
+            }
+        };
+
+        // App initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            initFirebase();
+            renderVocab();
+            renderSentences();
+            renderIPAGrid();
+
+            // Set up search event
+            document.getElementById('vocab-search').addEventListener('input', () => {
+                renderVocab();
+            });
+        });
+
+        // ================= TAB NAVIGATION =================
+        window.switchTab = (tabId, element) => {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+                btn.classList.remove('text-rose-500', 'active');
+                btn.classList.add('text-slate-400');
+                btn.querySelector('div').classList.remove('bg-rose-50');
+            });
+
+            element.classList.add('text-rose-500', 'active');
+            element.classList.remove('text-slate-400');
+            element.querySelector('div').classList.add('bg-rose-50');
+        };
+
+        // ================= RENDERING VOCABULARY =================
+        window.filterVocab = (category) => {
+            activeCategory = category;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-rose-500', 'text-white', 'shadow-sm');
+                btn.classList.add('bg-white', 'border', 'border-rose-100', 'text-rose-500');
+            });
+            event.target.classList.remove('bg-white', 'border', 'border-rose-100', 'text-rose-500');
+            event.target.classList.add('bg-rose-500', 'text-white', 'shadow-sm');
+            renderVocab();
+        };
+
+        window.renderVocab = () => {
+            const grid = document.getElementById('vocab-grid');
+            const searchVal = document.getElementById('vocab-search').value.toLowerCase().trim();
+            grid.innerHTML = '';
+
+            let filtered = vocabList;
+            if (activeCategory !== 'all') {
+                filtered = vocabList.filter(item => item.category === activeCategory);
+            }
+            if (searchVal) {
+                filtered = filtered.filter(item => 
+                    item.english.toLowerCase().includes(searchVal) || 
+                    item.vietnamese.toLowerCase().includes(searchVal)
+                );
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-2 py-10 text-center text-slate-400 text-xs">
+                        Không tìm thấy từ nào phù hợp rồi em bé ơi! 💕
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white/90 p-4 rounded-3xl border border-rose-50 shadow-sm flex flex-col justify-between items-center text-center gap-1 active:scale-95 transition-all cursor-pointer";
+                card.onclick = () => showVocabDetail(item);
+                card.innerHTML = `
+                    <span class="text-[10px] text-rose-400 uppercase font-extrabold tracking-wider bg-rose-50 px-2 py-0.5 rounded-full">${getCategoryEmoji(item.category)} ${item.category}</span>
+                    <h4 class="text-lg font-bold text-slate-800 tracking-tight mt-1">${item.english}</h4>
+                    <p class="text-xs text-slate-400 italic">${item.ipa || ''}</p>
+                    <p class="text-sm font-semibold text-slate-600 mt-0.5">${item.vietnamese}</p>
+                `;
+                grid.appendChild(card);
+            });
+        };
+
+        const getCategoryEmoji = (cat) => {
+            if (cat === 'nature') return '🌲';
+            if (cat === 'life') return '🏠';
+            if (cat === 'emotions') return '❤️';
+            return '✏️';
+        };
+
+        // ================= VOCAB DETAIL POPUP =================
+        window.showVocabDetail = (item) => {
+            currentDetailWord = item;
+            document.getElementById('detail-category').innerText = item.category;
+            document.getElementById('detail-english').innerText = item.english;
+            document.getElementById('detail-ipa').innerText = item.ipa || '/.../';
+            document.getElementById('detail-vietnamese').innerText = item.vietnamese;
+            if (item.note) {
+                document.getElementById('detail-note-box').classList.remove('hidden');
+                document.getElementById('detail-note').innerText = item.note;
+            } else {
+                document.getElementById('detail-note-box').classList.add('hidden');
+            }
+            openModal('vocab-detail-modal');
+        };
+
+        window.speakCurrentDetailWord = () => {
+            if (currentDetailWord) speakText(currentDetailWord.english);
+        };
+
+        // Speech Synthesis Engine
+        window.speakText = (text) => {
+            if (!text) return;
+            const synth = window.speechSynthesis;
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'en-US';
+            utter.rate = 0.85; // Slightly slower for better learning
+            synth.cancel(); // Interrupt existing voice
+            synth.speak(utter);
+        };
+
+        // ================= ADD NEW VOCABULARY =================
+        window.saveNewVocab = async () => {
+            const eng = document.getElementById('add-v-eng').value.trim();
+            const ipa = document.getElementById('add-v-ipa').value.trim();
+            const vie = document.getElementById('add-v-vie').value.trim();
+            const note = document.getElementById('add-v-note').value.trim();
+
+            if (!eng || !vie) {
+                showToast("Vui lòng điền đủ thông tin có dấu sao em bé nhé! 😘");
+                return;
+            }
+
+            const newObj = {
+                id: 'custom_v_' + Date.now(),
+                english: eng,
+                ipa: ipa,
+                vietnamese: vie,
+                category: 'custom',
+                note: note
+            };
+
+            vocabList.unshift(newObj);
+            await saveData();
+            renderVocab();
+            closeModal('add-vocab-modal');
+            showToast("Thêm từ vựng thành công rồi ạ! 💕");
+
+            // Reset inputs
+            document.getElementById('add-v-eng').value = '';
+            document.getElementById('add-v-ipa').value = '';
+            document.getElementById('add-v-vie').value = '';
+            document.getElementById('add-v-note').value = '';
+        };
+
+        // ================= RENDERING SENTENCES =================
+        window.renderSentences = () => {
+            const listContainer = document.getElementById('sentence-list');
+            listContainer.innerHTML = '';
+
+            if (sentenceList.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="py-10 text-center text-slate-400 text-xs">
+                        Chưa có câu nào rồi em bé ơi! Hãy thêm câu mới nhé. ✨
+                    </div>
+                `;
+                return;
+            }
+
+            sentenceList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white/95 p-4 rounded-3xl border border-rose-100 shadow-sm flex flex-col justify-between relative group overflow-hidden";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1 pr-6">
+                            <h4 class="text-base font-bold text-slate-800">${item.english}</h4>
+                            <p class="text-xs text-rose-500 font-semibold mt-1 bg-rose-50/50 inline-block px-2.5 py-0.5 rounded-full">${item.vietnamese}</p>
+                        </div>
+                        <button onclick="speakText('${item.english.replace(/'/g, "\\'")}')" class="w-9 h-9 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center shrink-0 active:scale-90 transition">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        };
+
+        // ================= ADD NEW SENTENCE =================
+        window.saveNewSentence = async () => {
+            const eng = document.getElementById('add-s-eng').value.trim();
+            const vie = document.getElementById('add-s-vie').value.trim();
+
+            if (!eng || !vie) {
+                showToast("Vui lòng nhập đầy đủ câu em bé nhé! 💕");
+                return;
+            }
+
+            const newObj = {
+                id: 'custom_s_' + Date.now(),
+                english: eng,
+                vietnamese: vie
+            };
+
+            sentenceList.unshift(newObj);
+            await saveData();
+            renderSentences();
+            closeModal('add-sentence-modal');
+            showToast("Thêm câu mới thành công rồi nhé! 🌸");
+
+            document.getElementById('add-s-eng').value = '';
+            document.getElementById('add-s-vie').value = '';
+        };
+
+        // ================= IPA CHART HELPER =================
+        window.renderIPAGrid = () => {
+            const grid = document.getElementById('ipa-grid');
+            const ipaVowels = [
+                { symbol: "i:", word: "see", ipa: "/siː/" },
+                { symbol: "ɪ", word: "sit", ipa: "/sɪt/" },
+                { symbol: "ʊ", word: "good", ipa: "/ɡʊd/" },
+                { symbol: "u:", word: "two", ipa: "/tuː/" },
+                { symbol: "e", word: "ten", ipa: "/ten/" },
+                { symbol: "ə", word: "about", ipa: "/əˈbaʊt/" },
+                { symbol: "ɜ:", word: "bird", ipa: "/bɜːd/" },
+                { symbol: "ɔ:", word: "door", ipa: "/dɔː/" },
+                { symbol: "æ", word: "cat", ipa: "/kæt/" },
+                { symbol: "ʌ", word: "cup", ipa: "/kʌp/" },
+                { symbol: "ɑ:", word: "father", ipa: "/ˈfɑː.ðər/" },
+                { symbol: "ɒ", word: "hot", ipa: "/hɒt/" }
+            ];
+
+            ipaVowels.forEach(item => {
+                const card = document.createElement('button');
+                card.className = "bg-white p-2.5 rounded-2xl border border-rose-50 flex flex-col items-center justify-center shadow-sm active:scale-95 transition";
+                card.onclick = () => speakText(item.word);
+                card.innerHTML = `
+                    <span class="text-base font-extrabold text-rose-500">${item.symbol}</span>
+                    <span class="text-[10px] text-slate-500 font-bold mt-0.5">${item.word}</span>
+                    <span class="text-[9px] text-slate-400 italic">${item.ipa}</span>
+                `;
+                grid.appendChild(card);
+            });
+        };
+
+        // ================= TESTING SYSTEM =================
+        window.selectTestType = (type) => {
+            testType = type;
+            document.querySelectorAll('.test-type-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-rose-400', 'bg-rose-50/50');
+                btn.classList.add('border-slate-200', 'bg-white');
+                btn.querySelector('i').className = btn.querySelector('i').className.replace('text-rose-500', 'text-slate-500');
+            });
+            const activeBtn = document.getElementById(`btn-test-${type}`);
+            activeBtn.classList.add('active', 'border-rose-400', 'bg-rose-50/50');
+            activeBtn.classList.remove('border-slate-200', 'bg-white');
+            activeBtn.querySelector('i').className = activeBtn.querySelector('i').className.replace('text-slate-500', 'text-rose-500');
+        };
+
+        window.selectTestSource = (source) => {
+            testSource = source;
+            document.querySelectorAll('.test-source-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-rose-400', 'bg-rose-50/50');
+                btn.classList.add('border-slate-200', 'bg-white');
+            });
+            const activeBtn = document.getElementById(`btn-source-${source}`);
+            activeBtn.classList.add('active', 'border-rose-400', 'bg-rose-50/50');
+            activeBtn.classList.remove('border-slate-200', 'bg-white');
+        };
+
+        window.startTest = () => {
+            let pool = testSource === 'vocab' ? [...vocabList] : [...sentenceList];
+            if (pool.length < 4) {
+                showToast("Hãy thêm tối thiểu 4 từ vựng hoặc câu để bắt đầu làm kiểm tra nhé! 😘");
+                return;
+            }
+
+            // Shuffle pool to pick questions
+            pool.sort(() => 0.5 - Math.random());
+            testQuestions = pool.slice(0, 10); // Max 10 questions per test
+
+            currentQuestionIndex = 0;
+            testScore = 0;
+
+            document.getElementById('test-setup').classList.add('hidden');
+            document.getElementById('test-active').classList.remove('hidden');
+            document.getElementById('test-result').classList.add('hidden');
+
+            showNextQuestion();
+        };
+
+        const showNextQuestion = () => {
+            if (currentQuestionIndex >= testQuestions.length) {
+                finishTest();
+                return;
+            }
+
+            // Update Progress UI
+            document.getElementById('test-progress').innerText = `Câu ${currentQuestionIndex + 1}/${testQuestions.length}`;
+            document.getElementById('test-score').innerText = `Điểm: ${testScore}`;
+
+            const q = testQuestions[currentQuestionIndex];
+            const direction = Math.random() > 0.5 ? 'en-vi' : 'vi-en';
+            q._direction = direction; // Keep track of the direction
+
+            if (direction === 'en-vi') {
+                document.getElementById('question-direction').innerText = "Chọn nghĩa tiếng Việt chính xác:";
+                document.getElementById('question-text').innerText = q.english;
+            } else {
+                document.getElementById('question-direction').innerText = "Dịch cụm từ sau sang Tiếng Anh:";
+                document.getElementById('question-text').innerText = q.vietnamese;
+            }
+
+            // Handle Mode Views
+            if (testType === 'mcq') {
+                document.getElementById('answer-zone-mcq').classList.remove('hidden');
+                document.getElementById('answer-zone-write').classList.add('hidden');
+                renderMCQOptions(q, direction);
+            } else {
+                document.getElementById('answer-zone-mcq').classList.add('hidden');
+                document.getElementById('answer-zone-write').classList.remove('hidden');
+                document.getElementById('write-answer-input').value = '';
+                document.getElementById('write-answer-input').focus();
+            }
+        };
+
+        const renderMCQOptions = (question, direction) => {
+            const mcqZone = document.getElementById('answer-zone-mcq');
+            mcqZone.innerHTML = '';
+
+            // Get distractor pool
+            let pool = testSource === 'vocab' ? [...vocabList] : [...sentenceList];
+            pool = pool.filter(item => item.id !== question.id);
+            pool.sort(() => 0.5 - Math.random());
+
+            let options = [];
+            // Target option
+            options.push({
+                text: direction === 'en-vi' ? question.vietnamese : question.english,
+                isCorrect: true
+            });
+
+            // Distractor options (up to 3)
+            for (let i = 0; i < Math.min(3, pool.length); i++) {
+                options.push({
+                    text: direction === 'en-vi' ? pool[i].vietnamese : pool[i].english,
+                    isCorrect: false
+                });
+            }
+
+            // Shuffle options
+            options.sort(() => 0.5 - Math.random());
+
+            options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-4 bg-white border border-slate-200 text-slate-800 text-sm font-bold rounded-2xl shadow-sm text-left active:scale-[0.99] transition flex items-center justify-between";
+                btn.onclick = () => selectMCQAnswer(btn, opt.isCorrect);
+                btn.innerHTML = `
+                    <span>${opt.text}</span>
+                    <span class="text-slate-300"><i class="fa-solid fa-circle-dot"></i></span>
+                `;
+                mcqZone.appendChild(btn);
+            });
+        };
+
+        window.selectMCQAnswer = (button, isCorrect) => {
+            // Disable all buttons in zone to avoid multiple clicks
+            const buttons = document.getElementById('answer-zone-mcq').querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (isCorrect) {
+                button.classList.remove('border-slate-200', 'bg-white');
+                button.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+                button.querySelector('i').className = "fa-solid fa-circle-check text-emerald-500";
+                testScore++;
+                showToast("Chính xác rồi em ơi! ❤️");
+            } else {
+                button.classList.remove('border-slate-200', 'bg-white');
+                button.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
+                button.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-500";
+                // Show the correct answer
+                showToast("Tiếc quá, sai mất rồi ạ! Cố lên nhé! 😘");
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showNextQuestion();
+            }, 1500);
+        };
+
+        window.submitWriteAnswer = () => {
+            const userAns = document.getElementById('write-answer-input').value.trim().toLowerCase();
+            const q = testQuestions[currentQuestionIndex];
+            const correctAns = (q._direction === 'en-vi' ? q.vietnamese : q.english).trim().toLowerCase();
+
+            // Simple direct string matching
+            if (userAns === correctAns) {
+                testScore++;
+                showToast("Đúng chuẩn rồi bé ơi! Siêu thế! 🎉");
+            } else {
+                showToast(`Nghĩa đúng là: "${q._direction === 'en-vi' ? q.vietnamese : q.english}" bé nhé!`);
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showNextQuestion();
+            }, 2500);
+        };
+
+        const finishTest = () => {
+            document.getElementById('test-active').classList.add('hidden');
+            document.getElementById('test-result').classList.remove('hidden');
+
+            document.getElementById('result-score-display').innerText = `${testScore} / ${testQuestions.length}`;
+
+            if (testScore === testQuestions.length) {
+                document.getElementById('result-emoji').innerText = "🏆👑";
+                document.getElementById('result-title').innerText = "Thiên tài tiếng Anh của anh đây rồi!";
+                document.getElementById('result-subtitle').innerText = "Trời ơi xuất sắc đạt điểm tuyệt đối 100%! Yêu em bé quá đi! ❤️";
+                // Fire continuous confetti
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            } else if (testScore >= testQuestions.length / 2) {
+                document.getElementById('result-emoji').innerText = "🎉✨";
+                document.getElementById('result-title').innerText = "Làm tốt lắm em bé ơi!";
+                document.getElementById('result-subtitle').innerText = "Chỉ một chút xíu nữa là tuyệt đối rồi. Tiếp tục luyện tập nhé!";
+            } else {
+                document.getElementById('result-emoji').innerText = "💪❤️";
+                document.getElementById('result-title').innerText = "Cố gắng lên em bé nhé!";
+                document.getElementById('result-subtitle').innerText = "Anh tin là lượt sau em bé sẽ làm tốt hơn rất nhiều.";
+            }
+        };
+
+        window.quitTest = () => {
+            document.getElementById('test-setup').classList.remove('hidden');
+            document.getElementById('test-active').classList.add('hidden');
+        };
+
+        window.resetTest = () => {
+            document.getElementById('test-setup').classList.remove('hidden');
+            document.getElementById('test-result').classList.add('hidden');
+        };
+
+        // ================= UNIVERSAL MODALS & TOASTS =================
+        window.openModal = (modalId) => {
+            const m = document.getElementById(modalId);
+            m.classList.remove('hidden');
+            setTimeout(() => {
+                m.querySelector('.transform').classList.remove('scale-95');
+                m.querySelector('.transform').classList.add('scale-100');
+            }, 10);
+        };
+
+        window.closeModal = (modalId) => {
+            const m = document.getElementById(modalId);
+            m.querySelector('.transform').classList.add('scale-95');
+            m.querySelector('.transform').classList.remove('scale-100');
+            setTimeout(() => {
+                m.classList.add('hidden');
+            }, 150);
+        };
+
+        window.showToast = (msg) => {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.remove('opacity-0');
+            t.classList.add('opacity-100');
+            setTimeout(() => {
+                t.classList.remove('opacity-100');
+                t.classList.add('opacity-0');
+            }, 2500);
+        };
+    </script>
+</body>
+</html>
