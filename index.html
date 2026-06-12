@@ -293,7 +293,7 @@
 
     <!-- Add Vocab Modal -->
     <div id="add-vocab-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative transform scale-95 transition-transform duration-300">
             <button onclick="closeModal('add-vocab-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
                 <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -323,7 +323,7 @@
 
     <!-- Add Sentence Modal -->
     <div id="add-sentence-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative transform scale-95 transition-transform duration-300">
             <button onclick="closeModal('add-sentence-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
                 <i class="fa-solid fa-circle-xmark"></i>
             </button>
@@ -400,6 +400,16 @@
             { id: "v6", english: "Rainbow", ipa: "/ˈreɪn.bəʊ/", vietnamese: "Cầu vồng", category: "nature", note: "A beautiful rainbow after the rain." },
             { id: "v7", english: "Butterfly", ipa: "/ˈbʌt.ə.flaɪ/", vietnamese: "Con bướm", category: "nature", note: "Butterflies are landing on flowers." },
             { id: "v8", english: "Waterfall", ipa: "/ˈwɔː.tə.fɔːl/", vietnamese: "Thác nước", category: "nature", note: "A great waterfall in the jungle." },
+            { id: "v101", english: "Sunlight", ipa: "/ˈsʌn.laɪt/", vietnamese: "Ánh sáng mặt trời", category: "nature", note: "Plants need sunlight to grow." },
+            { id: "v102", english: "Moonlight", ipa: "/ˈmuːn.laɪt/", vietnamese: "Ánh trăng", category: "nature", note: "Walking under the sweet moonlight." },
+            { id: "v103", english: "Breeze", ipa: "/briːz/", vietnamese: "Cơn gió nhẹ", category: "nature", note: "A cool breeze blew from the sea." },
+            { id: "v104", english: "Cloud", ipa: "/klaʊd/", vietnamese: "Đám mây", category: "nature", note: "There is a fluffy cloud in the sky." },
+            { id: "v105", english: "Raindrop", ipa: "/ˈreɪn.drɒp/", vietnamese: "Giọt mưa", category: "nature", note: "Raindrops are falling on the window." },
+            { id: "v106", english: "Starry", ipa: "/ˈstɑː.ri/", vietnamese: "Nhiều sao, lấp lánh", category: "nature", note: "I love looking at the starry night." },
+            { id: "v107", english: "Thunder", ipa: "/ˈθʌn.dər/", vietnamese: "Sấm sét", category: "nature", note: "The loud thunder scared the kitty." },
+            { id: "v108", english: "Blossom", ipa: "/ˈblɒs.əm/", vietnamese: "Hoa nở, đóa hoa", category: "nature", note: "Cherry blossoms bloom in spring." },
+            { id: "v109", english: "Meadow", ipa: "/ˈmed.əʊ/", vietnamese: "Đồng cỏ", category: "nature", note: "Sheep are grazing in the meadow." },
+            { id: "v110", english: "Pebble", ipa: "/ˈpeb.əl/", vietnamese: "Đá cuội", category: "nature", note: "Collecting smooth pebbles on the beach." },
             
             // Daily Life
             { id: "v9", english: "Kitchen", ipa: "/ˈkɪtʃ.ən/", vietnamese: "Nhà bếp", category: "life", note: "Cooking sweet food in the kitchen." },
@@ -408,12 +418,28 @@
             { id: "v12", english: "Pillow", ipa: "/ˈpɪl.əʊ/", vietnamese: "Chiếc gối", category: "life", note: "A comfortable pillow for sweet dreams." },
             { id: "v13", english: "Coffee", ipa: "/ˈkɒf.i/", vietnamese: "Cà phê", category: "life", note: "A hot cup of coffee in the morning." },
             { id: "v14", english: "Bicycle", ipa: "/ˈbaɪ.sɪ.kl̩/", vietnamese: "Xe đạp", category: "life", note: "Riding a bicycle around the lake." },
+            { id: "v201", english: "Candle", ipa: "/ˈkæn.dəl/", vietnamese: "Cây nến", category: "life", note: "The warm candle lights up the room." },
+            { id: "v202", english: "Mirror", ipa: "/ˈmɪr.ər/", vietnamese: "Cái gương", category: "life", note: "She looked at herself in the mirror." },
+            { id: "v203", english: "Teapot", ipa: "/ˈtiː.pɒt/", vietnamese: "Ấm trà", category: "life", note: "Pouring warm tea from the teapot." },
+            { id: "v204", english: "Slippers", ipa: "/ˈslɪp.əz/", vietnamese: "Dép đi trong nhà", category: "life", note: "Wearing cozy slippers in winter." },
+            { id: "v205", english: "Bookshelf", ipa: "/ˈbʊk.ʃelf/", vietnamese: "Kệ sách", category: "life", note: "Our bookshelf is full of love stories." },
+            { id: "v206", english: "Balcony", ipa: "/ˈbæl.kə.ni/", vietnamese: "Ban công", category: "life", note: "Enjoying the fresh air on the balcony." },
+            { id: "v207", english: "Wardrobe", ipa: "/ˈwɔː.drəʊb/", vietnamese: "Tủ quần áo", category: "life", note: "Hanging beautiful dresses in the wardrobe." },
+            { id: "v208", english: "Clock", ipa: "/klɒk/", vietnamese: "Đồng hồ", category: "life", note: "The clock ticking gently in the night." },
+            { id: "v209", english: "Desk", ipa: "/desk/", vietnamese: "Bàn học, bàn làm việc", category: "life", note: "Studying hard at my tidy desk." },
+            { id: "v210", english: "Curtain", ipa: "/ˈkɜː.tən/", vietnamese: "Rèm cửa", category: "life", note: "Pulling back the curtains to let light in." },
 
             // Emotions
             { id: "v15", english: "Happiness", ipa: "/ˈhæp.i.nəs/", vietnamese: "Sự hạnh phúc", category: "emotions", note: "Being with you is pure happiness." },
             { id: "v16", english: "Grateful", ipa: "/ˈɡreɪt.fəl/", vietnamese: "Biết ơn", category: "emotions", note: "I am grateful for every moment with you." },
             { id: "v17", english: "Affection", ipa: "/əˈfek.ʃən/", vietnamese: "Sự yêu thương", category: "emotions", note: "Holding hands shows deep affection." },
-            { id: "v18", english: "Comfortable", ipa: "/ˈkʌm.fə.tə.bəl/", vietnamese: "Thoải mái, dễ chịu", category: "emotions", note: "I feel comfortable when I'm home." }
+            { id: "v18", english: "Comfortable", ipa: "/ˈkʌm.fə.tə.bəl/", vietnamese: "Thoải mái, dễ chịu", category: "emotions", note: "I feel comfortable when I'm home." },
+            { id: "v301", english: "Excited", ipa: "/ɪkˈsaɪ.tɪd/", vietnamese: "Hào hứng, phấn khích", category: "emotions", note: "She is excited about the coming trip." },
+            { id: "v302", english: "Peaceful", ipa: "/ˈpiːs.fəl/", vietnamese: "Yên bình", category: "emotions", note: "Looking at the calm sea makes me feel peaceful." },
+            { id: "v303", english: "Hopeful", ipa: "/ˈhəʊp.fəl/", vietnamese: "Đầy hy vọng", category: "emotions", note: "Always be hopeful about your beautiful future." },
+            { id: "v304", english: "Cheerfulness", ipa: "/ˈtʃɪə.fəl.nəs/", vietnamese: "Sự tươi vui, hớn hở", category: "emotions", note: "Her cheerfulness brightens up the entire room." },
+            { id: "v305", english: "Sympathy", ipa: "/ˈsɪm.pə.θi/", vietnamese: "Sự thông cảm", category: "emotions", note: "Sending letters of sympathy to friends." },
+            { id: "v306", english: "Curiosity", ipa: "/ˌjʊə.riˈɒs.ɪ.ti/", vietnamese: "Sự tò mò", category: "emotions", note: "Children have high curiosity about nature." }
         ];
 
         // Default sentences
@@ -952,16 +978,22 @@
         window.openModal = (modalId) => {
             const m = document.getElementById(modalId);
             m.classList.remove('hidden');
-            setTimeout(() => {
-                m.querySelector('.transform').classList.remove('scale-95');
-                m.querySelector('.transform').classList.add('scale-100');
-            }, 10);
+            const inner = m.querySelector('.transform');
+            if (inner) {
+                setTimeout(() => {
+                    inner.classList.remove('scale-95');
+                    inner.classList.add('scale-100');
+                }, 10);
+            }
         };
 
         window.closeModal = (modalId) => {
             const m = document.getElementById(modalId);
-            m.querySelector('.transform').classList.add('scale-95');
-            m.querySelector('.transform').classList.remove('scale-100');
+            const inner = m.querySelector('.transform');
+            if (inner) {
+                inner.classList.add('scale-95');
+                inner.classList.remove('scale-100');
+            }
             setTimeout(() => {
                 m.classList.add('hidden');
             }, 150);
