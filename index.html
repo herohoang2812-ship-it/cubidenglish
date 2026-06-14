@@ -605,7 +605,21 @@
         let user = null;
         let authTab = 'login'; // 'login' or 'signup'
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'cupid-english-default';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const firebaseConfig = {
+            apiKey: "AIzaSyCmCd2D0-r82ItmSga1aevfs_HjCwR3czQ",
+            authDomain: "datacupid-b6358.firebaseapp.com",
+            projectId: "datacupid-b6358",
+            storageBucket: "datacupid-b6358.firebasestorage.app",
+            messagingSenderId: "546157714106",
+            appId: "1:546157714106:web:a6b05685559bbd46a74083",
+            measurementId: "G-4ZFDHWJLNC"
+       };
+        
+        // Khởi tạo Firebase
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app); // Gán biến db để sử dụng cho việc lưu/đọc dữ liệu
+            auth = getAuth(app);    // Gán biến auth để sử dụng cho việc đăng nhập
+       
 
         // BỘ CƠ SỞ DỮ LIỆU ĐỒ SỘ GỒM 500 TỪ VỰNG CHUẨN XÁC (GIA ĐÌNH, ĐỜI SỐNG, THIÊN NHIÊN, CẢM XÚC)
         const defaultVocab = [
