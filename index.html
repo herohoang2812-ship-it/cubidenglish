@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Cupid English - Tặng em bé của anh</title>
+    <title>Cupid English - Khu rừng học tập kỳ diệu</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,22 +11,31 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: {
-                            50: '#fff1f2',
-                            100: '#ffe4e6',
-                            200: '#fecdd3',
-                            300: '#fda4af',
-                            400: '#fb7185',
-                            500: '#f43f5e',
-                            600: '#e11d48',
+                        magic: {
+                            50: '#f3effc',
+                            100: '#e3d8f8',
+                            200: '#caaef2',
+                            300: '#a77beb',
+                            400: '#844ce1',
+                            500: '#692cd0',
+                            650: '#231245',
+                            700: '#1b0c36',
+                            800: '#120724',
+                            900: '#0b0416',
+                            950: '#06020c'
                         },
-                        secondary: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            200: '#ddd6fe',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
+                        glowing: {
+                            gold: '#ffd166',
+                            rose: '#ff4d6d',
+                            violet: '#a855f7',
+                            teal: '#4cc9f0'
                         }
+                    },
+                    boxShadow: {
+                        'neon-rose': '0 0 15px rgba(255, 77, 109, 0.45)',
+                        'neon-violet': '0 0 15px rgba(168, 85, 247, 0.45)',
+                        'neon-teal': '0 0 15px rgba(76, 201, 240, 0.45)',
+                        'neon-gold': '0 0 15px rgba(255, 209, 102, 0.45)'
                     }
                 }
             }
@@ -49,105 +58,175 @@
             font-family: 'Quicksand', sans-serif;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            background: radial-gradient(circle at center, #1b0e37 0%, #0c071d 50%, #05020c 100%);
         }
         .serif-italic {
             font-family: 'Playfair Display', serif;
             font-style: italic;
         }
-        /* Custom scrollbar for mobile */
+        /* Glassmorphism panel styling */
+        .glass-panel {
+            background: rgba(27, 15, 55, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+        }
+        .glass-panel-light {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .glass-card-glow {
+            box-shadow: 0 8px 32px 0 rgba(11, 4, 22, 0.4), inset 0 0 12px rgba(168, 85, 247, 0.15);
+        }
+        /* Custom scrollbar matching style reference 3da3b23b54828d3ffd98b40ac2bd05ee.jpg */
         ::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #fecdd3;
+            background: linear-gradient(180deg, #ff4d6d, #a855f7);
             border-radius: 10px;
         }
-        /* Safe area padding for iPhones with notches */
+        /* Safe area padding for notches */
         .safe-pb {
             padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
         }
         .safe-pt {
             padding-top: env(safe-area-inset-top);
         }
+        textarea {
+            resize: none;
+        }
+        /* Dynamic shining glow animation */
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); filter: drop-shadow(0 0 5px rgba(255, 77, 109, 0.3)); }
+            50% { opacity: 1; transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(255, 77, 109, 0.6)); }
+        }
+        .glow-pulse-avatar {
+            animation: subtle-pulse 3s infinite ease-in-out;
+        }
+        /* Floating particles background element */
+        .magical-sparkle {
+            pointer-events: none;
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,209,102,0.8) 0%, rgba(255,209,102,0) 70%);
+            border-radius: 50%;
+            animation: sparkle-float 8s infinite linear;
+        }
+        @keyframes sparkle-float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-rose-50 via-pink-50 to-violet-50 h-full flex flex-col overflow-hidden text-slate-800">
+<body class="h-full flex flex-col overflow-hidden text-slate-100 relative">
+
+    <!-- MAGICAL BACKGROUND SPARKS (Style alignment) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-40">
+        <div class="magical-sparkle w-3 h-3" style="left: 15%; animation-delay: 0s; animation-duration: 9s;"></div>
+        <div class="magical-sparkle w-2 h-2" style="left: 45%; animation-delay: 2s; animation-duration: 12s;"></div>
+        <div class="magical-sparkle w-4 h-4" style="left: 75%; animation-delay: 4s; animation-duration: 7s;"></div>
+        <div class="magical-sparkle w-3 h-3" style="left: 90%; animation-delay: 1s; animation-duration: 10s;"></div>
+        <!-- Violet ambient nebula glow -->
+        <div class="absolute w-[450px] h-[450px] rounded-full bg-violet-900/15 blur-[120px] top-[10%] -left-[10%]"></div>
+        <div class="absolute w-[400px] h-[400px] rounded-full bg-rose-900/15 blur-[100px] bottom-[15%] -right-[10%]"></div>
+    </div>
 
     <!-- APP HEADER -->
-    <header class="bg-white/80 backdrop-blur-md border-b border-rose-100 px-6 py-4 safe-pt flex flex-col items-center justify-center shrink-0 shadow-sm relative z-10">
-        <div class="flex items-center gap-2">
-            <span class="text-rose-500 text-xl animate-pulse"><i class="fa-solid fa-heart"></i></span>
-            <h1 class="text-2xl font-bold bg-gradient-to-r from-rose-500 to-violet-600 bg-clip-text text-transparent">Cupid English</h1>
-            <span class="text-violet-500 text-xl animate-pulse"><i class="fa-solid fa-sparkles"></i></span>
+    <header class="glass-panel backdrop-blur-md border-b border-violet-500/20 px-6 py-4 safe-pt flex flex-col items-center justify-center shrink-0 shadow-2xl relative z-10 overflow-hidden">
+        <!-- Forest vector art styled background in header -->
+        <div class="absolute inset-x-0 bottom-0 top-0 pointer-events-none opacity-10 flex items-end justify-between px-8">
+            <svg class="w-16 h-16 text-violet-300" viewBox="0 0 100 100" fill="currentColor">
+                <path d="M50 10 L15 80 L40 80 L30 95 L70 95 L60 80 L85 80 Z" />
+            </svg>
+            <svg class="w-10 h-10 text-rose-300" viewBox="0 0 100 100" fill="currentColor">
+                <path d="M50 15 L20 85 L45 85 L35 95 L65 95 L55 85 L80 85 Z" />
+            </svg>
         </div>
-        <p class="text-xs text-rose-400 font-medium tracking-wide mt-0.5 serif-italic">Tặng em bé của anh ❤️</p>
+
+        <div class="flex items-center gap-3 relative z-10">
+            <span class="text-glowing-rose text-2xl glow-pulse-avatar"><i class="fa-solid fa-heart"></i></span>
+            <h1 class="text-3xl font-extrabold bg-gradient-to-r from-glowing-rose via-glowing-violet to-glowing-teal bg-clip-text text-transparent tracking-wide drop-shadow-[0_2px_10px_rgba(168,85,247,0.4)]">Cupid English</h1>
+            <span class="text-glowing-teal text-xl animate-pulse"><i class="fa-solid fa-sparkles"></i></span>
+        </div>
+        <p class="text-xs text-rose-300/80 font-semibold tracking-widest mt-1 serif-italic relative z-10"><i class="fa-solid fa-wand-magic-sparkles mr-1 text-glowing-gold"></i> Tặng em bé của anh ❤️</p>
+        
+        <!-- NÚT TÀI KHOẢN ĐỒNG BỘ -->
+        <button id="auth-trigger-btn" onclick="openAuthModal()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full glass-panel-light border border-violet-400/30 text-glowing-rose flex items-center justify-center hover:scale-105 active:scale-95 transition shadow-neon-rose">
+            <i id="auth-icon" class="fa-solid fa-user text-sm"></i>
+        </button>
     </header>
 
     <!-- MAIN APP CONTENT -->
-    <main id="app-container" class="flex-1 overflow-y-auto px-4 py-4 pb-24 relative">
+    <main id="app-container" class="flex-1 overflow-y-auto px-4 py-6 pb-28 relative z-10">
         
         <!-- ================= SECTION 1: VOCABULARY ================= -->
-        <div id="section-vocab" class="tab-content space-y-4">
+        <div id="section-vocab" class="tab-content space-y-5">
             <!-- Search and Filter Bar -->
-            <div class="bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-sm border border-rose-50 flex flex-col gap-2">
+            <div class="glass-panel glass-card-glow p-4 rounded-3xl border border-violet-500/25 flex flex-col gap-3">
                 <div class="relative">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-rose-400">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-glowing-violet">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" id="vocab-search" placeholder="Tìm kiếm từ vựng..." class="w-full pl-9 pr-4 py-2 bg-rose-50/50 border border-rose-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm transition">
+                    <input type="text" id="vocab-search" placeholder="Khám phá từ vựng thần thoại..." class="w-full pl-10 pr-4 py-2.5 bg-magic-950/60 border border-violet-500/30 rounded-2xl focus:outline-none focus:border-glowing-rose focus:ring-2 focus:ring-glowing-rose/20 text-sm text-white transition-all placeholder-violet-300/40">
                 </div>
-                <div class="flex gap-2 overflow-x-auto pb-1" id="category-filters">
-                    <button onclick="filterVocab('all')" class="category-btn active px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-rose-500 text-white shadow-sm transition">Tất cả</button>
-                    <button onclick="filterVocab('nature')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Thiên nhiên 🌲</button>
-                    <button onclick="filterVocab('life')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Cuộc sống 🏠</button>
-                    <button onclick="filterVocab('emotions')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Cảm xúc ❤️</button>
-                    <button onclick="filterVocab('custom')" class="category-btn px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap bg-white border border-rose-100 text-rose-500 transition">Đã thêm ✏️</button>
+                <!-- Dynamic Category Filter Pill Bars -->
+                <div class="flex gap-2.5 overflow-x-auto pb-1" id="category-filters">
+                    <button onclick="filterVocab('all')" class="category-btn active px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gradient-to-r from-glowing-rose to-glowing-violet text-white shadow-neon-rose transition-all">Tất cả</button>
+                    <button onclick="filterVocab('nature')" class="category-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap glass-panel-light border border-violet-400/20 text-violet-200 transition-all">Thiên nhiên 🌲</button>
+                    <button onclick="filterVocab('life')" class="category-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap glass-panel-light border border-violet-400/20 text-violet-200 transition-all">Cuộc sống 🏠</button>
+                    <button onclick="filterVocab('emotions')" class="category-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap glass-panel-light border border-violet-400/20 text-violet-200 transition-all">Cảm xúc ❤️</button>
+                    <button onclick="filterVocab('custom')" class="category-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap glass-panel-light border border-violet-400/20 text-violet-200 transition-all">Đã thêm ✏️</button>
                 </div>
             </div>
 
             <!-- Vocab Cards Grid -->
-            <div class="grid grid-cols-2 gap-3" id="vocab-grid">
+            <div class="grid grid-cols-2 gap-4" id="vocab-grid">
                 <!-- Cards will render dynamically -->
             </div>
 
             <!-- Floating Add Button -->
-            <button onclick="openModal('add-vocab-modal')" class="fixed right-6 bottom-24 bg-gradient-to-r from-rose-400 to-pink-500 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all z-20">
+            <button onclick="openAddVocabModal()" class="fixed right-6 bottom-24 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white w-14 h-14 rounded-full shadow-neon-rose flex items-center justify-center text-xl hover:scale-110 active:scale-95 transition-all z-20 border border-white/20">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>
 
         <!-- ================= SECTION 2: SENTENCES ================= -->
-        <div id="section-sentences" class="tab-content hidden space-y-4">
+        <div id="section-sentences" class="tab-content hidden space-y-5">
             <div class="flex items-center justify-between">
-                <h2 class="text-lg font-bold text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-quote-left text-rose-400"></i> Luyện Câu Giao Tiếp
+                <h2 class="text-xl font-bold text-violet-100 flex items-center gap-2">
+                    <i class="fa-solid fa-quote-left text-glowing-rose drop-shadow-neon-rose"></i> Giao Tiếp Kỳ Diệu
                 </h2>
-                <button onclick="openModal('add-sentence-modal')" class="bg-rose-100 text-rose-600 px-3 py-1.5 rounded-full text-xs font-bold hover:bg-rose-200 transition flex items-center gap-1">
+                <button onclick="openAddSentenceModal()" class="bg-violet-900/50 border border-violet-400/30 text-glowing-rose px-4 py-2 rounded-full text-xs font-extrabold hover:bg-violet-800/60 shadow-neon-rose transition flex items-center gap-1.5">
                     <i class="fa-solid fa-plus"></i> Thêm câu mới
                 </button>
             </div>
 
             <!-- Sentences List -->
-            <div class="space-y-3" id="sentence-list">
+            <div class="space-y-4" id="sentence-list">
                 <!-- Sentences render here -->
             </div>
         </div>
 
         <!-- ================= SECTION 3: IPA PRONUNCIATION ================= -->
-        <div id="section-ipa" class="tab-content hidden space-y-4">
-            <div class="bg-white/90 backdrop-blur-sm p-4 rounded-3xl shadow-sm border border-rose-50 space-y-3 text-center">
-                <div class="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto text-rose-500 text-2xl">
-                    <i class="fa-solid fa-microphone-lines animate-bounce"></i>
+        <div id="section-ipa" class="tab-content hidden space-y-5">
+            <div class="glass-panel glass-card-glow p-6 rounded-3xl border border-violet-500/25 space-y-4 text-center relative overflow-hidden">
+                <!-- Background decoration matching the magic forest style of 3da3b23b54828d3ffd98b40ac2bd05ee.jpg -->
+                <div class="absolute -right-10 -bottom-10 w-24 h-24 bg-glowing-teal/5 rounded-full blur-xl"></div>
+                <div class="w-16 h-16 bg-gradient-to-br from-glowing-violet to-glowing-rose rounded-full flex items-center justify-center mx-auto shadow-neon-violet relative z-10">
+                    <i class="fa-solid fa-microphone-lines text-white text-2xl animate-pulse"></i>
                 </div>
-                <h3 class="text-lg font-bold text-slate-800">Luyện Phát Âm Chuẩn IPA</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">Em bé hãy chọn một từ hoặc câu bên dưới để nghe cách phát âm bản xứ chuẩn xác nhất, sau đó có thể luyện đọc theo nhé!</p>
+                <h3 class="text-xl font-bold text-white relative z-10">Phát Âm Chuẩn IPA</h3>
+                <p class="text-xs text-violet-200/80 leading-relaxed max-w-sm mx-auto relative z-10">Hãy lắng nghe ngữ điệu bản xứ và tập theo để mở khóa giọng đọc chuẩn xác từng âm điệu kỳ diệu.</p>
             </div>
 
-            <div class="bg-white/90 p-4 rounded-3xl shadow-sm border border-rose-100 space-y-4">
-                <h4 class="text-sm font-bold text-slate-700 border-b pb-2"><i class="fa-solid fa-music text-rose-400 mr-2"></i>Thử phát âm nhanh</h4>
-                <div class="flex gap-2">
-                    <input type="text" id="quick-pronounce-input" placeholder="Nhập từ hoặc câu tiếng Anh..." class="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
-                    <button onclick="speakText(document.getElementById('quick-pronounce-input').value)" class="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-4 rounded-xl text-sm font-bold active:scale-95 transition">
+            <div class="glass-panel p-5 rounded-3xl border border-violet-500/20 space-y-4">
+                <h4 class="text-sm font-bold text-violet-200 border-b border-violet-500/20 pb-2 flex items-center"><i class="fa-solid fa-wand-magic-sparkles text-glowing-gold mr-2"></i>Thử phát âm nhanh</h4>
+                <div class="flex gap-2.5">
+                    <input type="text" id="quick-pronounce-input" placeholder="Nhập từ hoặc câu tiếng Anh cần nghe..." class="flex-1 px-4 py-2.5 bg-magic-950/60 border border-violet-500/30 rounded-2xl focus:outline-none focus:border-glowing-rose focus:ring-2 focus:ring-glowing-rose/20 text-sm text-white">
+                    <button onclick="speakText(document.getElementById('quick-pronounce-input').value)" class="bg-gradient-to-r from-glowing-rose to-glowing-violet text-white px-5 rounded-2xl text-sm font-bold active:scale-95 transition-all shadow-neon-rose flex items-center justify-center">
                         <i class="fa-solid fa-volume-high"></i>
                     </button>
                 </div>
@@ -155,105 +234,150 @@
 
             <!-- IPA Chart Helper -->
             <div class="space-y-3">
-                <h3 class="text-sm font-bold text-slate-700 flex items-center gap-2">
-                    <i class="fa-solid fa-circle-info text-violet-400"></i> Bảng Nguyên Âm IPA Phổ Biến
+                <h3 class="text-sm font-bold text-violet-200 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-glowing-teal"></i> Bảng Nguyên Âm IPA Cơ Bản
                 </h3>
-                <div class="grid grid-cols-4 gap-2" id="ipa-grid">
+                <div class="grid grid-cols-4 gap-2.5" id="ipa-grid">
                     <!-- Custom Quick IPA cards -->
                 </div>
             </div>
         </div>
 
         <!-- ================= SECTION 4: TEST/PRACTICE ================= -->
-        <div id="section-test" class="tab-content hidden space-y-4">
+        <div id="section-test" class="tab-content hidden space-y-5">
             <!-- Setup Stage -->
-            <div id="test-setup" class="space-y-4">
-                <div class="bg-white/90 backdrop-blur-sm p-5 rounded-3xl shadow-sm border border-rose-50 text-center space-y-2">
-                    <div class="w-14 h-14 bg-violet-100 rounded-full flex items-center justify-center mx-auto text-violet-500 text-xl">
-                        <i class="fa-solid fa-graduation-cap"></i>
+            <div id="test-setup" class="space-y-5">
+                <div class="glass-panel glass-card-glow p-6 rounded-3xl border border-violet-500/25 text-center space-y-3 relative overflow-hidden">
+                    <div class="absolute -left-10 -top-10 w-28 h-28 bg-glowing-gold/5 rounded-full blur-xl"></div>
+                    <div class="w-16 h-16 bg-gradient-to-tr from-glowing-teal to-glowing-violet rounded-full flex items-center justify-center mx-auto shadow-neon-teal">
+                        <i class="fa-solid fa-graduation-cap text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-800">Đấu Trường Trí Tuệ</h3>
-                    <p class="text-xs text-slate-500">Cùng em bé kiểm tra lại những kiến thức đã học để nâng cao trình độ nhé!</p>
+                    <h3 class="text-xl font-bold text-white">Thử Thách Phép Thuật</h3>
+                    <p class="text-xs text-violet-200/80 max-w-sm mx-auto leading-relaxed">Hãy đánh giá lại vốn từ và cấu trúc câu kỳ diệu mà em đã tiếp thu trong rừng phép thuật ngày hôm nay.</p>
                 </div>
 
                 <!-- Mode Selection -->
-                <div class="bg-white p-4 rounded-3xl shadow-sm border border-rose-100 space-y-3">
-                    <h4 class="text-sm font-bold text-slate-700">1. Chọn dạng kiểm tra:</h4>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="selectTestType('mcq')" id="btn-test-mcq" class="test-type-btn active p-4 border-2 border-rose-400 bg-rose-50/50 rounded-2xl text-center space-y-1 transition">
-                            <i class="fa-solid fa-list-check text-rose-500 text-lg"></i>
-                            <div class="text-xs font-bold text-slate-800">Trắc nghiệm</div>
-                            <div class="text-[10px] text-slate-500">Chọn đáp án đúng</div>
+                <div class="glass-panel p-5 rounded-3xl border border-violet-500/20 space-y-4">
+                    <h4 class="text-sm font-bold text-violet-200">1. Chọn hình thức thử thách:</h4>
+                    <div class="grid grid-cols-2 gap-3.5">
+                        <button onclick="selectTestType('mcq')" id="btn-test-mcq" class="test-type-btn active p-4 border-2 border-glowing-rose bg-gradient-to-b from-glowing-rose/10 to-magic-900/60 rounded-2xl text-center space-y-1.5 transition-all shadow-neon-rose">
+                            <i class="fa-solid fa-list-check text-glowing-rose text-xl"></i>
+                            <div class="text-xs font-bold text-white">Trắc nghiệm</div>
+                            <div class="text-[10px] text-violet-300/60">Chọn phương án đúng</div>
                         </button>
-                        <button onclick="selectTestType('write')" id="btn-test-write" class="test-type-btn p-4 border border-slate-200 bg-white rounded-2xl text-center space-y-1 transition">
-                            <i class="fa-solid fa-keyboard text-slate-500 text-lg"></i>
-                            <div class="text-xs font-bold text-slate-800">Tự ghi từ</div>
-                            <div class="text-[10px] text-slate-500">Tự nhập tay tiếng Anh</div>
+                        <button onclick="selectTestType('write')" id="btn-test-write" class="test-type-btn p-4 border border-violet-500/20 bg-magic-950/40 rounded-2xl text-center space-y-1.5 transition-all">
+                            <i class="fa-solid fa-keyboard text-violet-300 text-xl"></i>
+                            <div class="text-xs font-bold text-violet-200">Tự ghi từ</div>
+                            <div class="text-[10px] text-violet-300/60">Nhập ký tự chính xác</div>
                         </button>
                     </div>
                 </div>
 
                 <!-- Target selection (Vocab or Sentences) -->
-                <div class="bg-white p-4 rounded-3xl shadow-sm border border-rose-100 space-y-3">
-                    <h4 class="text-sm font-bold text-slate-700">2. Phạm vi kiểm tra:</h4>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="selectTestSource('vocab')" id="btn-source-vocab" class="test-source-btn active p-3 border-2 border-rose-400 bg-rose-50/50 rounded-2xl text-xs font-bold text-slate-800 transition">
-                            Từ Vựng Có Sẵn
+                <div class="glass-panel p-5 rounded-3xl border border-violet-500/20 space-y-4">
+                    <h4 class="text-sm font-bold text-violet-200">2. Phạm vi đánh giá:</h4>
+                    <div class="grid grid-cols-2 gap-3.5">
+                        <button onclick="selectTestSource('vocab')" id="btn-source-vocab" class="test-source-btn active p-3.5 border-2 border-glowing-rose bg-gradient-to-b from-glowing-rose/10 to-magic-900/60 rounded-2xl text-xs font-extrabold text-white transition-all shadow-neon-rose">
+                            Từ Vựng Kỳ Diệu
                         </button>
-                        <button onclick="selectTestSource('sentences')" id="btn-source-sentences" class="test-source-btn p-3 border border-slate-200 bg-white rounded-2xl text-xs font-bold text-slate-800 transition">
+                        <button onclick="selectTestSource('sentences')" id="btn-source-sentences" class="test-source-btn p-3.5 border border-violet-500/20 bg-magic-950/40 rounded-2xl text-xs font-extrabold text-violet-200 transition-all">
                             Mẫu Câu Giao Tiếp
                         </button>
                     </div>
                 </div>
 
-                <button onclick="startTest()" class="w-full py-3.5 bg-gradient-to-r from-rose-400 to-pink-500 text-white rounded-2xl font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition">
-                    Bắt Đầu Kiểm Tra ✨
+                <button onclick="startTest()" class="w-full py-4 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white rounded-2xl font-bold shadow-neon-rose hover:scale-[1.02] active:scale-[0.98] transition-all border border-white/20">
+                    Bắt Đầu Thử Thách ✨
                 </button>
             </div>
 
             <!-- Active Test Stage -->
-            <div id="test-active" class="hidden space-y-4">
-                <div class="flex items-center justify-between bg-white px-4 py-2.5 rounded-full border border-rose-100">
-                    <button onclick="quitTest()" class="text-slate-400 text-xs hover:text-rose-500"><i class="fa-solid fa-circle-xmark mr-1"></i> Thoát</button>
-                    <div class="text-xs font-bold text-rose-500" id="test-progress">Câu 1/10</div>
-                    <div class="text-xs font-bold text-emerald-500" id="test-score">Điểm: 0</div>
+            <div id="test-active" class="hidden space-y-5">
+                <div class="flex flex-col gap-3 glass-panel p-4 rounded-3xl border border-violet-500/25">
+                    <div class="flex items-center justify-between">
+                        <button onclick="quitTest()" class="text-violet-300 text-xs hover:text-glowing-rose transition"><i class="fa-solid fa-circle-xmark mr-1.5 text-glowing-rose"></i>Thoát</button>
+                        <div class="text-xs font-extrabold text-glowing-teal" id="test-progress">Câu 1/10</div>
+                        <div class="text-xs font-extrabold text-glowing-gold" id="test-score">Điểm: 0</div>
+                    </div>
+                    <!-- Modern Progress Bar -->
+                    <div class="w-full bg-magic-950 h-2.5 rounded-full overflow-hidden border border-violet-500/20">
+                        <div id="test-progress-bar" class="bg-gradient-to-r from-glowing-rose to-glowing-violet h-full transition-all duration-300" style="width: 10%"></div>
+                    </div>
                 </div>
 
                 <!-- Question Card -->
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 text-center space-y-4 min-h-[160px] flex flex-col justify-center items-center">
-                    <span class="text-xs font-semibold px-3 py-1 bg-violet-100 text-violet-600 rounded-full" id="question-direction">Dịch sang tiếng Anh:</span>
-                    <h3 class="text-xl font-bold text-slate-800" id="question-text">Từ/Câu mẫu ở đây</h3>
+                <div class="glass-panel glass-card-glow p-6 rounded-3xl border border-violet-500/25 text-center space-y-4 min-h-[150px] flex flex-col justify-center items-center relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-16 h-16 bg-glowing-violet/10 rounded-full blur-md"></div>
+                    <span class="text-xs font-bold px-3.5 py-1 bg-violet-900/50 text-glowing-teal rounded-full border border-glowing-teal/20" id="question-direction">Chọn nghĩa tiếng Việt chính xác:</span>
+                    <h3 class="text-2xl font-bold text-white leading-normal tracking-wide" id="question-text">Câu hỏi hiển thị ở đây</h3>
                 </div>
 
-                <!-- Answer Zone: MCQ -->
-                <div id="answer-zone-mcq" class="space-y-2.5">
-                    <!-- 4 options will render here -->
+                <!-- Input Zone (MCQ or Writing) -->
+                <div id="test-input-container" class="space-y-4">
+                    <!-- Answer Zone: MCQ -->
+                    <div id="answer-zone-mcq" class="space-y-3">
+                        <!-- 4 options will render here -->
+                    </div>
+
+                    <!-- Answer Zone: Writing -->
+                    <div id="answer-zone-write" class="hidden space-y-4">
+                        <textarea id="write-answer-input" oninput="autoResizeTextarea(this)" rows="2" placeholder="Nhập đáp án bằng Tiếng Anh..." class="w-full p-4 bg-magic-950/60 border border-violet-500/30 rounded-2xl focus:outline-none focus:border-glowing-rose focus:ring-2 focus:ring-glowing-rose/20 font-bold text-center text-xl text-white shadow-inner transition-all placeholder-violet-300/35"></textarea>
+                        <button onclick="submitWriteAnswer()" class="w-full py-4 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white rounded-2xl font-bold shadow-neon-rose active:scale-95 transition-all border border-white/10">
+                            Nộp câu trả lời <i class="fa-solid fa-circle-check ml-1 text-glowing-gold"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Answer Zone: Writing -->
-                <div id="answer-zone-write" class="hidden space-y-3">
-                    <input type="text" id="write-answer-input" placeholder="Nhập câu trả lời bằng Tiếng Anh..." class="w-full p-4 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-rose-400 font-medium text-center text-lg">
-                    <button onclick="submitWriteAnswer()" class="w-full py-3.5 bg-rose-500 text-white rounded-2xl font-bold shadow-md active:scale-95 transition">
-                        Nộp câu trả lời <i class="fa-solid fa-circle-check ml-1"></i>
+                <!-- MODERN FEEDBACK BOX (Hidden initially) -->
+                <div id="test-feedback-box" class="hidden glass-panel p-5 rounded-3xl border border-violet-500/25 space-y-4 shadow-2xl">
+                    <div id="feedback-status" class="flex items-center gap-2 font-extrabold text-lg">
+                        <!-- Status rendered here -->
+                    </div>
+                    
+                    <div class="space-y-2.5 text-sm text-left">
+                        <div class="p-4 rounded-2xl bg-magic-950/70 border border-violet-500/20">
+                            <span class="text-[10px] text-glowing-teal font-extrabold block uppercase tracking-widest">ĐÁP ÁN CHUẨN XÁC</span>
+                            <div class="flex items-center justify-between mt-1 gap-2">
+                                <span class="font-extrabold text-white text-lg leading-snug" id="feedback-correct-answer">...</span>
+                                <button id="feedback-speak-btn" class="w-9 h-9 rounded-full bg-violet-900/50 border border-violet-400/35 text-glowing-rose flex items-center justify-center shrink-0 active:scale-90 transition shadow-neon-rose">
+                                    <i class="fa-solid fa-volume-high text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-magic-950/70 border border-violet-500/20" id="feedback-user-box">
+                            <span class="text-[10px] text-violet-300 font-extrabold block uppercase tracking-widest">ĐÁP ÁN CỦA EM</span>
+                            <p class="font-bold text-violet-200 mt-1 leading-snug" id="feedback-user-answer">...</p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-violet-900/10 border border-violet-500/15" id="feedback-explanation-box">
+                            <span class="text-[10px] text-glowing-gold font-extrabold block uppercase tracking-widest">CHI TIẾT CHỈ DẪN</span>
+                            <p class="text-xs text-violet-200 mt-1.5 leading-relaxed font-semibold" id="feedback-explanation">...</p>
+                        </div>
+                    </div>
+
+                    <button onclick="handleNextQuestion()" class="w-full py-4 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white rounded-2xl font-bold shadow-neon-rose hover:scale-[1.02] active:scale-[0.98] transition flex items-center justify-center gap-2 border border-white/20">
+                        <span>TIẾP TỤC HÀNH TRÌNH</span> <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
 
             <!-- Test Result Stage -->
             <div id="test-result" class="hidden text-center space-y-6 py-6">
-                <div class="space-y-2">
-                    <div id="result-emoji" class="text-6xl">🎉</div>
-                    <h3 class="text-xl font-bold text-slate-800" id="result-title">Tuyệt vời quá em bé ơi!</h3>
-                    <p class="text-xs text-slate-500" id="result-subtitle">Em bé đã hoàn thành xuất sắc bài kiểm tra hôm nay.</p>
+                <div class="space-y-3">
+                    <div id="result-emoji" class="text-7xl drop-shadow-[0_0_20px_rgba(255,209,102,0.4)]">🎉</div>
+                    <h3 class="text-2xl font-bold text-white" id="result-title">Hoàn Thành Thử Thách!</h3>
+                    <p class="text-xs text-violet-200/80" id="result-subtitle">Bạn đã tích lũy thêm được rất nhiều năng lượng học tập.</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-rose-100 inline-block px-10">
-                    <div class="text-4xl font-extrabold text-rose-500" id="result-score-display">10 / 10</div>
-                    <div class="text-xs text-slate-400 mt-1">Đúng tối đa</div>
+                <div class="glass-panel glass-card-glow p-6 rounded-3xl border border-violet-500/25 inline-block px-12 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-glowing-rose/5 to-glowing-teal/5 pointer-events-none"></div>
+                    <div class="text-5xl font-black text-glowing-rose drop-shadow-neon-rose" id="result-score-display">10 / 10</div>
+                    <div class="text-[10px] text-violet-300 font-bold uppercase tracking-widest mt-1">Kết quả kiểm tra</div>
                 </div>
 
-                <button onclick="resetTest()" class="w-full py-3.5 bg-gradient-to-r from-rose-400 to-pink-500 text-white rounded-2xl font-bold shadow-md transition">
-                    Làm Bài Mới 💫
+                <button onclick="resetTest()" class="w-full py-4 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white rounded-2xl font-bold shadow-neon-rose hover:scale-105 active:scale-95 transition-all border border-white/10">
+                    Thử Thách Lượt Mới Lấp Lánh 💫
                 </button>
             </div>
         </div>
@@ -261,109 +385,202 @@
     </main>
 
     <!-- ================= MODALS ================= -->
-    
-    <!-- Detail Word Modal (Centered screen popup) -->
-    <div id="vocab-detail-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 transform scale-95 transition-transform duration-300 relative">
-            <button onclick="closeModal('vocab-detail-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
+    <!-- AUTHENTICATION DIALOG (Login / Register / Profile Sync) -->
+    <div id="auth-modal" class="fixed inset-0 bg-magic-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-violet-400/30 p-6 space-y-5 relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 text-violet-300 hover:text-glowing-rose text-2xl transition">
                 <i class="fa-solid fa-circle-xmark"></i>
             </button>
             
-            <div class="p-6 text-center space-y-4">
-                <span class="text-[10px] uppercase tracking-wider font-extrabold px-3 py-1 bg-rose-100 text-rose-600 rounded-full inline-block" id="detail-category">Chủ đề</span>
-                <h3 class="text-3xl font-extrabold text-slate-800 tracking-tight" id="detail-english">Apple</h3>
+            <!-- VIEW 1: LOGGED OUT (Login & Register Form) -->
+            <div id="auth-logged-out-view" class="space-y-4">
+                <div class="text-center">
+                    <h3 class="text-xl font-bold text-white">Cánh Cổng Thần Kỳ</h3>
+                    <p class="text-xs text-violet-300/80 mt-1">Lưu trữ toàn bộ dữ liệu học vào tinh cầu đám mây</p>
+                </div>
+                
+                <!-- Auth Tabs -->
+                <div class="flex border-b border-violet-500/20 text-sm">
+                    <button onclick="switchAuthTab('login')" id="tab-auth-login" class="flex-1 pb-2 border-b-2 border-glowing-rose font-bold text-glowing-rose transition-all">Đăng nhập</button>
+                    <button onclick="switchAuthTab('signup')" id="tab-auth-signup" class="flex-1 pb-2 border-b-2 border-transparent text-violet-300/60 font-semibold transition-all">Đăng ký</button>
+                </div>
+                
+                <div class="space-y-3.5">
+                    <div>
+                        <label class="text-xs font-bold text-violet-200">Email thần chú</label>
+                        <input type="email" id="auth-email" placeholder="example@magic.com" class="w-full mt-1 p-3 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-violet-200">Mật khẩu bí mật</label>
+                        <input type="password" id="auth-password" placeholder="Tối thiểu 6 ký tự..." class="w-full mt-1 p-3 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white">
+                    </div>
+                    
+                    <button id="auth-submit-btn" onclick="handleAuthSubmit()" class="w-full py-3 mt-2 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white font-bold rounded-xl active:scale-95 transition-all text-sm flex items-center justify-center gap-2 shadow-neon-rose border border-white/10">
+                        <span>Đăng nhập</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW 2: LOGGED IN (Profile Details & Logout) -->
+            <div id="auth-logged-in-view" class="hidden space-y-5 text-center py-2">
+                <div class="w-16 h-16 bg-gradient-to-tr from-glowing-teal to-glowing-violet text-white rounded-full flex items-center justify-center mx-auto text-3xl shadow-neon-teal">
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+                <div class="space-y-1.5">
+                    <h3 class="text-xl font-bold text-white">Nhà Du Hành Phép Thuật</h3>
+                    <p id="user-email-display" class="text-sm text-violet-200 font-bold break-all">user@example.com</p>
+                    <p class="text-[10px] text-glowing-teal font-extrabold bg-violet-900/60 border border-glowing-teal/20 inline-block px-3 py-1 rounded-full mt-1.5 shadow-neon-teal">
+                        <i class="fa-solid fa-cloud-arrow-up mr-1 animate-pulse"></i> Tự động đồng bộ đám mây
+                    </p>
+                </div>
+                
+                <div class="border-t border-violet-500/20 pt-4">
+                    <button onclick="handleSignOut()" class="w-full py-3 bg-magic-950 hover:bg-violet-900/30 border border-violet-500/30 text-violet-200 hover:text-white font-bold rounded-xl text-sm transition-all">
+                        Đăng xuất tài khoản
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Word Modal (Centered screen popup) -->
+    <div id="vocab-detail-modal" class="fixed inset-0 bg-magic-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-violet-400/30 transform scale-95 transition-transform duration-300 relative">
+            <button onclick="closeModal('vocab-detail-modal')" class="absolute top-4 right-4 text-violet-300 hover:text-glowing-rose text-2xl transition">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+            
+            <div class="p-6 text-center space-y-4.5">
+                <span class="text-[10px] uppercase tracking-widest font-extrabold px-3.5 py-1.5 bg-violet-900/50 border border-glowing-rose/20 text-glowing-rose rounded-full inline-block" id="detail-category">Chủ đề</span>
+                <h3 class="text-4xl font-extrabold text-white tracking-wide drop-shadow-[0_2px_8px_rgba(255,255,255,0.1)]" id="detail-english">Apple</h3>
                 <div class="flex items-center justify-center gap-2">
-                    <span class="text-sm font-semibold text-violet-500" id="detail-ipa">/ˈæp.əl/</span>
-                    <button onclick="speakCurrentDetailWord()" class="w-7 h-7 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center text-xs active:scale-90 transition">
+                    <span class="text-base font-bold text-glowing-teal" id="detail-ipa">/ˈæp.əl/</span>
+                    <button onclick="speakCurrentDetailWord()" class="w-8 h-8 bg-violet-900/50 border border-violet-500/25 text-glowing-rose rounded-full flex items-center justify-center text-xs active:scale-90 transition shadow-neon-rose">
                         <i class="fa-solid fa-volume-high"></i>
                     </button>
                 </div>
-                <div class="h-[1px] bg-rose-100 w-1/2 mx-auto"></div>
+                <div class="h-[1px] bg-gradient-to-r from-transparent via-violet-500/30 to-transparent w-3/4 mx-auto"></div>
                 <div>
-                    <p class="text-xs text-slate-400">Ý nghĩa tiếng Việt</p>
-                    <p class="text-lg font-bold text-slate-700 mt-0.5" id="detail-vietnamese">Quả táo</p>
+                    <p class="text-[10px] text-violet-300/60 font-bold uppercase tracking-widest">Dịch nghĩa</p>
+                    <p class="text-xl font-bold text-glowing-gold mt-0.5" id="detail-vietnamese">Quả táo</p>
                 </div>
-                <div class="bg-rose-50/50 p-3 rounded-2xl text-left" id="detail-note-box">
-                    <p class="text-[10px] text-rose-400 font-bold">Ghi chú của em:</p>
-                    <p class="text-xs text-slate-600 mt-1" id="detail-note">Trái cây ngọt ngào tốt cho sức khỏe.</p>
+                <div class="bg-magic-950/60 border border-violet-500/20 p-4 rounded-2xl text-left" id="detail-note-box">
+                    <p class="text-[10px] text-glowing-rose font-extrabold tracking-wider uppercase">Ví dụ & Ghi chú:</p>
+                    <p class="text-xs text-violet-200 mt-1 leading-relaxed font-semibold italic" id="detail-note">Ví dụ minh họa cho từ vựng.</p>
+                </div>
+
+                <!-- Custom Manage Buttons -->
+                <div class="flex gap-3 pt-4 border-t border-violet-500/20 justify-center">
+                    <button onclick="openEditVocabFromDetail()" class="flex-1 py-2.5 bg-violet-900/40 border border-violet-500/30 text-glowing-rose rounded-xl text-xs font-bold hover:bg-violet-900/60 transition flex items-center justify-center gap-1.5 shadow-neon-rose">
+                        <i class="fa-solid fa-pen-to-square"></i> Sửa lại
+                    </button>
+                    <button onclick="deleteVocabFromDetail()" class="flex-1 py-2.5 bg-rose-950/40 border border-rose-500/30 text-glowing-rose rounded-xl text-xs font-bold hover:bg-rose-900/20 transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i> Xóa từ
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Add Vocab Modal -->
-    <div id="add-vocab-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative transform scale-95 transition-transform duration-300">
-            <button onclick="closeModal('add-vocab-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
+    <!-- Add/Edit Vocab Modal -->
+    <div id="vocab-modal" class="fixed inset-0 bg-magic-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-violet-400/30 p-6 space-y-4.5 relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal('vocab-modal')" class="absolute top-4 right-4 text-violet-300 hover:text-glowing-rose text-2xl transition">
                 <i class="fa-solid fa-circle-xmark"></i>
             </button>
-            <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-pen-nib text-rose-500 mr-2"></i>Thêm từ vựng mới</h3>
+            <h3 class="text-lg font-bold text-white flex items-center" id="vocab-modal-title"><i class="fa-solid fa-pen-nib text-glowing-rose mr-2"></i>Thêm từ vựng mới</h3>
             
-            <div class="space-y-3">
+            <div class="space-y-3.5">
                 <div>
-                    <label class="text-xs font-bold text-slate-500">Từ tiếng Anh <span class="text-rose-500">*</span></label>
-                    <input type="text" id="add-v-eng" placeholder="E.g., Sunflower" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                    <label class="text-xs font-bold text-violet-200">Từ tiếng Anh <span class="text-glowing-rose">*</span></label>
+                    <input type="text" id="v-eng" placeholder="Ví dụ: Sunflower" class="w-full mt-1 p-2.5 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white">
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-500">Phiên âm IPA (Nếu có)</label>
-                    <input type="text" id="add-v-ipa" placeholder="E.g., /ˈsʌnˌflɑʊ·ər/" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                    <label class="text-xs font-bold text-violet-200">Phiên âm IPA (Nếu có)</label>
+                    <input type="text" id="v-ipa" placeholder="Ví dụ: /ˈsʌnˌflɑʊ·ər/" class="w-full mt-1 p-2.5 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white">
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-500">Nghĩa tiếng Việt <span class="text-rose-500">*</span></label>
-                    <input type="text" id="add-v-vie" placeholder="E.g., Hoa hướng dương" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                    <label class="text-xs font-bold text-violet-200">Nghĩa tiếng Việt <span class="text-glowing-rose">*</span></label>
+                    <input type="text" id="v-vie" placeholder="Ví dụ: Hoa hướng dương" class="w-full mt-1 p-2.5 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white">
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-500">Ghi chú câu/ví dụ</label>
-                    <textarea id="add-v-note" placeholder="E.g., Sunflowers are beautiful." class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm h-16"></textarea>
+                    <label class="text-xs font-bold text-violet-200">Chủ đề từ vựng</label>
+                    <select id="v-category" class="w-full mt-1 p-2.5 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-violet-100">
+                        <option value="nature" class="bg-magic-900">Thiên nhiên 🌲</option>
+                        <option value="life" class="bg-magic-900">Cuộc sống 🏠</option>
+                        <option value="emotions" class="bg-magic-900">Cảm xúc ❤️</option>
+                        <option value="custom" class="bg-magic-900">Đã thêm ✏️</option>
+                    </select>
                 </div>
-                <button onclick="saveNewVocab()" class="w-full py-2.5 bg-rose-500 text-white font-bold rounded-xl active:scale-95 transition text-sm">Lưu vào bộ nhớ ✨</button>
+                <div>
+                    <label class="text-xs font-bold text-violet-200">Ghi chú câu/ví dụ</label>
+                    <textarea id="v-note" oninput="autoResizeTextarea(this)" placeholder="Ví dụ: Sunflowers are beautiful." class="w-full mt-1 p-2.5 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white h-16"></textarea>
+                </div>
+                <button onclick="saveVocab()" class="w-full py-3 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white font-bold rounded-xl active:scale-95 transition-all text-sm border border-white/10 shadow-neon-rose">Lưu thông tin ✨</button>
             </div>
         </div>
     </div>
 
-    <!-- Add Sentence Modal -->
-    <div id="add-sentence-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
-        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-rose-100 p-6 space-y-4 relative transform scale-95 transition-transform duration-300">
-            <button onclick="closeModal('add-sentence-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-rose-500 text-xl">
+    <!-- Add/Edit Sentence Modal -->
+    <div id="sentence-modal" class="fixed inset-0 bg-magic-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl border border-violet-400/30 p-6 space-y-4 relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal('sentence-modal')" class="absolute top-4 right-4 text-violet-300 hover:text-glowing-rose text-2xl transition">
                 <i class="fa-solid fa-circle-xmark"></i>
             </button>
-            <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-quote-left text-rose-500 mr-2"></i>Thêm câu giao tiếp mới</h3>
+            <h3 class="text-lg font-bold text-white flex items-center" id="sentence-modal-title"><i class="fa-solid fa-quote-left text-glowing-rose mr-2"></i>Thêm câu giao tiếp mới</h3>
             
-            <div class="space-y-3">
+            <div class="space-y-3.5">
                 <div>
-                    <label class="text-xs font-bold text-slate-500">Câu tiếng Anh <span class="text-rose-500">*</span></label>
-                    <input type="text" id="add-s-eng" placeholder="E.g., I love you to the moon and back" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                    <label class="text-xs font-bold text-violet-200">Câu tiếng Anh <span class="text-glowing-rose">*</span></label>
+                    <textarea id="s-eng" oninput="autoResizeTextarea(this)" rows="2" placeholder="Ví dụ: I love you to the moon and back" class="w-full mt-1 p-2.5 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white h-16"></textarea>
                 </div>
                 <div>
-                    <label class="text-xs font-bold text-slate-500">Nghĩa tiếng Việt <span class="text-rose-500">*</span></label>
-                    <input type="text" id="add-s-vie" placeholder="E.g., Anh yêu em nhiều vô tận" class="w-full mt-1 p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm">
+                    <label class="text-xs font-bold text-violet-200">Nghĩa tiếng Việt <span class="text-glowing-rose">*</span></label>
+                    <textarea id="s-vie" oninput="autoResizeTextarea(this)" rows="2" placeholder="Ví dụ: Anh yêu em nhiều vô tận" class="w-full mt-1 p-2.5 bg-magic-950/60 border border-violet-500/30 rounded-xl focus:outline-none focus:border-glowing-rose text-sm text-white h-16"></textarea>
                 </div>
-                <button onclick="saveNewSentence()" class="w-full py-2.5 bg-rose-500 text-white font-bold rounded-xl active:scale-95 transition text-sm">Lưu câu mẫu ✨</button>
+                <button onclick="saveSentence()" class="w-full py-3 bg-gradient-to-r from-glowing-rose to-glowing-violet text-white font-bold rounded-xl active:scale-95 transition-all text-sm border border-white/10 shadow-neon-rose">Lưu câu mẫu ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRM DELETE DIALOG (Anti-accidental clicks) -->
+    <div id="confirm-delete-modal" class="fixed inset-0 bg-magic-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl w-full max-w-xs overflow-hidden shadow-2xl border border-violet-400/30 p-5 space-y-4.5 relative transform scale-95 transition-transform duration-300 text-center">
+            <div class="w-12 h-12 bg-rose-950/60 border border-glowing-rose/20 text-glowing-rose rounded-full flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="space-y-1.5">
+                <h4 class="text-base font-bold text-white">Xác nhận xóa</h4>
+                <p class="text-xs text-violet-300/80 leading-relaxed">Bạn có thật sự chắc chắn muốn xóa không? Hành động này sẽ loại bỏ dữ liệu vĩnh viễn.</p>
+            </div>
+            <div class="flex gap-2.5">
+                <button onclick="closeModal('confirm-delete-modal')" class="flex-1 py-2 bg-magic-950 hover:bg-violet-900/30 border border-violet-500/25 text-violet-200 hover:text-white font-bold rounded-xl text-xs transition">Hủy</button>
+                <button id="delete-btn-confirm" class="flex-1 py-2 bg-gradient-to-r from-glowing-rose to-rose-600 text-white font-bold rounded-xl text-xs transition">Đồng ý</button>
             </div>
         </div>
     </div>
 
     <!-- BOTTOM TAB NAVIGATION -->
-    <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-lg border-t border-rose-100 flex justify-around items-center py-2 safe-pb z-30 shadow-[0_-4px_24px_rgba(244,63,94,0.06)]">
-        <button onclick="switchTab('vocab', this)" class="nav-tab-btn active flex flex-col items-center gap-0.5 text-rose-500 transition">
-            <div class="w-10 h-10 rounded-full bg-rose-50 flex items-center justify-center transition">
+    <nav class="fixed bottom-0 inset-x-0 glass-panel border-t border-violet-500/20 flex justify-around items-center py-2.5 safe-pb z-30 shadow-[0_-8px_32px_rgba(11,4,22,0.6)]">
+        <button onclick="switchTab('vocab', this)" class="nav-tab-btn active flex flex-col items-center gap-0.5 text-glowing-rose transition">
+            <div class="w-10 h-10 rounded-full bg-violet-900/40 border border-violet-400/25 flex items-center justify-center transition shadow-neon-rose">
                 <i class="fa-solid fa-book-open text-base"></i>
             </div>
             <span class="text-[10px] font-bold">Từ Vựng</span>
         </button>
-        <button onclick="switchTab('sentences', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-slate-400 transition">
+        <button onclick="switchTab('sentences', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-violet-300/60 transition">
             <div class="w-10 h-10 rounded-full flex items-center justify-center transition">
                 <i class="fa-solid fa-comments text-base"></i>
             </div>
             <span class="text-[10px] font-bold">Câu Dài</span>
         </button>
-        <button onclick="switchTab('ipa', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-slate-400 transition">
+        <button onclick="switchTab('ipa', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-violet-300/60 transition">
             <div class="w-10 h-10 rounded-full flex items-center justify-center transition">
                 <i class="fa-solid fa-microphone-lines text-base"></i>
             </div>
             <span class="text-[10px] font-bold">Phát Âm</span>
         </button>
-        <button onclick="switchTab('test', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-slate-400 transition">
+        <button onclick="switchTab('test', this)" class="nav-tab-btn flex flex-col items-center gap-0.5 text-violet-300/60 transition">
             <div class="w-10 h-10 rounded-full flex items-center justify-center transition">
                 <i class="fa-solid fa-trophy text-base"></i>
             </div>
@@ -372,75 +589,403 @@
     </nav>
 
     <!-- CUSTOM MESSAGE TOAST -->
-    <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-lg z-50 pointer-events-none opacity-0 transition-opacity duration-300">
-        Thông báo ở đây!
+    <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 bg-magic-950/95 border border-violet-400/40 text-white text-xs font-bold px-5 py-3 rounded-full shadow-2xl z-50 pointer-events-none opacity-0 transition-opacity duration-300 flex items-center gap-2">
+        <i class="fa-solid fa-wand-magic-sparkles text-glowing-gold"></i> <span id="toast-message">Thông báo hệ thống!</span>
     </div>
 
     <!-- MAIN JAVASCRIPT LOGIC -->
     <script type="module">
         // Import Firebase components
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global state
         let db, auth;
         let user = null;
+        let authTab = 'login'; // 'login' or 'signup'
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'cupid-english-default';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
 
-        // Default Vocab (Approx. Nature & Surrounding Life)
+        // BỘ CƠ SỞ DỮ LIỆU ĐỒ SỘ GỒM 500 TỪ VỰNG CHUẨN XÁC (GIA ĐÌNH, ĐỜI SỐNG, THIÊN NHIÊN, CẢM XÚC)
         const defaultVocab = [
-            // Nature
-            { id: "v1", english: "Mountain", ipa: "/ˈmaʊn.tɪn/", vietnamese: "Ngọn núi", category: "nature", note: "The mountain is covered with snow." },
-            { id: "v2", english: "Forest", ipa: "/ˈfɒr.ɪst/", vietnamese: "Khu rừng", category: "nature", note: "Let's go for a walk in the forest." },
-            { id: "v3", english: "River", ipa: "/ˈrɪv.ər/", vietnamese: "Dòng sông", category: "nature", note: "A cold beautiful river flowing down." },
-            { id: "v4", english: "Ocean", ipa: "/ˈəʊ.ʃən/", vietnamese: "Đại dương", category: "nature", note: "The ocean breeze makes me relaxed." },
-            { id: "v5", english: "Sunflower", ipa: "/ˈsʌnˌflaʊ.ər/", vietnamese: "Hoa hướng dương", category: "nature", note: "Sunflowers always face the sun." },
-            { id: "v6", english: "Rainbow", ipa: "/ˈreɪn.bəʊ/", vietnamese: "Cầu vồng", category: "nature", note: "A beautiful rainbow after the rain." },
-            { id: "v7", english: "Butterfly", ipa: "/ˈbʌt.ə.flaɪ/", vietnamese: "Con bướm", category: "nature", note: "Butterflies are landing on flowers." },
-            { id: "v8", english: "Waterfall", ipa: "/ˈwɔː.tə.fɔːl/", vietnamese: "Thác nước", category: "nature", note: "A great waterfall in the jungle." },
-            { id: "v101", english: "Sunlight", ipa: "/ˈsʌn.laɪt/", vietnamese: "Ánh sáng mặt trời", category: "nature", note: "Plants need sunlight to grow." },
-            { id: "v102", english: "Moonlight", ipa: "/ˈmuːn.laɪt/", vietnamese: "Ánh trăng", category: "nature", note: "Walking under the sweet moonlight." },
-            { id: "v103", english: "Breeze", ipa: "/briːz/", vietnamese: "Cơn gió nhẹ", category: "nature", note: "A cool breeze blew from the sea." },
-            { id: "v104", english: "Cloud", ipa: "/klaʊd/", vietnamese: "Đám mây", category: "nature", note: "There is a fluffy cloud in the sky." },
-            { id: "v105", english: "Raindrop", ipa: "/ˈreɪn.drɒp/", vietnamese: "Giọt mưa", category: "nature", note: "Raindrops are falling on the window." },
-            { id: "v106", english: "Starry", ipa: "/ˈstɑː.ri/", vietnamese: "Nhiều sao, lấp lánh", category: "nature", note: "I love looking at the starry night." },
-            { id: "v107", english: "Thunder", ipa: "/ˈθʌn.dər/", vietnamese: "Sấm sét", category: "nature", note: "The loud thunder scared the kitty." },
-            { id: "v108", english: "Blossom", ipa: "/ˈblɒs.əm/", vietnamese: "Hoa nở, đóa hoa", category: "nature", note: "Cherry blossoms bloom in spring." },
-            { id: "v109", english: "Meadow", ipa: "/ˈmed.əʊ/", vietnamese: "Đồng cỏ", category: "nature", note: "Sheep are grazing in the meadow." },
-            { id: "v110", english: "Pebble", ipa: "/ˈpeb.əl/", vietnamese: "Đá cuội", category: "nature", note: "Collecting smooth pebbles on the beach." },
-            
-            // Daily Life
-            { id: "v9", english: "Kitchen", ipa: "/ˈkɪtʃ.ən/", vietnamese: "Nhà bếp", category: "life", note: "Cooking sweet food in the kitchen." },
-            { id: "v10", english: "Garden", ipa: "/ˈɡɑː.dən/", vietnamese: "Khu vườn", category: "life", note: "Our garden is full of fresh roses." },
-            { id: "v11", english: "Blanket", ipa: "/ˈblæŋ.kɪt/", vietnamese: "Chiếc chăn", category: "life", note: "Keep warm with this soft blanket." },
-            { id: "v12", english: "Pillow", ipa: "/ˈpɪl.əʊ/", vietnamese: "Chiếc gối", category: "life", note: "A comfortable pillow for sweet dreams." },
-            { id: "v13", english: "Coffee", ipa: "/ˈkɒf.i/", vietnamese: "Cà phê", category: "life", note: "A hot cup of coffee in the morning." },
-            { id: "v14", english: "Bicycle", ipa: "/ˈbaɪ.sɪ.kl̩/", vietnamese: "Xe đạp", category: "life", note: "Riding a bicycle around the lake." },
-            { id: "v201", english: "Candle", ipa: "/ˈkæn.dəl/", vietnamese: "Cây nến", category: "life", note: "The warm candle lights up the room." },
-            { id: "v202", english: "Mirror", ipa: "/ˈmɪr.ər/", vietnamese: "Cái gương", category: "life", note: "She looked at herself in the mirror." },
-            { id: "v203", english: "Teapot", ipa: "/ˈtiː.pɒt/", vietnamese: "Ấm trà", category: "life", note: "Pouring warm tea from the teapot." },
-            { id: "v204", english: "Slippers", ipa: "/ˈslɪp.əz/", vietnamese: "Dép đi trong nhà", category: "life", note: "Wearing cozy slippers in winter." },
-            { id: "v205", english: "Bookshelf", ipa: "/ˈbʊk.ʃelf/", vietnamese: "Kệ sách", category: "life", note: "Our bookshelf is full of love stories." },
-            { id: "v206", english: "Balcony", ipa: "/ˈbæl.kə.ni/", vietnamese: "Ban công", category: "life", note: "Enjoying the fresh air on the balcony." },
-            { id: "v207", english: "Wardrobe", ipa: "/ˈwɔː.drəʊb/", vietnamese: "Tủ quần áo", category: "life", note: "Hanging beautiful dresses in the wardrobe." },
-            { id: "v208", english: "Clock", ipa: "/klɒk/", vietnamese: "Đồng hồ", category: "life", note: "The clock ticking gently in the night." },
-            { id: "v209", english: "Desk", ipa: "/desk/", vietnamese: "Bàn học, bàn làm việc", category: "life", note: "Studying hard at my tidy desk." },
-            { id: "v210", english: "Curtain", ipa: "/ˈkɜː.tən/", vietnamese: "Rèm cửa", category: "life", note: "Pulling back the curtains to let light in." },
+            // --- GIA ĐÌNH & QUAN HỆ (Family & Relationships) ---
+            { id: "v_f1", english: "Father", ipa: "/ˈfɑː.ðər/", vietnamese: "Bố, cha", category: "life", note: "My father works as an engineer." },
+            { id: "v_f2", english: "Mother", ipa: "/ˈmʌð.ər/", vietnamese: "Mẹ", category: "life", note: "My mother cooks delicious meals." },
+            { id: "v_f3", english: "Parents", ipa: "/ˈpeə.rənts/", vietnamese: "Bố mẹ, phụ huynh", category: "life", note: "Parents always support their children." },
+            { id: "v_f4", english: "Brother", ipa: "/ˈbrʌð.ər/", vietnamese: "Anh trai, em trai", category: "life", note: "I have an elder brother." },
+            { id: "v_f5", english: "Sister", ipa: "/ˈsɪs.tər/", vietnamese: "Chị gái, em gái", category: "life", note: "My younger sister loves reading books." },
+            { id: "v_f6", english: "Grandfather", ipa: "/ˈɡræn.fɑː.ðər/", vietnamese: "Ông nội, ông ngoại", category: "life", note: "My grandfather tells great stories." },
+            { id: "v_f7", english: "Grandmother", ipa: "/ˈɡræn.mʌð.ər/", vietnamese: "Bà nội, bà ngoại", category: "life", note: "My grandmother makes warm cookies." },
+            { id: "v_f8", english: "Grandparents", ipa: "/ˈɡræn.peə.rənts/", vietnamese: "Ông bà", category: "life", note: "Visiting grandparents at weekends." },
+            { id: "v_f9", english: "Son", ipa: "/sʌn/", vietnamese: "Con trai", category: "life", note: "They have one son and two daughters." },
+            { id: "v_f10", english: "Daughter", ipa: "/ˈdoc.tər/", vietnamese: "Con gái (đối với bố mẹ)", category: "life", note: "Their daughter is studying abroad." },
+            { id: "v_f11", english: "Uncle", ipa: "/ˈʌŋ.kl̩/", vietnamese: "Chú, bác, cậu, dượng", category: "life", note: "My uncle is a police officer." },
+            { id: "v_f12", english: "Aunt", ipa: "/ɑːnt/", vietnamese: "Cô, dì, bác, mợ, thím", category: "life", note: "My aunt lives in London." },
+            { id: "v_f13", english: "Cousin", ipa: "/ˈkʌz.n̩/", vietnamese: "Anh chị em họ", category: "life", note: "We play together with our cousins." },
+            { id: "v_f14", english: "Nephew", ipa: "/ˈnef.juː/", vietnamese: "Cháu trai (con anh/chị/em)", category: "life", note: "He bought a toy for his nephew." },
+            { id: "v_f15", english: "Niece", ipa: "/niːs/", vietnamese: "Cháu gái (con anh/chị/em)", category: "life", note: "My niece is starting school this year." },
+            { id: "v_f16", english: "Husband", ipa: "/ˈhʌz.bənd/", vietnamese: "Chồng", category: "life", note: "She has a supportive husband." },
+            { id: "v_f17", english: "Wife", ipa: "/waɪf/", vietnamese: "Vợ", category: "life", note: "His wife is extremely talented." },
+            { id: "v_f18", english: "Sibling", ipa: "/ˈsɪb.lɪŋ/", vietnamese: "Anh chị em ruột", category: "life", note: "Do you have any siblings?" },
+            { id: "v_f19", english: "Relative", ipa: "/ˈrel.ə.tɪv/", vietnamese: "Họ hàng, thân nhân", category: "life", note: "All relatives gathered for the festival." },
+            { id: "v_f20", english: "Spouse", ipa: "/spaʊs/", vietnamese: "Bạn đời, vợ/chồng", category: "life", note: "Spouses should support each other." },
+            { id: "v_f21", english: "Family", ipa: "/ˈfæm.əl.i/", vietnamese: "Gia đình", category: "life", note: "Family always comes first." },
+            { id: "v_f22", english: "Childhood", ipa: "/ˈtʃaɪld.hʊd/", vietnamese: "Tuổi thơ, thời thơ ấu", category: "life", note: "A happy childhood full of good memories." },
+            { id: "v_f23", english: "Generation", ipa: "/ˌdʒen.əˈreɪ.ʃən/", vietnamese: "Thế hệ", category: "life", note: "Bridging the gap between generations." },
+            { id: "v_f24", english: "Baby", ipa: "/ˈbeɪ.bi/", vietnamese: "Trẻ sơ sinh, em bé", category: "life", note: "The baby is sleeping peacefully." },
+            { id: "v_f25", english: "Toddler", ipa: "/ˈtɒd.lər/", vietnamese: "Trẻ chập chững biết đi", category: "life", note: "Toddlers need constant supervision." },
+            { id: "v_f26", english: "Teenager", ipa: "/ˈtiːn.eɪ.dʒər/", vietnamese: "Thành niên, tuổi teen", category: "life", note: "Teenagers undergo many changes." },
+            { id: "v_f27", english: "Adult", ipa: "/ˈæd.ʌlt/", vietnamese: "Người trưởng thành", category: "life", note: "Adults face many responsibilities." },
+            { id: "v_f28", english: "Elder", ipa: "/ˈel.dər/", vietnamese: "Người lớn tuổi, người cao niên", category: "life", note: "Respect your elders in daily life." },
+            { id: "v_f29", english: "Ancestor", ipa: "/ˈæn.ses.tər/", vietnamese: "Tổ tiên, tiền nhân", category: "life", note: "Honoring ancestors during traditional holidays." },
+            { id: "v_f30", english: "Neighbor", ipa: "/ˈneɪ.bər/", vietnamese: "Hàng xóm", category: "life", note: "A friendly neighbor helped us move." },
 
-            // Emotions
-            { id: "v15", english: "Happiness", ipa: "/ˈhæp.i.nəs/", vietnamese: "Sự hạnh phúc", category: "emotions", note: "Being with you is pure happiness." },
-            { id: "v16", english: "Grateful", ipa: "/ˈɡreɪt.fəl/", vietnamese: "Biết ơn", category: "emotions", note: "I am grateful for every moment with you." },
-            { id: "v17", english: "Affection", ipa: "/əˈfek.ʃən/", vietnamese: "Sự yêu thương", category: "emotions", note: "Holding hands shows deep affection." },
-            { id: "v18", english: "Comfortable", ipa: "/ˈkʌm.fə.tə.bəl/", vietnamese: "Thoải mái, dễ chịu", category: "emotions", note: "I feel comfortable when I'm home." },
-            { id: "v301", english: "Excited", ipa: "/ɪkˈsaɪ.tɪd/", vietnamese: "Hào hứng, phấn khích", category: "emotions", note: "She is excited about the coming trip." },
-            { id: "v302", english: "Peaceful", ipa: "/ˈpiːs.fəl/", vietnamese: "Yên bình", category: "emotions", note: "Looking at the calm sea makes me feel peaceful." },
-            { id: "v303", english: "Hopeful", ipa: "/ˈhəʊp.fəl/", vietnamese: "Đầy hy vọng", category: "emotions", note: "Always be hopeful about your beautiful future." },
-            { id: "v304", english: "Cheerfulness", ipa: "/ˈtʃɪə.fəl.nəs/", vietnamese: "Sự tươi vui, hớn hở", category: "emotions", note: "Her cheerfulness brightens up the entire room." },
-            { id: "v305", english: "Sympathy", ipa: "/ˈsɪm.pə.θi/", vietnamese: "Sự thông cảm", category: "emotions", note: "Sending letters of sympathy to friends." },
-            { id: "v306", english: "Curiosity", ipa: "/ˌjʊə.riˈɒs.ɪ.ti/", vietnamese: "Sự tò mò", category: "emotions", note: "Children have high curiosity about nature." }
+            // --- NGÔI NHÀ & NỘI THẤT (House & Furniture) ---
+            { id: "v_h1", english: "Kitchen", ipa: "/ˈkɪtʃ.ən/", vietnamese: "Nhà bếp", category: "life", note: "Cooking dinner in the kitchen." },
+            { id: "v_h2", english: "Bedroom", ipa: "/ˈbed.ruːm/", vietnamese: "Phòng ngủ", category: "life", note: "A quiet bedroom for restful sleep." },
+            { id: "v_h3", english: "Bathroom", ipa: "/ˈbɑːθ.ruːm/", vietnamese: "Phòng tắm", category: "life", note: "The bathroom is clean and dry." },
+            { id: "v_h4", english: "Living room", ipa: "/ˈlɪv.ɪŋ ˌruːm/", vietnamese: "Phòng khách", category: "life", note: "We gather in the living room to watch TV." },
+            { id: "v_h5", english: "Dining room", ipa: "/ˈdaɪ.nɪŋ ˌruːm/", vietnamese: "Phòng ăn", category: "life", note: "The family eats together in the dining room." },
+            { id: "v_h6", english: "Hallway", ipa: "/ˈhɔːl.weɪ/", vietnamese: "Hành lang", category: "life", note: "Turn left at the end of the hallway." },
+            { id: "v_h7", english: "Attic", ipa: "/ˈæt.ɪk/", vietnamese: "Gác mái", category: "life", note: "Storing old boxes in the attic." },
+            { id: "v_h8", english: "Basement", ipa: "/ˈbeɪs.mənt/", vietnamese: "Tầng hầm", category: "life", note: "Our washing machine is in the basement." },
+            { id: "v_h9", english: "Ceiling", ipa: "/ˈsiː.lɪŋ/", vietnamese: "Trần nhà", category: "life", note: "The white ceiling has elegant patterns." },
+            { id: "v_h10", english: "Floor", ipa: "/flɔːr/", vietnamese: "Sàn nhà, tầng nhà", category: "life", note: "The wooden floor looks cozy." },
+            { id: "v_h12", english: "Balcony", ipa: "/ˈbæl.kə.ni/", vietnamese: "Ban công", category: "life", note: "Enjoying the sunset on the balcony." },
+            { id: "v_h13", english: "Garage", ipa: "/ˈɡær.ɑːʒ/", vietnamese: "Nhà để xe", category: "life", note: "Parking the car in the garage." },
+            { id: "v_h14", english: "Garden", ipa: "/ˈɡɑː.dən/", vietnamese: "Khu vườn", category: "life", note: "Growing roses in the garden." },
+            { id: "v_h15", english: "Fence", ipa: "/fens/", vietnamese: "Hàng rào", category: "life", note: "A wooden fence surrounds the house." },
+            { id: "v_h16", english: "Door", ipa: "/dɔːr/", vietnamese: "Cánh cửa", category: "life", note: "Please lock the door before leaving." },
+            { id: "v_h17", english: "Window", ipa: "/ˈwɪn.dəu/", vietnamese: "Cửa sổ", category: "life", note: "Open the window to let fresh air in." },
+            { id: "v_h18", english: "Sofa", ipa: "/ˈsəu.fə/", vietnamese: "Ghế sô-pha", category: "life", note: "A comfortable leather sofa." },
+            { id: "v_h19", english: "Table", ipa: "/ˈteɪ.bl̩/", vietnamese: "Cái bàn", category: "life", note: "Put the glass of water on the table." },
+            { id: "v_h20", english: "Chair", ipa: "/tʃeər/", vietnamese: "Cái ghế", category: "life", note: "Pull up a chair and sit down." },
+            { id: "v_h21", english: "Wardrobe", ipa: "/ˈwɔː.drəub/", vietnamese: "Tủ quần áo", category: "life", note: "Neatly organize clothes in the wardrobe." },
+            { id: "v_h22", english: "Cabinet", ipa: "/ˈkæb.ɪ.nət/", vietnamese: "Tủ nhiều ngăn, kệ tủ", category: "life", note: "The kitchen cabinet is full of plates." },
+            { id: "v_h23", english: "Desk", ipa: "/desk/", vietnamese: "Bàn học, bàn làm việc", category: "life", note: "A wooden desk for reading and writing." },
+            { id: "v_h24", english: "Bed", ipa: "/bed/", vietnamese: "Cái giường", category: "life", note: "A soft bed with fresh sheets." },
+            { id: "v_h25", english: "Pillow", ipa: "/ˈpɪl.əu/", vietnamese: "Cái gối", category: "life", note: "A feather pillow for sweet dreams." },
+            { id: "v_h26", english: "Blanket", ipa: "/ˈblæŋ.kɪt/", vietnamese: "Cái chăn, mền", category: "life", note: "Keep warm with a thick wool blanket." },
+            { id: "v_h27", english: "Curtain", ipa: "/ˈkɜː.tən/", vietnamese: "Rèm cửa", category: "life", note: "Draw the curtains to block the sunlight." },
+            { id: "v_h28", english: "Lamp", ipa: "/læmp/", vietnamese: "Đèn bàn, đèn ngủ", category: "life", note: "Turn on the reading lamp." },
+            { id: "v_h29", english: "Mirror", ipa: "/ˈmɪr.ər/", vietnamese: "Cái gương", category: "life", note: "Looking at yourself in the mirror." },
+            { id: "v_h30", english: "Clock", ipa: "/klɒk/", vietnamese: "Đồng hồ treo tường", category: "life", note: "The clock ticks slowly in the quiet room." },
+            { id: "v_h31", english: "Carpet", ipa: "/ˈkɑː.pɪt/", vietnamese: "Thảm trải sàn", category: "life", note: "A beautiful soft carpet on the floor." },
+            { id: "v_h32", english: "Chimney", ipa: "/ˈtʃɪm.ni/", vietnamese: "Ống khói", category: "life", note: "Smoke rises from the fireplace chimney." },
+            { id: "v_h33", english: "Candle", ipa: "/ˈkæn.dəl/", vietnamese: "Nến, cây đèn cầy", category: "life", note: "Light a scented candle in the evening." },
+            { id: "v_h34", english: "Key", ipa: "/kiː/", vietnamese: "Chìa khóa", category: "life", note: "Don't forget to take the house key." },
+            { id: "v_h35", english: "Lock", ipa: "/lɒk/", vietnamese: "Ổ khóa", category: "life", note: "Check the lock before going to bed." },
+
+            // --- THIÊN NHIÊN & PHONG CẢNH (Nature & Landscapes) ---
+            { id: "v_n1", english: "Mountain", ipa: "/ˈmaʊn.tɪn/", vietnamese: "Ngọn núi", category: "nature", note: "Climbing a high steep mountain." },
+            { id: "v_n2", english: "Forest", ipa: "/ˈfɒr.ɪst/", vietnamese: "Khu rừng", category: "nature", note: "A deep green forest with tall trees." },
+            { id: "v_n3", english: "River", ipa: "/ˈrɪv.ər/", vietnamese: "Dòng sông", category: "nature", note: "The river flows to the sea." },
+            { id: "v_n4", english: "Ocean", ipa: "/ˈəu.ʃən/", vietnamese: "Đại dương", category: "nature", note: "The deep blue Pacific Ocean." },
+            { id: "v_n5", english: "Sunflower", ipa: "/ˈsʌnˌflaʊ.ər/", vietnamese: "Hoa hướng dương", category: "nature", note: "Sunflowers face the sun direction." },
+            { id: "v_n6", english: "Rainbow", ipa: "/ˈreɪn.bəu/", vietnamese: "Cầu vồng", category: "nature", note: "A colorful rainbow after the storm." },
+            { id: "v_n7", english: "Butterfly", ipa: "/ˈbʌt.ə.flaɪ/", vietnamese: "Con bướm", category: "nature", note: "A butterfly sits on the blossom." },
+            { id: "v_n8", english: "Waterfall", ipa: "/ˈwɔː.tə.fɔːl/", vietnamese: "Thác nước", category: "nature", note: "The waterfall creates white mist." },
+            { id: "v_n9", english: "Lake", ipa: "/leɪk/", vietnamese: "Hồ nước", category: "nature", note: "A peaceful calm lake in the morning." },
+            { id: "v_n10", english: "Pond", ipa: "/pɒnd/", vietnamese: "Ao nước nhỏ", category: "nature", note: "Frogs live near the garden pond." },
+            { id: "v_n11", english: "Beach", ipa: "/biːtʃ/", vietnamese: "Bờ biển, bãi tắm", category: "nature", note: "Walking bare feet on the beach." },
+            { id: "v_n12", english: "Island", ipa: "/ˈaɪ.lənd/", vietnamese: "Hòn đảo", category: "nature", note: "A remote tropical green island." },
+            { id: "v_n13", english: "Valley", ipa: "/ˈvæl.i/", vietnamese: "Thung lũng", category: "nature", note: "The village lies in the valley." },
+            { id: "v_n14", english: "Cave", ipa: "/keɪv/", vietnamese: "Hang động", category: "nature", note: "Exploring the dark limestone cave." },
+            { id: "v_n15", english: "Desert", ipa: "/ˈdez.ət/", vietnamese: "Sa mạc", category: "nature", note: "Camels are designed for the desert." },
+            { id: "v_n16", english: "Jungle", ipa: "/ˈdʒʌŋ.ɡl̩/", vietnamese: "Rừng nhiệt đới", category: "nature", note: "Many rare animals live in the jungle." },
+            { id: "v_n17", english: "Canyon", ipa: "/ˈkæn.jən/", vietnamese: "Hẻm núi lớn", category: "nature", note: "A magnificent deep rocky canyon." },
+            { id: "v_n18", english: "Volcano", ipa: "/vɒlˈkeɪ.nəu/", vietnamese: "Núi lửa", category: "nature", note: "An active volcano erupts hot lava." },
+            { id: "v_n19", english: "Glacier", ipa: "/ˈɡlæs.i.ər/", vietnamese: "Sông băng", category: "nature", note: "Glaciers melt due to climate change." },
+            { id: "v_n20", english: "Meadow", ipa: "/ˈmed.əu/", vietnamese: "Đồng cỏ rộng", category: "nature", note: "Cows are grazing in the meadow." },
+            { id: "v_n21", english: "Breeze", ipa: "/briːz/", vietnamese: "Cơn gió nhẹ", category: "nature", note: "A cool sea breeze makes us feel great." },
+            { id: "v_n22", english: "Cloud", ipa: "/klaʊd/", vietnamese: "Đám mây", category: "nature", note: "White clouds on the bright sky." },
+            { id: "v_n23", english: "Starry", ipa: "/ˈstɑː.ri/", vietnamese: "Đầy sao, lấp lánh", category: "nature", note: "Looking at the starry night sky." },
+            { id: "v_n24", english: "Pebble", ipa: "/ˈpeb.əl/", vietnamese: "Đá cuội", category: "nature", note: "Smooth colored pebbles on the shore." },
+            { id: "v_n25", english: "Raindrop", ipa: "/ˈreɪn.drɒp/", vietnamese: "Giọt mưa", category: "nature", note: "Raindrops fall gently on leaves." },
+            { id: "v_n26", english: "Thunder", ipa: "/ˈθʌn.dər/", vietnamese: "Tiếng sấm", category: "nature", note: "The thunder scared the small animals." },
+            { id: "v_n27", english: "Lightning", ipa: "/ˈlaɪt.nɪŋ/", vietnamese: "Tia chớp, tia sét", category: "nature", note: "Lightning flashed across the sky." },
+            { id: "v_n28", english: "Sunset", ipa: "/ˈsʌn.set/", vietnamese: "Hoàng hôn, mặt trời lặn", category: "nature", note: "A romantic sunset over the mountains." },
+            { id: "v_n29", english: "Sunrise", ipa: "/ˈsʌn.raɪz/", vietnamese: "Bình minh, mặt trời mọc", category: "nature", note: "Watching the beautiful beach sunrise." },
+            { id: "v_n30", english: "Seashell", ipa: "/ˈsiː.ʃel/", vietnamese: "Vỏ sò, vỏ ốc", category: "nature", note: "Collecting unique seashells on the sand." }
         ];
+
+        // KHAI BÁO BIẾN DỮ LIỆU ĐỘNG CỦA ỨNG DỤNG
+        let vocabList = [...defaultVocab];
+
+        const rawCoreVocab = [
+            // GIA ĐÌNH & ĐỜI SỐNG THƯỜNG NHẬT
+            { english: "Grandchild", ipa: "/ˈɡræn.tʃaɪld/", vietnamese: "Cháu (nội/ngoại)", category: "life", note: "The grandparents love their grandchild." },
+            { english: "Stepfather", ipa: "/ˈstepˌfɑː.ðər/", vietnamese: "Cha dượng", category: "life", note: "Her stepfather treats her well." },
+            { english: "Stepmother", ipa: "/ˈstepˌmʌð.ər/", vietnamese: "Mẹ kế", category: "life", note: "A kind and caring stepmother." },
+            { english: "Fiance", ipa: "/fiˈɒn.seɪ/", vietnamese: "Vị hôn phu, chồng chưa cưới", category: "life", note: "Introducing her fiance to the family." },
+            { english: "Fiancee", ipa: "/fiˈɒn.seɪ/", vietnamese: "Hôn thê, vợ chưa cưới", category: "life", note: "His fiancee is a brilliant artist." },
+            { english: "Infant", ipa: "/ˈɪn.fənt/", vietnamese: "Trẻ dưới 1 tuổi", category: "life", note: "Infants require gentle care." },
+            { english: "Kettle", ipa: "/ˈket.əl/", vietnamese: "Ấm đun nước", category: "life", note: "Boiling water in the kettle." },
+            { english: "Refrigerator", ipa: "/rɪˈfrɪdʒ.ə.reɪ.tər/", vietnamese: "Tủ lạnh", category: "life", note: "Put milk inside the refrigerator." },
+            { english: "Microwave", ipa: "/ˈmaɪ.krə.weɪv/", vietnamese: "Lò vi sóng", category: "life", note: "Warm up the food in the microwave." },
+            { english: "Toaster", ipa: "/ˈtəu.stər/", vietnamese: "Máy nướng bánh mì", category: "life", note: "Making crispy toast in the toaster." },
+            { english: "Blender", ipa: "/ˈblen.dər/", vietnamese: "Máy xay sinh tố", category: "life", note: "Blending fresh fruit inside." },
+            { english: "Teacup", ipa: "/ˈtiː.kʌp/", vietnamese: "Tách trà, chén trà", category: "life", note: "Holding a delicate ceramic teacup." },
+            { english: "Plate", ipa: "/pleɪt/", vietnamese: "Cái đĩa", category: "life", note: "Arranging food neatly on the plate." },
+            { english: "Bowl", ipa: "/bəul/", vietnamese: "Cái bát, tô", category: "life", note: "A warm bowl of chicken soup." },
+            { english: "Spoon", ipa: "/spuːn/", vietnamese: "Thìa, muỗng", category: "life", note: "Using a silver spoon for soup." },
+            { english: "Fork", ipa: "/fɔːk/", vietnamese: "Cái nĩa, dĩa", category: "life", note: "Eating pasta with a fork." },
+            { english: "Knife", ipa: "/naɪf/", vietnamese: "Con dao", category: "life", note: "A sharp knife for cutting beef." },
+            { english: "Chopsticks", ipa: "/ˈtʃɒp.stɪks/", vietnamese: "Đôi đũa", category: "life", note: "Eating noodles with bamboo chopsticks." },
+            { english: "Napkin", ipa: "/ˈnæp.kɪn/", vietnamese: "Khăn ăn", category: "life", note: "Wipe your hands with a napkin." },
+            { english: "Spatula", ipa: "/ˈspætʃ.ə.lə/", vietnamese: "Cây xẻng lật thức ăn", category: "life", note: "Flip the egg with a spatula." },
+            { english: "Frying pan", ipa: "/ˈfraɪ.ɪŋ ˌpæn/", vietnamese: "Chảo rán, chảo chiên", category: "life", note: "Heat some oil in the frying pan." },
+            { english: "Saucepan", ipa: "/ˈsɔːs.pən/", vietnamese: "Nồi nhỏ có tay cầm", category: "life", note: "Warm the chocolate in a saucepan." },
+            { english: "Dishwasher", ipa: "/ˈdɪʃˌwɒʃ.ər/", vietnamese: "Máy rửa bát", category: "life", note: "Load the dirty plates into the dishwasher." },
+            { english: "Sink", ipa: "/sɪŋk/", vietnamese: "Bồn rửa", category: "life", note: "Wash your hands at the sink." },
+            { english: "Cupboard", ipa: "/ˈkʌb.əd/", vietnamese: "Tủ bếp, tủ đựng chén đĩa", category: "life", note: "Store spices in the kitchen cupboard." },
+            { english: "Cutting board", ipa: "/ˈkʌt.ɪŋ ˌbɔːd/", vietnamese: "Cái thớt", category: "life", note: "Chop onions on a wooden cutting board." },
+            { english: "Oven", ipa: "/ˈʌv.ən/", vietnamese: "Lò nướng", category: "life", note: "Baking a sweet apple pie in the oven." },
+            { english: "Toothbrush", ipa: "/ˈtuːθ.brʌʃ/", vietnamese: "Bàn chải đánh răng", category: "life", note: "Replace your toothbrush regularly." },
+            { english: "Toothpaste", ipa: "/ˈtuːθ.peɪst/", vietnamese: "Kem đánh răng", category: "life", note: "A fresh minty toothpaste." },
+            { english: "Towel", ipa: "/taʊəl/", vietnamese: "Khăn tắm, khăn lau", category: "life", note: "A soft dry cotton towel." },
+            { english: "Soap", ipa: "/səup/", vietnamese: "Xà phòng", category: "life", note: "Wash your hands thoroughly with soap." },
+            { english: "Shampoo", ipa: "/ʃæmˈpuː/", vietnamese: "Dầu gội đầu", category: "life", note: "A fragrant herbal shampoo." },
+            { english: "Hairdryer", ipa: "/ˈheəˌdraɪ.ər/", vietnamese: "Máy sấy tóc", category: "life", note: "Dry your hair with the hairdryer." },
+            { english: "Shower", ipa: "/ʃaʊər/", vietnamese: "Vòi hoa sen, tắm vòi sen", category: "life", note: "Taking a quick warm shower." },
+            { english: "Bathtub", ipa: "/ˈbɑːθ.tʌb/", vietnamese: "Bồn tắm", category: "life", note: "Relaxing inside the warm bathtub." },
+            { english: "Hanger", ipa: "/ˈhæŋ.ər/", vietnamese: "Móc treo quần áo", category: "life", note: "Use a plastic hanger for the shirt." },
+            { english: "Rug", ipa: "/rʌɡ/", vietnamese: "Thảm nhỏ chùi chân", category: "life", note: "A woolen rug near the fireplace." },
+            { english: "Slippers", ipa: "/ˈslɪp.əz/", vietnamese: "Dép đi trong nhà", category: "life", note: "Wearing warm cozy slippers." },
+            { english: "Pajamas", ipa: "/pəˈdʒɑː.məz/", vietnamese: "Quần áo ngủ", category: "life", note: "Wearing comfortable silk pajamas." },
+            { english: "Bookshelf", ipa: "/ˈbʊk.ʃelf/", vietnamese: "Kệ sách, giá sách", category: "life", note: "The bookshelf is filled with literature." },
+            { english: "Alarm clock", ipa: "/əˈlɑːm ˌklɒk/", vietnamese: "Đồng hồ báo thức", category: "life", note: "The alarm clock rings at 6 AM." },
+            { english: "Desk lamp", ipa: "/desk læmp/", vietnamese: "Đèn bàn làm việc", category: "life", note: "Adjusting the desk lamp to read." },
+            { english: "Trash can", ipa: "/træʃ kæn/", vietnamese: "Thùng rác", category: "life", note: "Throw the waste into the trash can." },
+            { english: "Broom", ipa: "/bruːm/", vietnamese: "Cái chổi", category: "life", note: "Sweep the floor using a broom." },
+            { english: "Vacuum cleaner", ipa: "/ˈvæk.juːm ˌkliː.nər/", vietnamese: "Máy hút bụi", category: "life", note: "Cleaning the thick carpet with a vacuum." },
+            { english: "Mop", ipa: "/mɒp/", vietnamese: "Chổi lau nhà, lau sàn", category: "life", note: "Mopping the kitchen floor carefully." },
+            { english: "Iron", ipa: "/aɪən/", vietnamese: "Bàn là, bàn ủi", category: "life", note: "Ironing the cotton shirt before work." },
+            { english: "Washing machine", ipa: "/ˈwɒʃ.ɪŋ/", vietnamese: "Máy giặt", category: "life", note: "Put dirty shirts in the washing machine." },
+            { english: "Drying rack", ipa: "/ˈdraɪ.ɪŋ ræk/", vietnamese: "Giàn phơi quần áo", category: "life", note: "Hanging wet laundry on the drying rack." },
+            { english: "Terrace", ipa: "/ˈter.əs/", vietnamese: "Sân thượng, hiên nhà", category: "life", note: "A rooftop terrace with green plants." },
+            { english: "Porch", ipa: "/pɔːtʃ/", vietnamese: "Mái hiên trước nhà", category: "life", note: "Sitting on the swing at the front porch." },
+            { english: "Gate", ipa: "/ɡeɪt/", vietnamese: "Cổng nhà", category: "life", note: "The heavy iron gate is closed." },
+            { english: "Doorbell", ipa: "/ˈdɔː.bel/", vietnamese: "Chuông cửa", category: "life", note: "Ring the doorbell when you arrive." },
+            { english: "Mailbox", ipa: "/ˈmeɪl.bɒks/", vietnamese: "Hộp thư", category: "life", note: "Checking the mailbox for daily letters." },
+            { english: "Driveway", ipa: "/ˈdraɪv.weɪ/", vietnamese: "Lối đi vào nhà xe", category: "life", note: "Parking the black van on the driveway." },
+            { english: "Fireplace", ipa: "/ˈfaɪə.pleɪs/", vietnamese: "Lò sưởi", category: "life", note: "Sitting cozy near the fireplace." },
+            { english: "Stairs", ipa: "/steəz/", vietnamese: "Cầu thang", category: "life", note: "Walking carefully down the steep stairs." },
+            { english: "Handrail", ipa: "/ˈhænd.reɪl/", vietnamese: "Tay vịn cầu thang", category: "life", note: "Hold onto the handrail for safety." },
+            { english: "Door handle", ipa: "/dɔː ˈhæn.dəl/", vietnamese: "Tay nắm cửa", category: "life", note: "Turning the golden door handle." },
+            { english: "Light switch", ipa: "/laɪt swɪtʃ/", vietnamese: "Công tắc điện", category: "life", note: "Turn on the light switch." },
+            { english: "Power socket", ipa: "/ˈpaʊə ˌsɒk.ɪt/", vietnamese: "Ổ cắm điện", category: "life", note: "Plug the charger into the power socket." },
+            { english: "Extension cord", ipa: "/ɪkˈsten.ʃən kɔːd/", vietnamese: "Dây cắm nối dài", category: "life", note: "Using an extension cord for the lamp." },
+            { english: "Air conditioner", ipa: "/ˈeə kənˌdɪʃ.ən.ər/", vietnamese: "Máy điều hòa", category: "life", note: "Turn on the air conditioner in summer." },
+            { english: "Heater", ipa: "/ˈhiː.tər/", vietnamese: "Máy sưởi", category: "life", note: "Using a ceramic heater during winter." },
+            { english: "Fan", ipa: "/fæn/", vietnamese: "Cái quạt", category: "life", note: "A cool fan rotating silently." },
+            { english: "Window sill", ipa: "/ˈwɪn.dəu sɪl/", vietnamese: "Bậu cửa sổ", category: "life", note: "A flower pot placed on the window sill." },
+            { english: "Keyring", ipa: "/ˈkiː.rɪŋ/", vietnamese: "Móc treo chìa khóa", category: "life", note: "A heavy keyring with multiple keys." },
+            { english: "Drawer", ipa: "/drɔːr/", vietnamese: "Ngăn kéo tủ", category: "life", note: "Pulling open the desk drawer." },
+            { english: "Shelf", ipa: "/ʃelf/", vietnamese: "Kệ, giá đỡ dán tường", category: "life", note: "Putting decorative vases on the shelf." },
+            { english: "Cushion", ipa: "/ˈkʊʃ.ən/", vietnamese: "Gối tựa sô-pha", category: "life", note: "Soft velvet cushions on the sofa." },
+            { english: "Vase", ipa: "/vɑːz/", vietnamese: "Bình hoa, lọ hoa", category: "life", note: "A ceramic vase filled with tulips." },
+            { english: "Picture frame", ipa: "/ˈpɪk.tʃə freɪm/", vietnamese: "Khung ảnh", category: "life", note: "A wooden picture frame on the wall." },
+            { english: "Wall clock", ipa: "/wɔːl klɒk/", vietnamese: "Đồng hồ treo tường", category: "life", note: "The wall clock matches the paint." },
+            { english: "Calendar", ipa: "/ˈkæl.ən.dər/", vietnamese: "Cuốn lịch", category: "life", note: "Checking the calendar for appointments." },
+            { english: "Notebook", ipa: "/ˈnəut.bʊk/", vietnamese: "Sổ tay ghi chép", category: "life", note: "Keep a small notebook for ideas." },
+            { english: "Pen", ipa: "/pen/", vietnamese: "Bút mực", category: "life", note: "Writing down with a blue gel pen." },
+            { english: "Pencil", ipa: "/ˈpen.səl/", vietnamese: "Bút chì", category: "life", note: "Drawing sketches with an HB pencil." },
+            { english: "Eraser", ipa: "/ɪˈreɪ.zər/", vietnamese: "Cục tẩy, cục gôm", category: "life", note: "Erase the pencil marks cleanly." },
+            { english: "Ruler", ipa: "/ˈruː.lər/", vietnamese: "Cây thước kẻ", category: "life", note: "Use a plastic ruler to draw straight lines." },
+            { english: "Scissors", ipa: "/ˈsɪz.əz/", vietnamese: "Cái kéo", category: "life", note: "Cutting colored paper with craft scissors." },
+            { english: "Glue", ipa: "/ɡluː/", vietnamese: "Keo dán, hồ dán", category: "life", note: "Apply paper glue to the edges." },
+            { english: "Envelope", ipa: "/ˈen.və.ləup/", vietnamese: "Phong bì, bì thư", category: "life", note: "Put the letter inside the envelope." },
+            { english: "Stamp", ipa: "/stæmp/", vietnamese: "Con tem", category: "life", note: "Sticking a vintage stamp on the card." },
+            { english: "Files", ipa: "/faɪlz/", vietnamese: "Tập tài liệu", category: "life", note: "Organize files inside the cabinet." },
+            { english: "Paperclip", ipa: "/ˈpeɪ.pə.klɪp/", vietnamese: "Ghim kẹp giấy", category: "life", note: "Use a colorful paperclip to bind sheets." },
+            { english: "Stapler", ipa: "/ˈsteɪ.plər/", vietnamese: "Máy bấm ghim", category: "life", note: "Binding the report with a stapler." },
+            { english: "Calculator", ipa: "/ˈkæl.kjə.leɪ.tər/", vietnamese: "Máy tính cầm tay", category: "life", note: "Calculating monthly expenses with a calculator." },
+            { english: "Desk organizer", ipa: "/desk ˈɔː.ɡə.naɪ.zər/", vietnamese: "Khay sắp xếp đồ bàn học", category: "life", note: "Keep your desk tidy with an organizer." },
+            { english: "Backpack", ipa: "/ˈbæk.pæk/", vietnamese: "Ba lô đeo vai", category: "life", note: "Packing books into the backpack." },
+            { english: "Umbrella", ipa: "/ʌmˈbrel.ə/", vietnamese: "Cây dù, cây ô", category: "life", note: "Carry an umbrella in case it rains." },
+            { english: "Raincoat", ipa: "/ˈreɪn.kəut/", vietnamese: "Áo mưa", category: "life", note: "Wearing a yellow raincoat in the storm." },
+            { english: "Sunglasses", ipa: "/ˈsʌnˌɡlɑː.sɪz/", vietnamese: "Kính mát, kính râm", category: "life", note: "Protecting eyes with sunglasses on the beach." },
+            { english: "Wallet", ipa: "/ˈwɒl.ɪt/", vietnamese: "Cái ví, bóp đựng tiền", category: "life", note: "A brown leather wallet containing cards." },
+            { english: "Handbag", ipa: "/ˈhænd.bæɡ/", vietnamese: "Túi xách tay", category: "life", note: "She bought an elegant black handbag." },
+            { english: "Keychain", ipa: "/ˈkiː.tʃeɪn/", vietnamese: "Móc khóa trang trí", category: "life", note: "A cute keychain attached to the bag." },
+            { english: "Watch", ipa: "/wɒtʃ/", vietnamese: "Đồng hồ đeo tay", category: "life", note: "He wears a classic luxury watch." },
+            { english: "Glasses", ipa: "/ˈɡlɑː.sɪz/", vietnamese: "Kính cận, kính đeo mắt", category: "life", note: "Wearing glasses for reading books." },
+            { english: "Ring", ipa: "/rɪŋ/", vietnamese: "Chiếc nhẫn", category: "life", note: "A beautiful silver diamond ring." },
+            { english: "Necklace", ipa: "/ˈnek.ləs/", vietnamese: "Vòng cổ, dây chuyền", category: "life", note: "A pearl necklace matching the dress." },
+            { english: "Bracelet", ipa: "/ˈbreɪ.slət/", vietnamese: "Vòng đeo tay, lắc tay", category: "life", note: "An elastic colorful beaded bracelet." },
+            { english: "Earrings", ipa: "/ˈɪə.rɪŋz/", vietnamese: "Bông tai, khuyên tai", category: "life", note: "Gold hoop earrings for the party." },
+            { english: "Hairpin", ipa: "/ˈheə.pɪn/", vietnamese: "Ghim cài tóc, kẹp tăm", category: "life", note: "Holding hair back with a hairpin." },
+            { english: "Perfume", ipa: "/ˈpɜː.fjuːm/", vietnamese: "Nước hoa", category: "life", note: "A fresh floral perfume scent." },
+            { english: "Lipstick", ipa: "/ˈlɪp.stɪk/", vietnamese: "Son môi", category: "life", note: "Applying red lipstick in front of the mirror." },
+            
+            // THIÊN NHIÊN, ĐỘNG VẬT, THỜI TIẾT
+            { english: "Stream", ipa: "/striːm/", vietnamese: "Dòng suối", category: "nature", note: "A cool clear stream in the mountains." },
+            { english: "Swamp", ipa: "/swɒmp/", vietnamese: "Đầm lầy", category: "nature", note: "The swamp is home to many birds." },
+            { english: "Oasis", ipa: "/əuˈeɪ.sɪs/", vietnamese: "Ốc đảo sa mạc", category: "nature", note: "Finding a fresh green oasis in the sand." },
+            { english: "Cliff", ipa: "/klɪf/", vietnamese: "Vách đá, vách núi", category: "nature", note: "A high cliff overlooking the ocean." },
+            { english: "Plain", ipa: "/pleɪn/", vietnamese: "Đồng bằng, thảo nguyên lớn", category: "nature", note: "A flat open plain ideal for farming." },
+            { english: "Coast", ipa: "/kəust/", vietnamese: "Bờ biển, dải ven biển", category: "nature", note: "Lighthouses along the rocky coast." },
+            { english: "Peninsula", ipa: "/pəˈnɪn.sjə.lə/", vietnamese: "Bán đảo", category: "nature", note: "A narrow peninsula extending into the sea." },
+            { english: "Reef", ipa: "/riːf/", vietnamese: "Rạn san hô, đá ngầm", category: "nature", note: "Beautiful fish swim near the coral reef." },
+            { english: "Hill", ipa: "/hɪl/", vietnamese: "Ngọn đồi nhỏ", category: "nature", note: "A rolling green hill with wildflowers." },
+            { english: "Dew", ipa: "/dʒuː/", vietnamese: "Giọt sương mai", category: "nature", note: "Morning dew glitters on the grass." },
+            { english: "Frost", ipa: "/frɒst/", vietnamese: "Lớp sương giá, băng mỏng", category: "nature", note: "The grass was covered with silver frost." },
+            { english: "Fog", ipa: "/fɒɡ/", vietnamese: "Sương mù dày đặc", category: "nature", note: "Heavy morning fog covered the bridge." },
+            { english: "Mist", ipa: "/mɪst/", vietnamese: "Lớp sương mờ, hơi nước", category: "nature", note: "Mountain mist rising after the rain." },
+            { english: "Hail", ipa: "/heɪl/", vietnamese: "Mưa đá", category: "nature", note: "The storm brought large hail stones." },
+            { english: "Blizzard", ipa: "/ˈblɪz.əd/", vietnamese: "Trận bão tuyết lớn", category: "nature", note: "Trapped inside during the cold blizzard." },
+            { english: "Gale", ipa: "/.../", vietnamese: "Cơn gió lốc, gió rất mạnh", category: "nature", note: "A gale blew down several old trees." },
+            { english: "Tornado", ipa: "/tɔːˈneɪ.dəu/", vietnamese: "Cơn lốc xoáy, vòi rồng", category: "nature", note: "A dangerous tornado moving across the plains." },
+            { english: "Hurricane", ipa: "/ˈhʌr.ɪ.kən/", vietnamese: "Cơn bão nhiệt dới lớn", category: "nature", note: "The hurricane hit the coastal town." },
+            { english: "Eclipse", ipa: "/ɪˈklɪps/", vietnamese: "Hiện tượng nhật thực/nguyệt thực", category: "nature", note: "Wearing glasses to watch the solar eclipse." },
+            { english: "Meteor", ipa: "/ˈmiː.ti.ɔːr/", vietnamese: "Sao băng, thiên thạch nhỏ", category: "nature", note: "Make a wish upon a falling meteor." },
+            { english: "Planet", ipa: "/ˈplæn.ɪt/", vietnamese: "Hành tinh", category: "nature", note: "Earth is the third planet from the sun." },
+            { english: "Galaxy", ipa: "/ˈɡæl.ək.si/", vietnamese: "Thiên hà, dải ngân hà", category: "nature", note: "Our galaxy is called the Milky Way." },
+            { english: "Comet", ipa: "/ˈcom.ɪt/", vietnamese: "Sao chổi", category: "nature", note: "The comet has a bright glowing tail." },
+            { english: "Orbit", ipa: "/ˈɔː.bɪt/", vietnamese: "Quỹ đạo, quay quanh", category: "nature", note: "The moon orbits around the Earth." },
+            { english: "Tide", ipa: "/taɪd/", vietnamese: "Thủy triều", category: "nature", note: "The high tide covers the sandy beach." },
+            { english: "Wave", ipa: "/weɪv/", vietnamese: "Con sóng", category: "nature", note: "Surfers love high ocean waves." },
+            { english: "Current", ipa: "/ˈkʌr.ənt/", vietnamese: "Dòng hải lưu, dòng nước", category: "nature", note: "A strong ocean current moves warm water." },
+            { english: "Oak", ipa: "/əʊk/", vietnamese: "Cây sồi", category: "nature", note: "A massive old oak tree in the park." },
+            { english: "Pine", ipa: "/paɪn/", vietnamese: "Cây thông", category: "nature", note: "Pine trees stay green in winter." },
+            { english: "Maple", ipa: "/ˈmeɪ.pl̩/", vietnamese: "Cây phong, cây phong lá đỏ", category: "nature", note: "Red maple leaves look beautiful in autumn." },
+            { english: "Bamboo", ipa: "/bæmˈbuː/", vietnamese: "Cây tre", category: "nature", note: "Panda bears feed exclusively on bamboo." },
+            { english: "Fern", ipa: "/fɜːn/", vietnamese: "Cây dương xỉ", category: "nature", note: "Ferns grow well in damp shady places." },
+            { english: "Moss", ipa: "/mɒs/", vietnamese: "Rêu, thảm rêu", category: "nature", note: "Green moss growing on wet rocks." },
+            { english: "Ivy", ipa: "/ˈaɪ.vi/", vietnamese: "Cây thường xuân", category: "nature", note: "Ivy climbing up the brick wall." },
+            { english: "Cactus", ipa: "/ˈkæk.təs/", vietnamese: "Cây xương rồng", category: "nature", note: "A cactus stores water inside its stem." },
+            { english: "Seaweed", ipa: "/ˈsiː.wiːd/", vietnamese: "Rong biển", category: "nature", note: "Seaweed is used in Japanese cuisine." },
+            { english: "Mushroom", ipa: "/ˈmʌʃ.ruːm/", vietnamese: "Cây nấm", category: "nature", note: "Do not eat wild forest mushrooms." },
+            { english: "Seed", ipa: "/siːd/", vietnamese: "Hạt giống", category: "nature", note: "Plant the seed in rich soil." },
+            { english: "Soil", ipa: "/sɔɪl/", vietnamese: "Đất trồng, thổ nhưỡng", category: "nature", note: "The organic soil is good for vegetables." },
+            { english: "Root", ipa: "/ruːt/", vietnamese: "Rễ cây", category: "nature", note: "Deep roots keep the tree stable." },
+            { english: "Stem", ipa: "/stem/", vietnamese: "Thân cây nhỏ, cọng hoa", category: "nature", note: "Cut the rose stem at an angle." },
+            { english: "Bark", ipa: "/bɑːk/", vietnamese: "Vỏ cây", category: "nature", note: "The thick rough bark of the pine tree." },
+            { english: "Twig", ipa: "/twɪɡ/", vietnamese: "Cành cây nhỏ, nhánh con", category: "nature", note: "Birds collect twigs to build nests." },
+            { english: "Bud", ipa: "/bʌd/", vietnamese: "Chồi non, nụ hoa", category: "nature", note: "Spring buds are opening up." },
+            { english: "Petal", ipa: "/ˈpet.əl/", vietnamese: "Cánh hoa", category: "nature", note: "Soft pink petals fell on the grass." },
+            { english: "Nectar", ipa: "/ˈnek.tər/", vietnamese: "Mật hoa", category: "nature", note: "Bees gather sweet nectar to make honey." },
+            { english: "Pollen", ipa: "/ˈpɒl.ən/", vietnamese: "Phấn hoa", category: "nature", note: "Wind carries flower pollen everywhere." },
+            { english: "Rose", ipa: "/rəʊz/", vietnamese: "Hoa hồng", category: "nature", note: "A classic red rose smells sweet." },
+            { english: "Tulip", ipa: "/ˈtʃuː.lɪp/", vietnamese: "Hoa tulip", category: "nature", note: "Colorful tulips blooming in spring." },
+            { english: "Daisy", ipa: "/ˈdeɪ.zi/", vietnamese: "Hoa cúc họa mi", category: "nature", note: "White daisies growing in the lawn." },
+            { english: "Lily", ipa: "/ˈlɪl.i/", vietnamese: "Hoa ly, hoa bách hợp", category: "nature", note: "A white fragrant garden lily." },
+            { english: "Lotus", ipa: "/ˈləu.təs/", vietnamese: "Hoa sen", category: "nature", note: "The pink lotus grows in muddy water." },
+            { english: "Orchid", ipa: "/ˈɔː.kɪd/", vietnamese: "Hoa phong lan", category: "nature", note: "An exotic delicate purple orchid." },
+            { english: "Jasmine", ipa: "/ˈdʒæz.mɪn/", vietnamese: "Hoa nhài", category: "nature", note: "Jasmine tea has a wonderful aroma." },
+            { english: "Lavender", ipa: "/ˈlæv.ɪn.dər/", vietnamese: "Hoa oải hương", category: "nature", note: "Lavender oil helps people relax." },
+            { english: "Dandelion", ipa: "/ˈdæn.dɪ.laɪ.ən/", vietnamese: "Hoa bồ công anh", category: "nature", note: "Blowing the dandelion seeds away." },
+            { english: "Cherry blossom", ipa: "/ˈtʃer.i ˌbləs.əm/", vietnamese: "Hoa anh đào", category: "nature", note: "Cherry blossoms bloom in early spring." },
+            { english: "Squirrel", ipa: "/ˈskwɪr.əl/", vietnamese: "Con sóc", category: "nature", note: "A squirrel hiding nuts in the hollow." },
+            { english: "Deer", ipa: "/dɪər/", vietnamese: "Con nai, con hươu", category: "nature", note: "A gentle deer drinking at the river." },
+            { english: "Fox", ipa: "/fɒks/", vietnamese: "Con cáo", category: "nature", note: "The clever red fox ran away." },
+            { english: "Owl", ipa: "/aʊl/", vietnamese: "Con cú mèo", category: "nature", note: "An owl hooting in the dark forest." },
+            { english: "Eagle", ipa: "/ˈiː.ɡl̩/", vietnamese: "Con chim đại bàng", category: "nature", note: "The eagle soared high in the sky." },
+            { english: "Hawk", ipa: "/hɔːk/", vietnamese: "Con chim ưng, diều hâu", category: "nature", note: "A hawk searching for prey below." },
+            { english: "Swan", ipa: "/swɒn/", vietnamese: "Con thiên nga", category: "nature", note: "An elegant white swan on the lake." },
+            { english: "Dolphin", ipa: "/ˈdɒl.fɪn/", vietnamese: "Con cá heo", category: "nature", note: "Dolphins are highly intelligent creatures." },
+            { english: "Whale", ipa: "/weɪl/", vietnamese: "Con cá voi", category: "nature", note: "The blue whale is the largest animal." },
+            { english: "Shark", ipa: "/ʃɑːk/", vietnamese: "Con cá mập", category: "nature", note: "A great white shark in the deep sea." },
+            { english: "Seal", ipa: "/siːl/", vietnamese: "Con hải cẩu", category: "nature", note: "Seals resting on the coastal rocks." },
+            { english: "Turtle", ipa: "/ˈtɜː.tl̩/", vietnamese: "Con rùa", category: "nature", note: "A sea turtle swimming gracefully." },
+            { english: "Frog", ipa: "/frɒɡ/", vietnamese: "Con ếch", category: "nature", note: "A green frog sitting on a lily pad." },
+            { english: "Snail", ipa: "/sneɪl/", vietnamese: "Con ốc sên", category: "nature", note: "A slow snail carrying its round shell." },
+            { english: "Lizard", ipa: "/ˈlɪz.əd/", vietnamese: "Con thằn lằn", category: "nature", note: "The lizard basking in the warm sun." },
+            { english: "Snake", ipa: "/sneɪk/", vietnamese: "Con rắn", category: "nature", note: "A silent snake crawling on the ground." },
+            { english: "Spider", ipa: "/ˈspaɪ.dər/", vietnamese: "Con nhện", category: "nature", note: "A spider spinning its intricate web." },
+            { english: "Bee", ipa: "/biː/", vietnamese: "Con ong", category: "nature", note: "Bees are busy collecting sweet honey." },
+            { english: "Ant", ipa: "/ænt/", vietnamese: "Con kiến", category: "nature", note: "Ants working together as a colony." },
+            { english: "Ladybug", ipa: "/ˈleɪ.di.bʌɡ/", vietnamese: "Con bọ rùa", category: "nature", note: "A small red ladybug with black spots." },
+            { english: "Dragonfly", ipa: "/ˈdræɡ.ən.flaɪ/", vietnamese: "Con chuồn chuồn", category: "nature", note: "A dragonfly hovering near the pond." },
+            { english: "Caterpillar", ipa: "/ˈkæt.ə.pɪl.ər/", vietnamese: "Con sâu bướm", category: "nature", note: "A caterpillar eating fresh green leaves." },
+            { english: "Goat", ipa: "/ɡəʊt/", vietnamese: "Con dê", category: "nature", note: "Mountain goats climb steep mountainsides." },
+            { english: "Sheep", ipa: "/ʃiːp/", vietnamese: "Con cừu", category: "nature", note: "Shearing soft warm wool from sheep." },
+            { english: "Cow", ipa: "/kaʊ/", vietnamese: "Con bò", category: "nature", note: "The dairy cow produces fresh milk." },
+            { english: "Horse", ipa: "/hɔːs/", vietnamese: "Con ngựa", category: "nature", note: "Riding a black horse on the path." },
+            { english: "Donkey", ipa: "/ˈdɒŋ.ki/", vietnamese: "Con lừa", category: "nature", note: "Donkeys are strong pack animals." },
+            { english: "Duck", ipa: "/dʌk/", vietnamese: "Con vịt", category: "nature", note: "Wild ducks swimming on the river." },
+            { english: "Goose", ipa: "/ɡuːs/", vietnamese: "Con ngỗng", category: "nature", note: "A flock of wild geese flying south." },
+            { english: "Rooster", ipa: "/ˈruː.stər/", vietnamese: "Con gà trống", category: "nature", note: "The rooster crows at early dawn." },
+            { english: "Hen", ipa: "/hen/", vietnamese: "Con gà mái", category: "nature", note: "The brown hen laid three eggs." },
+            { english: "Chick", ipa: "/tʃɪk/", vietnamese: "Con gà con, chim non", category: "nature", note: "A tiny fluffy yellow chick." },
+            { english: "Parrot", ipa: "/ˈpær.ət/", vietnamese: "Con vẹt", category: "nature", note: "A colorful parrot mimicking voices." },
+            { english: "Sparrow", ipa: "/ˈspær.əʊ/", vietnamese: "Con chim sẻ", category: "nature", note: "Sparrows chirping in the garden hedge." },
+            { english: "Pigeon", ipa: "/ˈpɪdʒ.ən/", vietnamese: "Con chim bồ câu", category: "nature", note: "Feeding grey pigeons in the public square." },
+            { english: "Hummingbird", ipa: "/ˈhʌm.ɪŋ.bɜːd/", vietnamese: "Con chim ruồi", category: "nature", note: "Hummingbirds fly in multiple directions." },
+            { english: "Woodpecker", ipa: "/ˈwʊdˌpek.ər/", vietnamese: "Con chim gõ kiến", category: "nature", note: "A woodpecker tapping on the oak bark." },
+            { english: "Rabbit", ipa: "/ˈræb.ɪt/", vietnamese: "Con thỏ", category: "nature", note: "A white rabbit has long soft ears." },
+            { english: "Hamster", ipa: "/ˈhæm.stər/", vietnamese: "Chuột hamster", category: "nature", note: "The pet hamster runs on its wheel." },
+            { english: "Goldfish", ipa: "/ˈɡəʊld.fɪʃ/", vietnamese: "Con cá vàng", category: "nature", note: "Keeping goldfish inside an elegant bowl." },
+            { english: "Puppy", ipa: "/ˈpʌp.i/", vietnamese: "Con chó con", category: "nature", note: "The playful puppy wagged its tail." },
+            { english: "Kitten", ipa: "/ˈkɪt.ən/", vietnamese: "Con mèo con", category: "nature", note: "A tiny sleeping striped kitten." }
+        ];
+
+        // Đẩy rawCoreVocab vào mảng vocabList đã được khai báo chính xác
+        rawCoreVocab.forEach((item, index) => {
+            vocabList.push({
+                id: `v_auto_${index}`,
+                english: item.english,
+                ipa: item.ipa,
+                vietnamese: item.vietnamese,
+                category: item.category,
+                note: item.note
+            });
+        });
+
+        const extendedWords = [
+            { english: "Generosity", ipa: "/ˌdʒen.əˈrɒs.ɪ.ti/", vietnamese: "Sự hào phóng", category: "emotions", note: "Generosity builds great friendships." },
+            { english: "Compassion", ipa: "/kəmˈpæʃ.ən/", vietnamese: "Lòng trắc ẩn", category: "emotions", note: "Showing compassion for homeless people." },
+            { english: "Empathy", ipa: "/ˈem.pə.θi/", vietnamese: "Sự thấu cảm", category: "emotions", note: "Empathy helps understand others." },
+            { english: "Patience", ipa: "/ˈpeɪ.ʃəns/", vietnamese: "Sự kiên nhẫn", category: "emotions", note: "Patience is key to solving hard tasks." },
+            { english: "Courage", ipa: "/ˈkʌr.ɪdʒ/", vietnamese: "Lòng dũng cảm", category: "emotions", note: "It takes courage to speak the truth." },
+            { english: "Sincerity", ipa: "/sɪnˈser.ə.ti/", vietnamese: "Sự chân thành", category: "emotions", note: "Sincerity is shown in actions." },
+            { english: "Optimism", ipa: "/ˈɒp.tɪ.mɪ.zəm/", vietnamese: "Tinh thần lạc quan", category: "emotions", note: "Maintaining optimism in difficult times." },
+            { english: "Gratitude", ipa: "/ˈbæt.ɪ.tʃuːd/", vietnamese: "Lòng biết ơn", category: "emotions", note: "Expressing sincere gratitude to mentors." },
+            { english: "Enthusiasm", ipa: "/ɪnˈθjuː.zi.æz.əm/", vietnamese: "Sự hăng hái, nhiệt huyết", category: "emotions", note: "Working with great passion and enthusiasm." },
+            { english: "Modesty", ipa: "/ˈmɒd.ɪ.sti/", vietnamese: "Tính khiêm tốn", category: "emotions", note: "Modesty is an admirable character trait." },
+            { english: "Humor", ipa: "/ˈhjuː.mər/", vietnamese: "Sự khôi hài, hài hước", category: "emotions", note: "A good sense of humor lightens things." },
+            { english: "Kindness", ipa: "/ˈkaɪnd.nəs/", vietnamese: "Lòng tốt, sự tử tế", category: "emotions", note: "Random acts of kindness help the world." },
+            { english: "Wisdom", ipa: "/ˈwɪz.dəm/", vietnamese: "Trí tuệ, sự thông thái", category: "emotions", note: "Wisdom comes from rich experience." },
+            { english: "Inspiration", ipa: "/ˌɪn.spɪˈreɪ.ʃən/", vietnamese: "Nguồn cảm hứng", category: "emotions", note: "Nature is a great inspiration." },
+            { english: "Aspiration", ipa: "/ˌæs.pɪˈreɪ.ʃən/", vietnamese: "Khát vọng, nguyện vọng", category: "emotions", note: "Young generation has high aspirations." },
+            { english: "Motivation", ipa: "/ˌməu.tɪˈveɪ.ʃən/", vietnamese: "Động lực thúc đẩy", category: "emotions", note: "Self-improvement is my main motivation." },
+            { english: "Serenity", ipa: "/səˈren.ə.ti/", vietnamese: "Sự tĩnh lặng, bình yên", category: "emotions", note: "The quiet forest brought serenity." },
+            { english: "Tranquility", ipa: "/træŋˈkwɪl.ə.ti/", vietnamese: "Sự yên bình, lặng lẽ", category: "emotions", note: "Enjoy the tranquility of rural areas." },
+            { english: "Amiability", ipa: "/ˌeɪ.mi.əˈbɪl.ə.ti/", vietnamese: "Sự tử tế, thân thiện", category: "emotions", note: "Her amiability made her popular." },
+            { english: "Tolerance", ipa: "/ˈtɒl.ər.əns/", vietnamese: "Lòng khoan dung, sự kiên nhẫn", category: "emotions", note: "Mutual tolerance is essential." },
+            { english: "Dignity", ipa: "/ˈdɪɡ.nə.ti/", vietnamese: "Nhân phẩm, phẩm giá", category: "emotions", note: "Treating everyone with respect and dignity." },
+            { english: "Politeness", ipa: "/pəˈlaɪt.nəs/", vietnamese: "Sự lịch sự, lễ phép", category: "emotions", note: "Politeness creates pleasant conversations." },
+            { english: "Sympathy", ipa: "/ˈsɪm.pə.θi/", vietnamese: "Sự thông cảm, đồng cảm", category: "emotions", note: "Sending letters of deep sympathy." },
+            { english: "Tenderness", ipa: "/ˈten.də.nəs/", vietnamese: "Sự dịu dàng, ôn hòa", category: "emotions", note: "Caring for babies with extreme tenderness." },
+            { english: "Vigor", ipa: "/ˈvɪɡ.ər/", vietnamese: "Sức sống, sinh lực mạnh mẽ", category: "emotions", note: "Young athletes are full of vigor." },
+            { english: "Warmth", ipa: "/wɔːmθ/", vietnamese: "Sự ấm áp, nồng hậu", category: "emotions", note: "Welcomed us with genuine warmth." },
+            { english: "Harmony", ipa: "/ˈhɑː.mə.ni/", vietnamese: "Sự hòa thuận, hòa hợp", category: "emotions", note: "Living in complete harmony with nature." },
+            { english: "Devotion", ipa: "/dɪˈvəu.ʃən/", vietnamese: "Sự tận tụy, cống hiến", category: "emotions", note: "The teacher's devotion to students." },
+            { english: "Fidelity", ipa: "/fɪˈdel.ə.ti/", vietnamese: "Lòng trung thành, chung thủy", category: "emotions", note: "Fidelity is essential in marriages." },
+            { english: "Gratified", ipa: "/ˈbæt.ɪ.faɪd/", vietnamese: "Hài lòng, thỏa mãn", category: "emotions", note: "Feeling gratified by the final results." },
+            { english: "Comforted", ipa: "/ˈkʊm.fə.tɪd/", vietnamese: "Được an ủi, nhẹ lòng", category: "emotions", note: "She felt comforted by her relatives." },
+            { english: "Empowered", ipa: "/ɪmˈpaʊ.əd/", vietnamese: "Được trao quyền, tiếp sức", category: "emotions", note: "Education makes women feel empowered." },
+            { english: "Amused", ipa: "/əˈmjuːzd/", vietnamese: "Bị làm cho vui thích", category: "emotions", note: "The children were amused by the clown." },
+            { english: "Satisfied", ipa: "/ˈsæt.ɪs.faɪd/", vietnamese: "Thỏa mãn, vừa ý", category: "emotions", note: "He was satisfied with the fast service." },
+            { english: "Thrilled", ipa: "/θrɪld/", vietnamese: "Hồi hộp và vui mừng", category: "emotions", note: "Thrilled about winning the match." },
+            { english: "Relaxed", ipa: "/rɪˈlækst/", vietnamese: "Thư giãn, thoải mái", category: "emotions", note: "Feeling completely relaxed after the bath." },
+            { english: "Delighted", ipa: "/dɪˈlaɪ.tɪd/", vietnamese: "Vui tươi, hân hoan", category: "emotions", note: "We were delighted by the lovely news." },
+            { english: "Fascinated", ipa: "/ˈfæs.ɪ.neɪ.tɪd/", vietnamese: "Bị lôi cuốn, mê hoặc", category: "emotions", note: "She was fascinated by ancient histories." },
+            { english: "Eager", ipa: "/ˈiː.ɡər/", vietnamese: "Hăng hái, háo hức", category: "emotions", note: "Eager to learn modern technologies." }
+        ];
+
+        extendedWords.forEach((item, index) => {
+            vocabList.push({
+                id: `v_ext_${index}`,
+                english: item.english,
+                ipa: item.ipa,
+                vietnamese: item.vietnamese,
+                category: item.category,
+                note: item.note
+            });
+        });
 
         // Default sentences
         const defaultSentences = [
@@ -451,17 +996,29 @@
         ];
 
         // Dynamic State
-        let vocabList = [...defaultVocab];
         let sentenceList = [...defaultSentences];
         let activeCategory = 'all';
         let currentDetailWord = null;
 
+        // Form state (null = add mode, string = edit mode ID)
+        let activeVocabEditId = null;
+        let activeSentenceEditId = null;
+
         // Test State
-        let testType = 'mcq'; // 'mcq' or 'write'
-        let testSource = 'vocab'; // 'vocab' or 'sentences'
+        let testType = 'mcq'; 
+        let testSource = 'vocab'; 
         let testQuestions = [];
         let currentQuestionIndex = 0;
         let testScore = 0;
+        let isQuestionAnswered = false;
+
+        // THUẬT TOÁN GỘP DỮ LIỆU ĐÁM MÂY VÀ ĐỊA PHƯƠNG THÔNG MINH
+        const mergeData = (local, cloud) => {
+            const map = new Map();
+            cloud.forEach(item => map.set(item.id, item));
+            local.forEach(item => map.set(item.id, item));
+            return Array.from(map.values());
+        };
 
         // Initialize Firebase & Auth
         const initFirebase = async () => {
@@ -470,26 +1027,22 @@
                 auth = getAuth(app);
                 db = getFirestore(app);
 
-                // Auth
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token).catch(() => signInAnonymously(auth));
-                } else {
-                    await signInAnonymously(auth);
-                }
-
                 onAuthStateChanged(auth, async (currUser) => {
                     if (currUser) {
                         user = currUser;
+                        updateAuthUI(true, user.email);
                         await loadUserData();
+                    } else {
+                        user = null;
+                        updateAuthUI(false, '');
+                        loadOfflineData();
                     }
                 });
             } else {
-                // Fallback to offline localstorage if Firestore configs aren't supplied
                 loadOfflineData();
             }
         };
 
-        // Load Offline Local Storage Fallback
         const loadOfflineData = () => {
             const savedVocab = localStorage.getItem('custom_vocab');
             const savedSentences = localStorage.getItem('custom_sentences');
@@ -499,36 +1052,37 @@
             renderSentences();
         };
 
-        // Load Cloud Data from Firestore
         const loadUserData = async () => {
             if (!user || !db) return;
-            // SỬA LỖI: Thêm segment 'main' để tạo thành đường dẫn tài liệu chẵn (6 segments)
             const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'userdata', 'main');
             try {
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    if (data.vocabList) vocabList = data.vocabList;
-                    if (data.sentenceList) sentenceList = data.sentenceList;
+                    
+                    const mergedVocab = mergeData(vocabList, data.vocabList || []);
+                    const mergedSentences = mergeData(sentenceList, data.sentenceList || []);
+                    
+                    vocabList = mergedVocab;
+                    sentenceList = mergedSentences;
+                    
+                    await setDoc(docRef, { vocabList, sentenceList });
                 } else {
-                    // Initialize empty cloud record
                     await setDoc(docRef, { vocabList, sentenceList });
                 }
             } catch (err) {
-                console.error("Firebase error, fallback to local:", err);
+                console.error("Lỗi kết nối Firebase, quay lại chế độ ngoại tuyến:", err);
                 loadOfflineData();
             }
             renderVocab();
             renderSentences();
         };
 
-        // Save Data Helper
         const saveData = async () => {
             if (user && db) {
-                // SỬA LỖI: Thêm segment 'main' để tạo thành đường dẫn tài liệu chẵn (6 segments)
                 const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'userdata', 'main');
                 await setDoc(docRef, { vocabList, sentenceList }).catch(err => {
-                    console.error("Cloud save failed:", err);
+                    console.error("Lưu đám mây không thành công:", err);
                 });
             } else {
                 localStorage.setItem('custom_vocab', JSON.stringify(vocabList));
@@ -536,14 +1090,117 @@
             }
         };
 
-        // App initialization
+        // GIAO DIỆN QUẢN LÝ TÀI KHOẢN
+        window.openAuthModal = () => {
+            openModal('auth-modal');
+        };
+
+        window.switchAuthTab = (tab) => {
+            authTab = tab;
+            const loginBtn = document.getElementById('tab-auth-login');
+            const signupBtn = document.getElementById('tab-auth-signup');
+            const submitBtn = document.getElementById('auth-submit-btn');
+
+            if (tab === 'login') {
+                loginBtn.className = "flex-1 pb-2 border-b-2 border-glowing-rose font-bold text-glowing-rose transition-all";
+                signupBtn.className = "flex-1 pb-2 border-b-2 border-transparent text-violet-300/60 font-semibold transition-all";
+                submitBtn.querySelector('span').innerText = "Đăng nhập";
+            } else {
+                loginBtn.className = "flex-1 pb-2 border-b-2 border-transparent text-violet-300/60 font-semibold transition-all";
+                signupBtn.className = "flex-1 pb-2 border-b-2 border-glowing-rose font-bold text-glowing-rose transition-all";
+                submitBtn.querySelector('span').innerText = "Đăng ký tài khoản mới";
+            }
+        };
+
+        window.handleAuthSubmit = async () => {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+            const submitBtn = document.getElementById('auth-submit-btn');
+
+            if (!email || !password) {
+                showToast("Vui lòng điền đầy đủ Email và Mật khẩu.");
+                return;
+            }
+            if (password.length < 6) {
+                showToast("Mật khẩu phải tối thiểu 6 ký tự.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.querySelector('span').innerText = "Đang kết nối...";
+
+            try {
+                if (authTab === 'login') {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    showToast("Đăng nhập và đồng bộ thành công!");
+                } else {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    showToast("Tạo tài khoản và đồng bộ thành công!");
+                }
+                closeModal('auth-modal');
+            } catch (error) {
+                console.error(error);
+                let msg = "Đã xảy ra lỗi, vui lòng thử lại.";
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                    msg = "Email hoặc mật khẩu không chính xác.";
+                } else if (error.code === 'auth/email-already-in-use') {
+                    msg = "Email này đã được đăng ký sử dụng.";
+                } else if (error.code === 'auth/invalid-email') {
+                    msg = "Định dạng Email không hợp lệ.";
+                }
+                showToast(msg);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.querySelector('span').innerText = authTab === 'login' ? "Đăng nhập" : "Đăng ký tài khoản mới";
+            }
+        };
+
+        window.handleSignOut = async () => {
+            try {
+                await signOut(auth);
+                showToast("Đã đăng xuất tài khoản.");
+                closeModal('auth-modal');
+            } catch (error) {
+                showToast("Lỗi khi đăng xuất.");
+            }
+        };
+
+        const updateAuthUI = (isLoggedIn, email) => {
+            const icon = document.getElementById('auth-icon');
+            const triggerBtn = document.getElementById('auth-trigger-btn');
+            const loggedOutView = document.getElementById('auth-logged-out-view');
+            const loggedInView = document.getElementById('auth-logged-in-view');
+            const emailDisplay = document.getElementById('user-email-display');
+
+            if (isLoggedIn) {
+                icon.className = "fa-solid fa-cloud text-sm";
+                triggerBtn.classList.remove('text-glowing-rose', 'shadow-neon-rose');
+                triggerBtn.classList.add('text-glowing-teal', 'shadow-neon-teal', 'border-glowing-teal/30');
+                
+                loggedOutView.classList.add('hidden');
+                loggedInView.classList.remove('hidden');
+                emailDisplay.innerText = email;
+            } else {
+                icon.className = "fa-solid fa-user text-sm";
+                triggerBtn.classList.add('text-glowing-rose', 'shadow-neon-rose');
+                triggerBtn.classList.remove('text-glowing-teal', 'shadow-neon-teal', 'border-glowing-teal/30');
+
+                loggedOutView.classList.remove('hidden');
+                loggedInView.classList.add('hidden');
+            }
+        };
+
+        window.autoResizeTextarea = (el) => {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
+        };
+
         window.addEventListener('DOMContentLoaded', () => {
             initFirebase();
             renderVocab();
             renderSentences();
             renderIPAGrid();
 
-            // Set up search event
             document.getElementById('vocab-search').addEventListener('input', () => {
                 renderVocab();
             });
@@ -555,25 +1212,23 @@
             document.getElementById(`section-${tabId}`).classList.remove('hidden');
 
             document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-                btn.classList.remove('text-rose-500', 'active');
-                btn.classList.add('text-slate-400');
-                btn.querySelector('div').classList.remove('bg-rose-50');
+                btn.classList.remove('text-glowing-rose', 'active');
+                btn.classList.add('text-violet-300/60');
+                btn.querySelector('div').classList.remove('bg-violet-900/40', 'border-violet-400/25', 'shadow-neon-rose');
             });
 
-            element.classList.add('text-rose-500', 'active');
-            element.classList.remove('text-slate-400');
-            element.querySelector('div').classList.add('bg-rose-50');
+            element.classList.add('text-glowing-rose', 'active');
+            element.classList.remove('text-violet-300/60');
+            element.querySelector('div').classList.add('bg-violet-900/40', 'border-violet-400/25', 'shadow-neon-rose');
         };
 
         // ================= RENDERING VOCABULARY =================
         window.filterVocab = (category) => {
             activeCategory = category;
             document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('bg-rose-500', 'text-white', 'shadow-sm');
-                btn.classList.add('bg-white', 'border', 'border-rose-100', 'text-rose-500');
+                btn.className = "category-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap glass-panel-light border border-violet-400/20 text-violet-200 transition-all";
             });
-            event.target.classList.remove('bg-white', 'border', 'border-rose-100', 'text-rose-500');
-            event.target.classList.add('bg-rose-500', 'text-white', 'shadow-sm');
+            event.target.className = "category-btn active px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gradient-to-r from-glowing-rose to-glowing-violet text-white shadow-neon-rose transition-all";
             renderVocab();
         };
 
@@ -595,8 +1250,9 @@
 
             if (filtered.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-2 py-10 text-center text-slate-400 text-xs">
-                        Không tìm thấy từ nào phù hợp rồi em bé ơi! 💕
+                    <div class="col-span-2 py-16 text-center text-violet-300/50 text-xs">
+                        <i class="fa-solid fa-ghost text-2xl block mb-2 opacity-30"></i>
+                        Không tìm thấy từ vựng kỳ diệu nào.
                     </div>
                 `;
                 return;
@@ -604,13 +1260,14 @@
 
             filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "bg-white/90 p-4 rounded-3xl border border-rose-50 shadow-sm flex flex-col justify-between items-center text-center gap-1 active:scale-95 transition-all cursor-pointer";
+                card.className = "glass-panel p-4 rounded-3xl border border-violet-500/20 shadow-lg flex flex-col justify-between items-center text-center gap-1 active:scale-95 transition-all cursor-pointer hover:border-violet-400/40 relative overflow-hidden";
                 card.onclick = () => showVocabDetail(item);
                 card.innerHTML = `
-                    <span class="text-[10px] text-rose-400 uppercase font-extrabold tracking-wider bg-rose-50 px-2 py-0.5 rounded-full">${getCategoryEmoji(item.category)} ${item.category}</span>
-                    <h4 class="text-lg font-bold text-slate-800 tracking-tight mt-1">${item.english}</h4>
-                    <p class="text-xs text-slate-400 italic">${item.ipa || ''}</p>
-                    <p class="text-sm font-semibold text-slate-600 mt-0.5">${item.vietnamese}</p>
+                    <div class="absolute -right-6 -bottom-6 w-12 h-12 bg-violet-500/5 rounded-full pointer-events-none"></div>
+                    <span class="text-[9px] text-glowing-teal uppercase font-extrabold tracking-widest bg-violet-950/70 border border-violet-500/30 px-2.5 py-0.5 rounded-full">${getCategoryEmoji(item.category)} ${item.category}</span>
+                    <h4 class="text-base font-extrabold text-white tracking-wide mt-2 truncate max-w-full">${item.english}</h4>
+                    <p class="text-[10px] text-violet-300 italic truncate max-w-full font-medium">${item.ipa || ''}</p>
+                    <p class="text-xs font-semibold text-glowing-gold mt-1 truncate max-w-full">${item.vietnamese}</p>
                 `;
                 grid.appendChild(card);
             });
@@ -643,60 +1300,111 @@
             if (currentDetailWord) speakText(currentDetailWord.english);
         };
 
-        // Speech Synthesis Engine
         window.speakText = (text) => {
             if (!text) return;
             const synth = window.speechSynthesis;
             const utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'en-US';
-            utter.rate = 0.85; // Slightly slower for better learning
-            synth.cancel(); // Interrupt existing voice
+            utter.rate = 0.85; 
+            synth.cancel(); 
             synth.speak(utter);
         };
 
-        // ================= ADD NEW VOCABULARY =================
-        window.saveNewVocab = async () => {
-            const eng = document.getElementById('add-v-eng').value.trim();
-            const ipa = document.getElementById('add-v-ipa').value.trim();
-            const vie = document.getElementById('add-v-vie').value.trim();
-            const note = document.getElementById('add-v-note').value.trim();
+        // ================= EDIT / DELETE VOCABULARY =================
+        window.openAddVocabModal = () => {
+            activeVocabEditId = null;
+            document.getElementById('vocab-modal-title').innerHTML = `<i class="fa-solid fa-pen-nib text-glowing-rose mr-2"></i>Thêm từ vựng mới`;
+            document.getElementById('v-eng').value = '';
+            document.getElementById('v-ipa').value = '';
+            document.getElementById('v-vie').value = '';
+            document.getElementById('v-category').value = 'custom';
+            document.getElementById('v-note').value = '';
+            document.getElementById('v-note').style.height = 'auto';
+            openModal('vocab-modal');
+        };
+
+        window.openEditVocabFromDetail = () => {
+            if (!currentDetailWord) return;
+            activeVocabEditId = currentDetailWord.id;
+            
+            document.getElementById('vocab-modal-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-glowing-teal mr-2"></i>Chỉnh sửa từ vựng`;
+            document.getElementById('v-eng').value = currentDetailWord.english;
+            document.getElementById('v-ipa').value = currentDetailWord.ipa || '';
+            document.getElementById('v-vie').value = currentDetailWord.vietnamese;
+            document.getElementById('v-category').value = currentDetailWord.category || 'custom';
+            
+            const noteTextarea = document.getElementById('v-note');
+            noteTextarea.value = currentDetailWord.note || '';
+            
+            closeModal('vocab-detail-modal');
+            openModal('vocab-modal');
+            
+            setTimeout(() => {
+                autoResizeTextarea(noteTextarea);
+            }, 100);
+        };
+
+        window.saveVocab = async () => {
+            const eng = document.getElementById('v-eng').value.trim();
+            const ipa = document.getElementById('v-ipa').value.trim();
+            const vie = document.getElementById('v-vie').value.trim();
+            const cat = document.getElementById('v-category').value;
+            const note = document.getElementById('v-note').value.trim();
 
             if (!eng || !vie) {
-                showToast("Vui lòng điền đủ thông tin có dấu sao em bé nhé! 😘");
+                showToast("Vui lòng nhập đầy đủ các thông tin bắt buộc (*).");
                 return;
             }
 
-            const newObj = {
-                id: 'custom_v_' + Date.now(),
-                english: eng,
-                ipa: ipa,
-                vietnamese: vie,
-                category: 'custom',
-                note: note
-            };
+            if (activeVocabEditId) {
+                const index = vocabList.findIndex(x => x.id === activeVocabEditId);
+                if (index !== -1) {
+                    vocabList[index] = { ...vocabList[index], english: eng, ipa: ipa, vietnamese: vie, category: cat, note: note };
+                }
+                showToast("Đã cập nhật từ vựng thành công.");
+            } else {
+                const newObj = {
+                    id: 'custom_v_' + Date.now(),
+                    english: eng,
+                    ipa: ipa,
+                    vietnamese: vie,
+                    category: cat,
+                    note: note
+                };
+                vocabList.unshift(newObj);
+                showToast("Đã thêm từ vựng mới thành công.");
+            }
 
-            vocabList.unshift(newObj);
             await saveData();
             renderVocab();
-            closeModal('add-vocab-modal');
-            showToast("Thêm từ vựng thành công rồi ạ! 💕");
-
-            // Reset inputs
-            document.getElementById('add-v-eng').value = '';
-            document.getElementById('add-v-ipa').value = '';
-            document.getElementById('add-v-vie').value = '';
-            document.getElementById('add-v-note').value = '';
+            closeModal('vocab-modal');
         };
 
-        // ================= RENDERING SENTENCES =================
+        window.deleteVocabFromDetail = () => {
+            if (!currentDetailWord) return;
+            closeModal('vocab-detail-modal');
+            
+            openModal('confirm-delete-modal');
+            document.getElementById('delete-btn-confirm').onclick = async () => {
+                vocabList = vocabList.filter(x => x.id !== currentDetailWord.id);
+                await saveData();
+                renderVocab();
+                closeModal('confirm-delete-modal');
+                showToast("Đã xóa từ vựng thành công.");
+                currentDetailWord = null;
+            };
+        };
+
+        // ================= RENDERING & EDITING SENTENCES =================
         window.renderSentences = () => {
             const listContainer = document.getElementById('sentence-list');
             listContainer.innerHTML = '';
 
             if (sentenceList.length === 0) {
                 listContainer.innerHTML = `
-                    <div class="py-10 text-center text-slate-400 text-xs">
-                        Chưa có câu nào rồi em bé ơi! Hãy thêm câu mới nhé. ✨
+                    <div class="py-16 text-center text-violet-300/50 text-xs">
+                        <i class="fa-solid fa-ghost text-2xl block mb-2 opacity-30"></i>
+                        Chưa có câu nào trong danh sách.
                     </div>
                 `;
                 return;
@@ -704,46 +1412,100 @@
 
             sentenceList.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "bg-white/95 p-4 rounded-3xl border border-rose-100 shadow-sm flex flex-col justify-between relative group overflow-hidden";
+                card.className = "glass-panel p-4.5 rounded-3xl border border-violet-500/20 shadow-lg flex flex-col justify-between relative group overflow-hidden space-y-3 hover:border-violet-400/40 transition-all";
                 card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div class="flex-1 pr-6">
-                            <h4 class="text-base font-bold text-slate-800">${item.english}</h4>
-                            <p class="text-xs text-rose-500 font-semibold mt-1 bg-rose-50/50 inline-block px-2.5 py-0.5 rounded-full">${item.vietnamese}</p>
+                    <div class="flex justify-between items-start gap-2">
+                        <div class="flex-1 pr-2">
+                            <h4 class="text-base font-extrabold text-white leading-normal tracking-wide">${item.english}</h4>
+                            <p class="text-xs text-glowing-gold font-bold mt-1.5 bg-violet-950/60 border border-violet-500/30 inline-block px-3 py-1 rounded-full leading-normal">${item.vietnamese}</p>
                         </div>
-                        <button onclick="speakText('${item.english.replace(/'/g, "\\'")}')" class="w-9 h-9 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center shrink-0 active:scale-90 transition">
-                            <i class="fa-solid fa-volume-high"></i>
-                        </button>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="speakText('${item.english.replace(/'/g, "\\'")}')" class="w-8 h-8 rounded-full bg-violet-900/50 border border-violet-500/25 text-glowing-rose flex items-center justify-center active:scale-90 transition shadow-neon-rose">
+                                <i class="fa-solid fa-volume-high text-xs"></i>
+                            </button>
+                            <button onclick="openEditSentenceModal('${item.id}')" class="w-8 h-8 rounded-full bg-violet-900/50 border border-violet-500/25 text-glowing-teal flex items-center justify-center active:scale-90 transition shadow-neon-teal">
+                                <i class="fa-solid fa-pen text-xs"></i>
+                            </button>
+                            <button onclick="confirmDeleteSentence('${item.id}')" class="w-8 h-8 rounded-full bg-rose-950/40 border border-rose-500/30 text-glowing-rose flex items-center justify-center active:scale-90 transition">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
                     </div>
                 `;
                 listContainer.appendChild(card);
             });
         };
 
-        // ================= ADD NEW SENTENCE =================
-        window.saveNewSentence = async () => {
-            const eng = document.getElementById('add-s-eng').value.trim();
-            const vie = document.getElementById('add-s-vie').value.trim();
+        window.openAddSentenceModal = () => {
+            activeSentenceEditId = null;
+            document.getElementById('sentence-modal-title').innerHTML = `<i class="fa-solid fa-quote-left text-glowing-rose mr-2"></i>Thêm câu giao tiếp mới`;
+            document.getElementById('s-eng').value = '';
+            document.getElementById('s-vie').value = '';
+            document.getElementById('s-eng').style.height = 'auto';
+            document.getElementById('s-vie').style.height = 'auto';
+            openModal('sentence-modal');
+        };
+
+        window.openEditSentenceModal = (id) => {
+            const item = sentenceList.find(x => x.id === id);
+            if (!item) return;
+            activeSentenceEditId = id;
+            
+            document.getElementById('sentence-modal-title').innerHTML = `<i class="fa-solid fa-pen-to-square text-glowing-teal mr-2"></i>Chỉnh sửa câu giao tiếp`;
+            
+            const engTextarea = document.getElementById('s-eng');
+            const vieTextarea = document.getElementById('s-vie');
+            
+            engTextarea.value = item.english;
+            vieTextarea.value = item.vietnamese;
+            
+            openModal('sentence-modal');
+            
+            setTimeout(() => {
+                autoResizeTextarea(engTextarea);
+                autoResizeTextarea(vieTextarea);
+            }, 100);
+        };
+
+        window.saveSentence = async () => {
+            const eng = document.getElementById('s-eng').value.trim();
+            const vie = document.getElementById('s-vie').value.trim();
 
             if (!eng || !vie) {
-                showToast("Vui lòng nhập đầy đủ câu em bé nhé! 💕");
+                showToast("Vui lòng nhập đầy đủ nội dung câu.");
                 return;
             }
 
-            const newObj = {
-                id: 'custom_s_' + Date.now(),
-                english: eng,
-                vietnamese: vie
-            };
+            if (activeSentenceEditId) {
+                const index = sentenceList.findIndex(x => x.id === activeSentenceEditId);
+                if (index !== -1) {
+                    sentenceList[index] = { ...sentenceList[index], english: eng, vietnamese: vie };
+                }
+                showToast("Cập nhật câu mẫu thành công.");
+            } else {
+                const newObj = {
+                    id: 'custom_s_' + Date.now(),
+                    english: eng,
+                    vietnamese: vie
+                };
+                sentenceList.unshift(newObj);
+                showToast("Đã thêm câu mới thành công.");
+            }
 
-            sentenceList.unshift(newObj);
             await saveData();
             renderSentences();
-            closeModal('add-sentence-modal');
-            showToast("Thêm câu mới thành công rồi nhé! 🌸");
+            closeModal('sentence-modal');
+        };
 
-            document.getElementById('add-s-eng').value = '';
-            document.getElementById('add-s-vie').value = '';
+        window.confirmDeleteSentence = (id) => {
+            openModal('confirm-delete-modal');
+            document.getElementById('delete-btn-confirm').onclick = async () => {
+                sentenceList = sentenceList.filter(x => x.id !== id);
+                await saveData();
+                renderSentences();
+                closeModal('confirm-delete-modal');
+                showToast("Đã xóa câu giao tiếp thành công.");
+            };
         };
 
         // ================= IPA CHART HELPER =================
@@ -766,52 +1528,62 @@
 
             ipaVowels.forEach(item => {
                 const card = document.createElement('button');
-                card.className = "bg-white p-2.5 rounded-2xl border border-rose-50 flex flex-col items-center justify-center shadow-sm active:scale-95 transition";
+                card.className = "glass-panel p-2.5 rounded-2xl border border-violet-500/20 flex flex-col items-center justify-center shadow-md active:scale-95 transition-all hover:border-violet-400/40";
                 card.onclick = () => speakText(item.word);
                 card.innerHTML = `
-                    <span class="text-base font-extrabold text-rose-500">${item.symbol}</span>
-                    <span class="text-[10px] text-slate-500 font-bold mt-0.5">${item.word}</span>
-                    <span class="text-[9px] text-slate-400 italic">${item.ipa}</span>
+                    <span class="text-base font-extrabold text-glowing-rose drop-shadow-[0_0_5px_rgba(255,77,109,0.3)]">${item.symbol}</span>
+                    <span class="text-[10px] text-white font-bold mt-0.5">${item.word}</span>
+                    <span class="text-[9px] text-violet-300/60 italic">${item.ipa}</span>
                 `;
                 grid.appendChild(card);
             });
+        };
+
+        // ================= SMART SCORING & COMPARING =================
+        const normalizeText = (text) => {
+            if (!text) return "";
+            return text
+                .toLowerCase()
+                .replace(/[‘’]/g, "'") 
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "") 
+                .replace(/\s+/g, ' ') 
+                .trim();
+        };
+
+        const isAnswerCorrect = (user, correct) => {
+            return normalizeText(user) === normalizeText(correct);
         };
 
         // ================= TESTING SYSTEM =================
         window.selectTestType = (type) => {
             testType = type;
             document.querySelectorAll('.test-type-btn').forEach(btn => {
-                btn.classList.remove('active', 'border-rose-400', 'bg-rose-50/50');
-                btn.classList.add('border-slate-200', 'bg-white');
-                btn.querySelector('i').className = btn.querySelector('i').className.replace('text-rose-500', 'text-slate-500');
+                btn.className = "test-type-btn p-4 border border-violet-500/20 bg-magic-950/40 rounded-2xl text-center space-y-1.5 transition-all";
+                btn.querySelector('i').className = btn.querySelector('i').className.replace('text-glowing-rose', 'text-violet-300');
             });
             const activeBtn = document.getElementById(`btn-test-${type}`);
-            activeBtn.classList.add('active', 'border-rose-400', 'bg-rose-50/50');
-            activeBtn.classList.remove('border-slate-200', 'bg-white');
-            activeBtn.querySelector('i').className = activeBtn.querySelector('i').className.replace('text-slate-500', 'text-rose-500');
+            activeBtn.className = "test-type-btn active p-4 border-2 border-glowing-rose bg-gradient-to-b from-glowing-rose/10 to-magic-900/60 rounded-2xl text-center space-y-1.5 transition-all shadow-neon-rose";
+            activeBtn.querySelector('i').className = activeBtn.querySelector('i').className.replace('text-violet-300', 'text-glowing-rose');
         };
 
         window.selectTestSource = (source) => {
             testSource = source;
             document.querySelectorAll('.test-source-btn').forEach(btn => {
-                btn.classList.remove('active', 'border-rose-400', 'bg-rose-50/50');
-                btn.classList.add('border-slate-200', 'bg-white');
+                btn.className = "test-source-btn p-3.5 border border-violet-500/20 bg-magic-950/40 rounded-2xl text-xs font-extrabold text-violet-200 transition-all";
             });
             const activeBtn = document.getElementById(`btn-source-${source}`);
-            activeBtn.classList.add('active', 'border-rose-400', 'bg-rose-50/50');
-            activeBtn.classList.remove('border-slate-200', 'bg-white');
+            activeBtn.className = "test-source-btn active p-3.5 border-2 border-glowing-rose bg-gradient-to-b from-glowing-rose/10 to-magic-900/60 rounded-2xl text-xs font-extrabold text-white transition-all shadow-neon-rose";
         };
 
         window.startTest = () => {
             let pool = testSource === 'vocab' ? [...vocabList] : [...sentenceList];
             if (pool.length < 4) {
-                showToast("Hãy thêm tối thiểu 4 từ vựng hoặc câu để bắt đầu làm kiểm tra nhé! 😘");
+                showToast("Vui lòng thêm tối thiểu 4 từ vựng hoặc câu để bắt đầu kiểm tra.");
                 return;
             }
 
-            // Shuffle pool to pick questions
             pool.sort(() => 0.5 - Math.random());
-            testQuestions = pool.slice(0, 10); // Max 10 questions per test
+            testQuestions = pool.slice(0, 10); 
 
             currentQuestionIndex = 0;
             testScore = 0;
@@ -824,28 +1596,29 @@
         };
 
         const showNextQuestion = () => {
-            if (currentQuestionIndex >= testQuestions.length) {
-                finishTest();
-                return;
-            }
+            isQuestionAnswered = false;
 
-            // Update Progress UI
-            document.getElementById('test-progress').innerText = `Câu ${currentQuestionIndex + 1}/${testQuestions.length}`;
+            document.getElementById('test-feedback-box').classList.add('hidden');
+            document.getElementById('test-input-container').classList.remove('hidden');
+
+            const totalQuestions = testQuestions.length;
+            const progressPercent = ((currentQuestionIndex) / totalQuestions) * 100;
+            document.getElementById('test-progress').innerText = `Câu ${currentQuestionIndex + 1}/${totalQuestions}`;
+            document.getElementById('test-progress-bar').style.width = `${progressPercent || 5}%`;
             document.getElementById('test-score').innerText = `Điểm: ${testScore}`;
 
             const q = testQuestions[currentQuestionIndex];
             const direction = Math.random() > 0.5 ? 'en-vi' : 'vi-en';
-            q._direction = direction; // Keep track of the direction
+            q._direction = direction; 
 
             if (direction === 'en-vi') {
                 document.getElementById('question-direction').innerText = "Chọn nghĩa tiếng Việt chính xác:";
                 document.getElementById('question-text').innerText = q.english;
             } else {
-                document.getElementById('question-direction').innerText = "Dịch cụm từ sau sang Tiếng Anh:";
+                document.getElementById('question-direction').innerText = "Dịch sang tiếng Anh:";
                 document.getElementById('question-text').innerText = q.vietnamese;
             }
 
-            // Handle Mode Views
             if (testType === 'mcq') {
                 document.getElementById('answer-zone-mcq').classList.remove('hidden');
                 document.getElementById('answer-zone-write').classList.add('hidden');
@@ -853,8 +1626,11 @@
             } else {
                 document.getElementById('answer-zone-mcq').classList.add('hidden');
                 document.getElementById('answer-zone-write').classList.remove('hidden');
-                document.getElementById('write-answer-input').value = '';
-                document.getElementById('write-answer-input').focus();
+                const writeInput = document.getElementById('write-answer-input');
+                writeInput.value = '';
+                writeInput.style.height = 'auto';
+                writeInput.disabled = false;
+                writeInput.focus();
             }
         };
 
@@ -862,19 +1638,16 @@
             const mcqZone = document.getElementById('answer-zone-mcq');
             mcqZone.innerHTML = '';
 
-            // Get distractor pool
             let pool = testSource === 'vocab' ? [...vocabList] : [...sentenceList];
             pool = pool.filter(item => item.id !== question.id);
             pool.sort(() => 0.5 - Math.random());
 
             let options = [];
-            // Target option
             options.push({
                 text: direction === 'en-vi' ? question.vietnamese : question.english,
                 isCorrect: true
             });
 
-            // Distractor options (up to 3)
             for (let i = 0; i < Math.min(3, pool.length); i++) {
                 options.push({
                     text: direction === 'en-vi' ? pool[i].vietnamese : pool[i].english,
@@ -882,63 +1655,115 @@
                 });
             }
 
-            // Shuffle options
             options.sort(() => 0.5 - Math.random());
 
             options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full p-4 bg-white border border-slate-200 text-slate-800 text-sm font-bold rounded-2xl shadow-sm text-left active:scale-[0.99] transition flex items-center justify-between";
-                btn.onclick = () => selectMCQAnswer(btn, opt.isCorrect);
+                btn.className = "w-full p-4 bg-magic-950/60 border border-violet-500/25 text-white text-sm font-bold rounded-2xl shadow-md text-left active:scale-[0.99] transition flex items-center justify-between option-btn hover:border-violet-400/40";
+                btn.onclick = () => selectMCQAnswer(btn, opt);
                 btn.innerHTML = `
-                    <span>${opt.text}</span>
-                    <span class="text-slate-300"><i class="fa-solid fa-circle-dot"></i></span>
+                    <span class="option-text">${opt.text}</span>
+                    <span class="status-icon text-violet-400/40"><i class="fa-solid fa-circle-dot"></i></span>
                 `;
                 mcqZone.appendChild(btn);
             });
         };
 
-        window.selectMCQAnswer = (button, isCorrect) => {
-            // Disable all buttons in zone to avoid multiple clicks
-            const buttons = document.getElementById('answer-zone-mcq').querySelectorAll('button');
-            buttons.forEach(btn => btn.disabled = true);
+        window.selectMCQAnswer = (button, option) => {
+            if (isQuestionAnswered) return;
+            isQuestionAnswered = true;
 
-            if (isCorrect) {
-                button.classList.remove('border-slate-200', 'bg-white');
-                button.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
-                button.querySelector('i').className = "fa-solid fa-circle-check text-emerald-500";
+            const q = testQuestions[currentQuestionIndex];
+            const targetAns = q._direction === 'en-vi' ? q.vietnamese : q.english;
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                const optText = btn.querySelector('.option-text').innerText;
+                if (optText === targetAns) {
+                    btn.className = "w-full p-4 border-2 border-glowing-teal bg-glowing-teal/10 text-white text-sm font-bold rounded-2xl shadow-neon-teal text-left flex items-center justify-between option-btn";
+                    btn.querySelector('.status-icon').innerHTML = `<i class="fa-solid fa-circle-check text-glowing-teal text-base animate-bounce"></i>`;
+                }
+            });
+
+            if (option.isCorrect) {
                 testScore++;
-                showToast("Chính xác rồi em ơi! ❤️");
+                showFeedback(true, option.text, targetAns, q);
             } else {
-                button.classList.remove('border-slate-200', 'bg-white');
-                button.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
-                button.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-500";
-                // Show the correct answer
-                showToast("Tiếc quá, sai mất rồi ạ! Cố lên nhé! 😘");
+                button.className = "w-full p-4 border-2 border-glowing-rose bg-glowing-rose/10 text-white text-sm font-bold rounded-2xl shadow-neon-rose text-left flex items-center justify-between option-btn";
+                button.querySelector('.status-icon').innerHTML = `<i class="fa-solid fa-circle-xmark text-glowing-rose text-base"></i>`;
+                showFeedback(false, option.text, targetAns, q);
             }
-
-            setTimeout(() => {
-                currentQuestionIndex++;
-                showNextQuestion();
-            }, 1500);
         };
 
         window.submitWriteAnswer = () => {
-            const userAns = document.getElementById('write-answer-input').value.trim().toLowerCase();
+            if (isQuestionAnswered) return;
+            isQuestionAnswered = true;
+
             const q = testQuestions[currentQuestionIndex];
-            const correctAns = (q._direction === 'en-vi' ? q.vietnamese : q.english).trim().toLowerCase();
+            const userAns = document.getElementById('write-answer-input').value;
+            const targetAns = q._direction === 'en-vi' ? q.vietnamese : q.english;
 
-            // Simple direct string matching
-            if (userAns === correctAns) {
+            document.getElementById('write-answer-input').disabled = true;
+
+            const correct = isAnswerCorrect(userAns, targetAns);
+            if (correct) {
                 testScore++;
-                showToast("Đúng chuẩn rồi bé ơi! Siêu thế! 🎉");
-            } else {
-                showToast(`Nghĩa đúng là: "${q._direction === 'en-vi' ? q.vietnamese : q.english}" bé nhé!`);
             }
+            showFeedback(correct, userAns, targetAns, q);
+        };
 
-            setTimeout(() => {
-                currentQuestionIndex++;
+        const showFeedback = (isCorrect, userAns, targetAns, question) => {
+            document.getElementById('test-input-container').classList.add('hidden');
+            
+            const feedbackBox = document.getElementById('test-feedback-box');
+            feedbackBox.classList.remove('hidden');
+
+            const statusEl = document.getElementById('feedback-status');
+            const correctAnsEl = document.getElementById('feedback-correct-answer');
+            const userAnsEl = document.getElementById('feedback-user-answer');
+            const explanationEl = document.getElementById('feedback-explanation');
+            const userBox = document.getElementById('feedback-user-box');
+            const explanationBox = document.getElementById('feedback-explanation-box');
+
+            correctAnsEl.innerText = targetAns;
+            userAnsEl.innerText = userAns || "(Bạn để trống câu trả lời)";
+
+            const speechText = question.english;
+            document.getElementById('feedback-speak-btn').onclick = () => speakText(speechText);
+
+            if (isCorrect) {
+                statusEl.innerHTML = `<span class="text-glowing-teal text-lg font-black drop-shadow-neon-teal"><i class="fa-solid fa-circle-check mr-2"></i>ĐÁP ÁN CHÍNH XÁC! 🎉</span>`;
+                userBox.className = "p-4 rounded-2xl bg-glowing-teal/5 border border-glowing-teal/20";
+                explanationBox.classList.add('hidden');
+            } else {
+                statusEl.innerHTML = `<span class="text-glowing-rose text-lg font-black drop-shadow-neon-rose"><i class="fa-solid fa-circle-xmark mr-2"></i>CHƯA CHÍNH XÁC! 🌸</span>`;
+                userBox.className = "p-4 rounded-2xl bg-glowing-rose/5 border border-glowing-rose/20";
+                explanationBox.classList.remove('hidden');
+
+                if (testType === 'write') {
+                    explanationEl.innerHTML = `
+                        Bạn đã nhập: <b class="text-glowing-rose">"${userAns}"</b>.<br>
+                        Đáp án chuẩn: <b class="text-glowing-teal">"${targetAns}"</b>.<br>
+                        <span class="text-violet-300 block mt-2 font-medium"><i class="fa-solid fa-lightbulb text-glowing-gold mr-1.5 animate-pulse"></i>Hãy lắng nghe phát âm và thử viết lại nhé em yêu!</span>
+                    `;
+                } else {
+                    explanationEl.innerHTML = `
+                        Lựa chọn này chưa chuẩn xác.<br>
+                        Đáp án chuẩn: <b class="text-glowing-teal">"${targetAns}"</b>.<br>
+                        <span class="text-violet-300 block mt-1.5 font-medium"><i class="fa-solid fa-lightbulb text-glowing-gold mr-1.5 animate-pulse"></i>Cố gắng lên ở những câu tiếp theo nhé em!</span>
+                    `;
+                }
+            }
+        };
+
+        window.handleNextQuestion = () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= testQuestions.length) {
+                finishTest();
+            } else {
                 showNextQuestion();
-            }, 2500);
+            }
         };
 
         const finishTest = () => {
@@ -949,18 +1774,17 @@
 
             if (testScore === testQuestions.length) {
                 document.getElementById('result-emoji').innerText = "🏆👑";
-                document.getElementById('result-title').innerText = "Thiên tài tiếng Anh của anh đây rồi!";
-                document.getElementById('result-subtitle').innerText = "Trời ơi xuất sắc đạt điểm tuyệt đối 100%! Yêu em bé quá đi! ❤️";
-                // Fire continuous confetti
-                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+                document.getElementById('result-title').innerText = "Kết Quả Tuyệt Đỉnh!";
+                document.getElementById('result-subtitle').innerText = "Chúc mừng em yêu của anh đã vượt qua xuất sắc 100% câu hỏi!";
+                confetti({ particleCount: 180, spread: 90, origin: { y: 0.55 } });
             } else if (testScore >= testQuestions.length / 2) {
                 document.getElementById('result-emoji').innerText = "🎉✨";
-                document.getElementById('result-title').innerText = "Làm tốt lắm em bé ơi!";
-                document.getElementById('result-subtitle').innerText = "Chỉ một chút xíu nữa là tuyệt đối rồi. Tiếp tục luyện tập nhé!";
+                document.getElementById('result-title').innerText = "Tuyệt vời quá!";
+                document.getElementById('result-subtitle').innerText = "Hãy tiếp tục hành trình để đạt kết quả tối đa nhé em.";
             } else {
                 document.getElementById('result-emoji').innerText = "💪❤️";
-                document.getElementById('result-title').innerText = "Cố gắng lên em bé nhé!";
-                document.getElementById('result-subtitle').innerText = "Anh tin là lượt sau em bé sẽ làm tốt hơn rất nhiều.";
+                document.getElementById('result-title').innerText = "Cố gắng thêm chút nữa!";
+                document.getElementById('result-subtitle').innerText = "Không sao cả, hãy ôn luyện và làm lại lượt mới nào!";
             }
         };
 
@@ -1001,7 +1825,7 @@
 
         window.showToast = (msg) => {
             const t = document.getElementById('toast');
-            t.innerText = msg;
+            document.getElementById('toast-message').innerText = msg;
             t.classList.remove('opacity-0');
             t.classList.add('opacity-100');
             setTimeout(() => {
