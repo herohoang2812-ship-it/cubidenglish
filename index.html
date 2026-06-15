@@ -6,20 +6,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>English — Tặng em bé của anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg1:#1b2a4a; --bg2:#3a1d5c; --bg3:#0f2e3e;
-    --glass: rgba(255,255,255,0.12);
-    --glass-strong: rgba(255,255,255,0.18);
-    --border: rgba(255,255,255,0.25);
-    --text:#f4f6ff; --muted:rgba(244,246,255,0.7);
-    --accent:#ff7eb3; --accent2:#7ee8fa; --good:#5ee0a0; --bad:#ff7a7a;
-    --radius:22px;
+    --bg1:#fff1f2; --bg2:#fdf2f8; --bg3:#f5f3ff;
+    --card: rgba(255,255,255,0.9);
+    --card-strong: #ffffff;
+    --border: #fecdd3;
+    --border-soft: #ffe4e6;
+    --text:#1e293b; --muted:#64748b;
+    --accent:#f43f5e; --accent-2:#ec4899; --accent2:#8b5cf6; --violet:#8b5cf6; --good:#10b981; --bad:#f43f5e;
+    --radius:24px;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0;height:100%;}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-family:'Quicksand',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     color:var(--text);
     background:linear-gradient(135deg,var(--bg1),var(--bg2) 50%,var(--bg3));
     background-attachment:fixed;
@@ -27,107 +29,109 @@
     overflow-x:hidden;
     padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
-  body::before{
-    content:"";position:fixed;inset:0;z-index:-1;
-    background:
-      radial-gradient(40% 30% at 15% 12%, rgba(255,126,179,0.25), transparent 60%),
-      radial-gradient(45% 35% at 85% 20%, rgba(126,232,250,0.22), transparent 60%),
-      radial-gradient(50% 40% at 50% 95%, rgba(150,120,255,0.20), transparent 60%);
-  }
   .app{max-width:680px;margin:0 auto;padding:18px 16px 110px;}
   header{text-align:center;margin:8px 0 18px;}
-  header h1{font-size:26px;margin:0;font-weight:800;letter-spacing:.3px;
-    background:linear-gradient(90deg,var(--accent2),var(--accent));
+  header h1{font-size:26px;margin:0;font-weight:700;letter-spacing:.3px;
+    background:linear-gradient(90deg,var(--accent),var(--violet));
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-  .gift{font-size:12px;font-style:italic;color:var(--muted);margin-top:4px;}
+  .gift{font-size:13px;font-style:italic;color:var(--accent);font-weight:500;margin-top:4px;
+    font-family:'Playfair Display',serif;}
   .sync{font-size:11px;color:var(--muted);margin-top:6px;display:flex;gap:6px;justify-content:center;align-items:center;}
-  .dot{width:8px;height:8px;border-radius:50%;background:#888;display:inline-block;}
+  .dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;display:inline-block;}
   .dot.on{background:var(--good);box-shadow:0 0 8px var(--good);}
   .dot.off{background:var(--bad);}
 
   .glass{
-    background:var(--glass);
-    border:1px solid var(--border);
+    background:var(--card);
+    border:1px solid var(--border-soft);
     border-radius:var(--radius);
-    backdrop-filter:blur(18px) saturate(140%);
-    -webkit-backdrop-filter:blur(18px) saturate(140%);
-    box-shadow:0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+    backdrop-filter:blur(8px) saturate(120%);
+    -webkit-backdrop-filter:blur(8px) saturate(120%);
+    box-shadow:0 4px 20px rgba(244,63,94,0.06);
   }
 
   /* Tab grid */
   .tabs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
   .tab{
     padding:22px 16px;text-align:center;cursor:pointer;
-    transition:transform .15s ease, background .2s;
+    transition:transform .15s ease, box-shadow .2s;
     display:flex;flex-direction:column;align-items:center;gap:8px;
   }
   .tab:active{transform:scale(.96);}
   .tab .ic{font-size:30px;}
-  .tab .nm{font-weight:700;font-size:16px;}
+  .tab .nm{font-weight:700;font-size:16px;color:var(--text);}
   .tab .sub{font-size:11px;color:var(--muted);}
 
   /* Buttons */
   button{font-family:inherit;color:var(--text);cursor:pointer;border:none;}
   .btn{
-    background:var(--glass-strong);border:1px solid var(--border);
-    border-radius:14px;padding:11px 16px;font-size:15px;font-weight:600;
-    backdrop-filter:blur(10px);transition:transform .12s, background .2s;
+    background:#fff;border:1px solid var(--border);color:var(--accent);
+    border-radius:14px;padding:11px 16px;font-size:15px;font-weight:700;
+    transition:transform .12s, box-shadow .2s, background .2s;
   }
   .btn:active{transform:scale(.95);}
-  .btn.primary{background:linear-gradient(90deg,var(--accent),#ff5e9c);border:none;}
-  .btn.cyan{background:linear-gradient(90deg,var(--accent2),#3fc7e0);border:none;color:#06303a;}
-  .btn.ghost{background:rgba(255,255,255,0.06);}
+  .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#fff;
+    box-shadow:0 4px 14px rgba(244,63,94,0.3);}
+  .btn.cyan{background:linear-gradient(90deg,var(--violet),#a78bfa);border:none;color:#fff;
+    box-shadow:0 4px 14px rgba(139,92,246,0.3);}
+  .btn.ghost{background:#fff;border:1px solid #e2e8f0;color:var(--muted);}
   .btn.sm{padding:7px 11px;font-size:13px;border-radius:11px;}
   .row{display:flex;gap:10px;flex-wrap:wrap;}
   .row.between{justify-content:space-between;align-items:center;}
 
   input,select,textarea{
     width:100%;font-family:inherit;font-size:15px;color:var(--text);
-    background:rgba(255,255,255,0.10);border:1px solid var(--border);
-    border-radius:12px;padding:11px 13px;outline:none;
+    background:#f8fafc;border:1px solid #e2e8f0;
+    border-radius:12px;padding:11px 13px;outline:none;transition:border .2s, box-shadow .2s;
   }
-  input::placeholder,textarea::placeholder{color:rgba(244,246,255,0.45);}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(244,63,94,0.15);}
+  input::placeholder,textarea::placeholder{color:#94a3b8;}
   select option{color:#111;}
-  label{font-size:12px;color:var(--muted);display:block;margin:10px 0 5px;}
+  label{font-size:12px;color:var(--muted);font-weight:700;display:block;margin:10px 0 5px;}
 
   /* Modal */
   .overlay{
     position:fixed;inset:0;z-index:50;display:none;
     align-items:center;justify-content:center;padding:18px;
-    background:rgba(8,10,25,0.55);backdrop-filter:blur(6px);
+    background:rgba(15,23,42,0.4);backdrop-filter:blur(6px);
     animation:fade .2s ease;
   }
   .overlay.show{display:flex;}
   @keyframes fade{from{opacity:0}to{opacity:1}}
   .modal{
     width:100%;max-width:560px;max-height:86vh;overflow:auto;
+    background:var(--card-strong);border:1px solid var(--border);
+    box-shadow:0 20px 50px rgba(15,23,42,0.2);
     padding:20px;animation:pop .25s cubic-bezier(.2,.9,.3,1.3);
   }
   @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
-  .modal h2{margin:0 0 4px;font-size:20px;}
+  .modal h2{margin:0 0 4px;font-size:20px;color:var(--text);}
+  .modal h3{color:var(--text);}
   .modal .close{position:sticky;top:0;float:right;font-size:22px;line-height:1;
-    background:transparent;border:none;color:var(--muted);padding:2px 6px;margin:-6px -6px 0 0;}
+    background:transparent;border:none;color:#94a3b8;padding:2px 6px;margin:-6px -6px 0 0;}
 
   /* List items */
   .item{
     padding:13px 15px;margin:10px 0;border-radius:16px;
-    background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
+    background:#fff;border:1px solid var(--border-soft);
+    box-shadow:0 2px 8px rgba(244,63,94,0.04);
     display:flex;justify-content:space-between;align-items:center;gap:10px;
   }
-  .item .w{font-weight:700;font-size:16px;}
-  .item .ipa{color:var(--accent2);font-size:13px;}
+  .item .w{font-weight:700;font-size:16px;color:var(--text);}
+  .item .ipa{color:var(--violet);font-size:13px;font-style:italic;}
   .item .mean{color:var(--muted);font-size:14px;}
   .item .acts{display:flex;gap:6px;flex-shrink:0;}
-  .iconbtn{background:rgba(255,255,255,0.10);border:1px solid var(--border);
+  .iconbtn{background:#fff5f6;border:1px solid var(--border-soft);color:var(--accent);
     border-radius:10px;width:36px;height:36px;font-size:16px;display:flex;align-items:center;justify-content:center;}
 
-  .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;
-    background:rgba(255,255,255,0.12);border:1px solid var(--border);margin:0 6px 6px 0;cursor:pointer;}
-  .pill.active{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#06303a;font-weight:700;}
+  .pill{display:inline-block;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;color:var(--accent);
+    background:#fff;border:1px solid var(--border);margin:0 6px 6px 0;cursor:pointer;}
+  .pill.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;
+    box-shadow:0 2px 8px rgba(244,63,94,0.25);}
 
   .count{font-size:13px;color:var(--muted);}
   .center{text-align:center;}
-  .big{font-size:28px;font-weight:800;margin:10px 0;}
+  .big{font-size:28px;font-weight:800;margin:10px 0;color:var(--text);}
   .muted{color:var(--muted);}
   .hidden{display:none!important;}
   .scroll{max-height:58vh;overflow:auto;margin-top:8px;}
@@ -136,9 +140,32 @@
   .res-good{color:var(--good);font-weight:700;}
   .res-bad{color:var(--bad);font-weight:700;}
   .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);
-    background:rgba(20,22,40,0.9);border:1px solid var(--border);padding:11px 18px;
-    border-radius:14px;font-size:14px;z-index:99;opacity:0;transition:opacity .25s;backdrop-filter:blur(10px);}
+    background:rgba(15,23,42,0.9);color:#fff;border:none;padding:11px 18px;
+    border-radius:14px;font-size:14px;font-weight:600;z-index:99;opacity:0;transition:opacity .25s;box-shadow:0 8px 24px rgba(15,23,42,0.25);}
   .toast.show{opacity:1;}
+  .ipagrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .ipacell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    padding:14px 6px;background:#fff;border:1px solid var(--border-soft);border-radius:16px;
+    box-shadow:0 2px 8px rgba(244,63,94,0.04);transition:transform .12s;}
+  .ipacell:active{transform:scale(.95);}
+  .ipacell.vowel{border:1.5px solid #f59e0b;}
+  .ipacell.cons{border:1.5px solid #10b981;}
+  .ipacell .sym{font-size:18px;font-weight:800;color:var(--text);}
+  .ipacell.vowel .sym{color:#d97706;}
+  .ipacell.cons .sym{color:#059669;}
+  .ipacell .wd{font-size:12px;font-weight:700;color:var(--muted);}
+  .ipacell .ix{font-size:10px;font-style:italic;color:#94a3b8;}
+  .pairhead{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 4px;
+    font-size:13px;font-weight:700;color:var(--muted);text-align:center;}
+  .pairrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0;}
+  .pairside{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;
+    padding:11px 13px;background:#fff;border:1px solid var(--border-soft);border-radius:14px;
+    box-shadow:0 2px 8px rgba(244,63,94,0.04);transition:transform .12s;}
+  .pairside:active{transform:scale(.97);}
+  .pairside .w{font-weight:700;font-size:15px;color:var(--text);}
+  .pairside .ipa{color:var(--violet);font-size:12px;font-style:italic;}
+  .pairside .mean{color:var(--muted);font-size:11px;}
+  .pairside .spk{color:var(--accent);font-size:16px;flex-shrink:0;}
   .speak{cursor:pointer;}
 </style>
 </head>
@@ -487,31 +514,101 @@ function sentForm(s){
 }
 
 /* ---------- PRONUNCIATION ---------- */
-let pronIdx=0;
+const IPA_GROUPS=[
+  {label:"Nguyên âm ngắn",kind:"vowel",items:[["ɪ","sit"],["ʊ","good"],["ʌ","cup"],["ɒ","hot"],["ə","about"],["e","ten"],["æ","cat"]]},
+  {label:"Nguyên âm dài",kind:"vowel",items:[["iː","see"],["uː","two"],["ɑː","father"],["ɔː","door"],["ɜː","bird"]]},
+  {label:"Nguyên âm đôi",kind:"vowel",items:[["ɪə","here"],["ʊə","tour"],["aɪ","my"],["ɔɪ","boy"],["əʊ","go"],["eə","hair"],["aʊ","now"],["eɪ","day"]]},
+  {label:"Phụ âm gió",kind:"cons",items:[["p","pen"],["t","ten"],["tʃ","chair"],["k","cat"],["f","fish"],["θ","think"],["s","sun"],["ʃ","she"]]},
+  {label:"Phụ âm rung",kind:"cons",items:[["b","bag"],["d","dog"],["dʒ","jam"],["g","go"],["v","van"],["ð","this"],["z","zoo"],["ʒ","vision"]]},
+  {label:"Phụ âm khác",kind:"cons",items:[["m","man"],["n","no"],["ŋ","sing"],["l","leg"],["r","red"],["w","we"],["j","yes"],["h","hat"]]}
+];
+const MIN_PAIRS=[
+  {title:"/ɪ/ vs /iː/",rows:[
+    ["Ship","/ʃɪp/","Con tàu","Sheep","/ʃiːp/","Con cừu"],
+    ["Sit","/sɪt/","Ngồi","Seat","/siːt/","Chỗ ngồi"],
+    ["It","/ɪt/","Nó, cái đó","Eat","/iːt/","Ăn"],
+    ["Bin","/bɪn/","Thùng rác","Bean","/biːn/","Đậu, đỗ"],
+    ["Fill","/fɪl/","Làm đầy","Feel","/fiːl/","Cảm thấy"],
+    ["Chip","/tʃɪp/","Khoai tây chiên","Cheap","/tʃiːp/","Rẻ"],
+    ["Still","/stɪl/","Vẫn còn","Steal","/stiːl/","Ăn cắp"],
+    ["Rich","/rɪtʃ/","Giàu","Reach","/riːtʃ/","Với tới"]
+  ]},
+  {title:"/æ/ vs /e/",rows:[
+    ["Bad","/bæd/","Tồi tệ","Bed","/bed/","Cái giường"],
+    ["Sat","/sæt/","Đã ngồi","Set","/set/","Đặt, bộ"],
+    ["Man","/mæn/","Đàn ông","Men","/men/","Những người đàn ông"],
+    ["Bag","/bæɡ/","Cái túi","Beg","/beɡ/","Cầu xin"],
+    ["Had","/hæd/","Đã có","Head","/hed/","Cái đầu"],
+    ["Pan","/pæn/","Cái chảo","Pen","/pen/","Cây bút"]
+  ]},
+  {title:"/ʊ/ vs /uː/",rows:[
+    ["Full","/fʊl/","Đầy","Fool","/fuːl/","Kẻ ngốc"],
+    ["Pull","/pʊl/","Kéo","Pool","/puːl/","Hồ bơi"],
+    ["Foot","/fʊt/","Bàn chân","Food","/fuːd/","Thức ăn"]
+  ]}
+];
+let pronTab="quick", pairIdx=0;
 function renderPron(){
-  if(words.length===0){ openModal(`<button class="close" onclick="window.__close()">×</button><h2>🔊 Phát âm</h2><p class="muted center" style="padding:24px">Chưa có từ vựng.</p>`); bindClose(); return; }
-  if(pronIdx>=words.length) pronIdx=0;
-  const w=words[pronIdx];
+  const tabs=[["quick","🎵 Thử nhanh"],["board","🔤 Bảng âm IPA"],["guide","📖 Hướng dẫn"]]
+    .map(([k,l])=>`<span class="pill ${pronTab===k?'active':''}" data-ptab="${k}">${l}</span>`).join("");
+  let body="";
+  if(pronTab==="quick"){
+    body=`
+    <div class="glass" style="padding:18px;margin-top:4px">
+      <h3 style="margin:0 0 12px;font-size:15px">🎵 Thử phát âm nhanh</h3>
+      <div class="row" style="flex-wrap:nowrap;gap:10px">
+        <input id="pQuick" placeholder="Nhập từ hoặc câu tiếng Anh…" style="flex:1">
+        <button class="btn primary" id="pQuickSay" style="flex-shrink:0">🔊</button>
+      </div>
+    </div>`;
+  } else if(pronTab==="board"){
+    body=IPA_GROUPS.map(g=>`
+      <h3 style="margin:16px 0 8px;font-size:14px">${g.label}</h3>
+      <div class="ipagrid">${g.items.map(([sym,word])=>`
+        <button class="ipacell ${g.kind}" data-say="${esc(word)}">
+          <span class="sym">${esc(sym)}</span>
+          <span class="wd">${esc(word)}</span>
+        </button>`).join("")}</div>`).join("");
+  } else {
+    const set=MIN_PAIRS[pairIdx];
+    const sets=MIN_PAIRS.map((p,i)=>`<span class="pill ${i===pairIdx?'active':''}" data-pair="${i}">${esc(p.title)}</span>`).join("");
+    const rows=set.rows.map(r=>`
+      <div class="pairrow">
+        <button class="pairside" data-say="${esc(r[0])}">
+          <div><div class="w">${esc(r[0])}</div><div class="ipa">${esc(r[1])}</div><div class="mean">${esc(r[2])}</div></div>
+          <span class="spk">🔊</span>
+        </button>
+        <button class="pairside" data-say="${esc(r[3])}">
+          <div><div class="w">${esc(r[3])}</div><div class="ipa">${esc(r[4])}</div><div class="mean">${esc(r[5])}</div></div>
+          <span class="spk">🔊</span>
+        </button>
+      </div>`).join("");
+    body=`
+      <p class="muted" style="font-size:13px;margin:4px 0 10px">So sánh cặp âm dễ nhầm. Bấm vào từ để nghe và luyện phân biệt nhé!</p>
+      <div>${sets}</div>
+      <div class="pairhead"><span>Từ thứ nhất</span><span>Từ thứ hai</span></div>
+      <div class="scroll">${rows}</div>`;
+  }
   openModal(`
     <button class="close" onclick="window.__close()">×</button>
-    <h2>🔊 Phát âm chuẩn IPA</h2>
-    <div class="glass center" style="padding:28px 18px;margin-top:14px">
-      <div class="big">${esc(w.word)}</div>
-      <div style="color:var(--accent2);font-size:20px;margin:6px 0">${esc(w.ipa||"—")}</div>
-      <div class="muted">${esc(w.meaning||"")}</div>
-      <button class="btn cyan" style="margin-top:16px" id="pSay">🔊 Nghe phát âm</button>
+    <div class="glass center" style="padding:20px 18px">
+      <div style="width:58px;height:58px;border-radius:50%;background:#ffe4e6;color:var(--accent);
+        display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px">🎤</div>
+      <h2 style="margin:0">Luyện Phát Âm Chuẩn IPA</h2>
+      <p class="muted" style="font-size:13px;margin:8px 0 0;line-height:1.5">Em bé hãy chọn một từ hoặc câu bên dưới để nghe cách phát âm bản xứ chuẩn xác nhất, sau đó có thể luyện đọc theo nhé!</p>
     </div>
-    <div class="row between" style="margin-top:16px">
-      <button class="btn ghost" id="pPrev">← Trước</button>
-      <span class="muted">${pronIdx+1}/${words.length}</span>
-      <button class="btn ghost" id="pNext">Sau →</button>
-    </div>
+    <div style="margin:14px 0 8px">${tabs}</div>
+    ${body}
   `);
   bindClose();
-  $("#pSay").onclick=()=>speak(w.word);
-  $("#pPrev").onclick=()=>{ pronIdx=(pronIdx-1+words.length)%words.length; renderPron(); };
-  $("#pNext").onclick=()=>{ pronIdx=(pronIdx+1)%words.length; renderPron(); };
-  speak(w.word);
+  modalBody.querySelectorAll("[data-ptab]").forEach(b=>b.onclick=()=>{ pronTab=b.dataset.ptab; renderPron(); });
+  modalBody.querySelectorAll("[data-pair]").forEach(b=>b.onclick=()=>{ pairIdx=+b.dataset.pair; renderPron(); });
+  modalBody.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));
+  if(pronTab==="quick"){
+    const submit=()=>{ const t=$("#pQuick").value.trim(); if(t) speak(t); };
+    $("#pQuickSay").onclick=submit;
+    $("#pQuick").addEventListener("keydown",e=>{ if(e.key==="Enter") submit(); });
+  }
 }
 
 /* ---------- QUIZ ---------- */
