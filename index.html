@@ -812,12 +812,18 @@ onSnapshot(wordsCol, snap=>{
   words = snap.docs.map(d=>({id:d.id, ...d.data()}));
   words.sort((a,b)=>(a.word||"").localeCompare(b.word||""));
   $("#cntVocab").textContent = words.length+" từ";
+  
+  if (typeof cleanupDuplicateWords === "function") {
+    cleanupDuplicateWords();
+  }
+  
   if(words.length===0 && !snap.metadata.fromCache) {
     seedWords();
-  } else if (words.length > 0) {
+  } else if (words.length > 0 && !localStorage.getItem("seeded_v4")) {
     const existingWords = new Set(words.map(w => (w.word || "").toLowerCase().trim()));
-    const missingCount = SEED.filter(([word]) => !existingWords.has(word.toLowerCase().trim())).length;
-    if (missingCount > 10) {
+    const missing = SEED.filter(([word]) => !existingWords.has(word.toLowerCase().trim()));
+    if (missing.length > 10) {
+      localStorage.setItem("seeded_v4", "true");
       seedMissingWords();
     }
   }
@@ -1739,6 +1745,56 @@ $("#btnBackup").onclick=()=>{
   a.download="english-backup-"+Date.now()+".json"; a.click();
   toast("Đã tải file sao lưu");
 };
+
+/* ---------- Cleanup Duplicates ---------- */
+let duplicatesCleaned = false;
+
+async function cleanupDuplicateWords() {
+  if (duplicatesCleaned || words.length === 0) return;
+  duplicatesCleaned = true; // Run only once per session
+  
+  const wordMap = new Map();
+  words.forEach(w => {
+    const text = (w.word || "").toLowerCase().trim();
+    if (!wordMap.has(text)) {
+      wordMap.set(text, []);
+    }
+    wordMap.get(text).push(w);
+  });
+  
+  const toDelete = [];
+  wordMap.forEach((list, text) => {
+    if (list.length > 1) {
+      // Sort to keep the oldest created word
+      list.sort((a, b) => {
+        const t1 = a.createdAt ? (a.createdAt.seconds || 0) : 0;
+        const t2 = b.createdAt ? (b.createdAt.seconds || 0) : 0;
+        return t1 - t2;
+      });
+      for (let i = 1; i < list.length; i++) {
+        toDelete.push(list[i].id);
+      }
+    }
+  });
+  
+  if (toDelete.length > 0) {
+    console.log("Found duplicate words to clean up:", toDelete.length);
+    const batchLimit = 500;
+    for (let i = 0; i < toDelete.length; i += batchLimit) {
+      const chunk = toDelete.slice(i, i + batchLimit);
+      const batch = writeBatch(db);
+      chunk.forEach(id => {
+        batch.delete(doc(db, "words", id));
+      });
+      try {
+        await batch.commit();
+      } catch (err) {
+        console.error("Error deleting duplicates:", err);
+      }
+    }
+    toast("✨ Đã tự động dọn dẹp " + toDelete.length + " từ vựng trùng lặp!");
+  }
+}
 
 /* ---------- LOVE GARDEN ---------- */
 let gardenAnimId = null;
