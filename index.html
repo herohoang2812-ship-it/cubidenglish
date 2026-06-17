@@ -423,8 +423,8 @@
   /* Mascot floating widget */
   .mascot-widget {
     position: fixed;
-    width: 90px;
-    height: 90px;
+    width: 280px;
+    height: 280px;
     z-index: 1000;
     cursor: grab;
     user-select: none;
@@ -434,8 +434,8 @@
   }
   @media (max-width: 600px) {
     .mascot-widget {
-      width: 75px;
-      height: 75px;
+      width: 280px;
+      height: 280px;
     }
   }
   .mascot-widget:active {
@@ -447,6 +447,148 @@
     height: 100%;
     display: block;
     background: transparent;
+  }
+
+  /* Garden Single Tree Slider Viewport */
+  .garden-viewport {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    border-radius: var(--radius);
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-soft);
+    margin-bottom: 16px;
+  }
+
+  .garden-title-badge {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--border-soft);
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  }
+
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--border-soft);
+    color: var(--text);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  .slider-arrow:hover {
+    background: #ffffff;
+    transform: translateY(-50%) scale(1.1);
+    color: var(--accent);
+    box-shadow: 0 6px 16px rgba(244,63,94,0.12);
+  }
+  .slider-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  .slider-arrow.prev { left: 16px; }
+  .slider-arrow.next { right: 16px; }
+
+  .single-tree-img {
+    width: 320px;
+    height: 320px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+    transform-origin: center center;
+    animation: realisticSway 6s ease-in-out infinite;
+    filter: drop-shadow(0 12px 24px rgba(0,0,0,0.12));
+    margin-bottom: 0;
+    will-change: transform;
+    pointer-events: none;
+  }
+  
+  .single-tree-wilted {
+    filter: saturate(0.55) sepia(0.3) brightness(0.9) drop-shadow(0 12px 24px rgba(0,0,0,0.12));
+  }
+  
+  .single-tree-dead {
+    filter: saturate(0.2) brightness(0.8) drop-shadow(0 12px 24px rgba(0,0,0,0.12));
+  }
+
+  @keyframes realisticSway {
+    0%, 100% {
+      transform: scale(var(--tree-zoom, 1)) translateY(calc(var(--tree-offset-y, 0) * 1px)) rotate(0deg) skewX(0deg);
+    }
+    25% {
+      transform: scale(calc(var(--tree-zoom, 1) * 1.002)) translateY(calc(var(--tree-offset-y, 0) * 1px)) rotate(1.2deg) skewX(0.8deg);
+    }
+    50% {
+      transform: scale(calc(var(--tree-zoom, 1) * 0.998)) translateY(calc(var(--tree-offset-y, 0) * 1px)) rotate(-0.8deg) skewX(-0.5deg);
+    }
+    75% {
+      transform: scale(calc(var(--tree-zoom, 1) * 1.001)) translateY(calc(var(--tree-offset-y, 0) * 1px)) rotate(1.5deg) skewX(1deg);
+    }
+  }
+
+  .empty-plant-card {
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-soft);
+    padding: 20px;
+    border-radius: var(--radius);
+    text-align: center;
+    max-width: 85%;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 25px rgba(244,63,94,0.05);
+    animation: pop 0.3s cubic-bezier(.2,.9,.3,1.1);
+  }
+
+  .petal-particle {
+    position: absolute;
+    border-radius: 50% 0 50% 50%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.8;
+    animation: fallAndSway 4s linear infinite;
+    will-change: transform, opacity;
+  }
+
+  @keyframes fallAndSway {
+    0% {
+      transform: translateY(-20px) rotate(0deg) translateX(0px);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.8;
+    }
+    90% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(400px) rotate(720deg) translateX(80px);
+      opacity: 0;
+    }
   }
 </style>
 </head>
@@ -687,6 +829,12 @@ function closeModal(){
     cancelAnimationFrame(gardenAnimId);
     gardenAnimId = null;
   }
+  // Reset camera zoom & pan for Love Garden modal
+  if (typeof gardenZoom !== "undefined") {
+    gardenZoom = 1.0;
+    gardenPanX = 0;
+    gardenPanY = 0;
+  }
 }
 $("#modalClose").onclick=closeModal;
 overlay.addEventListener("click",e=>{ if(e.target===overlay) closeModal(); });
@@ -845,6 +993,18 @@ onSnapshot(doc(db, "garden", "state"), async (snap) => {
         lastWateredDate: "",
         treeState: "wilted",
         streak: 0,
+        activeTree: "phuong",
+        unlockedTrees: ["phuong"],
+        activeMascotSlot: 0,
+        petalCoins: 0,
+        landPurchased: false,
+        slots: [
+          { species: "phuong", level: 1, exp: 0 },
+          { species: "", level: 0, exp: 0 },
+          { species: "", level: 0, exp: 0 },
+          { species: "", level: 0, exp: 0 },
+          { species: "", level: 0, exp: 0 }
+        ],
         updatedAt: serverTimestamp()
       };
       await setDoc(doc(db, "garden", "state"), initial);
@@ -853,13 +1013,42 @@ onSnapshot(doc(db, "garden", "state"), async (snap) => {
     }
     return;
   }
+  
   gardenState = snap.data();
+  
+  // Tự động di trú dữ liệu đa vị trí đất lớn nếu chưa có
+  if (gardenState && (!gardenState.slots || gardenState.landPurchased === undefined)) {
+    const migratedSlots = gardenState.slots || [
+      { species: "phuong", level: gardenState.level || 1, exp: gardenState.exp || 0 }
+    ];
+    while (migratedSlots.length < 5) {
+      migratedSlots.push({ species: "", level: 0, exp: 0 });
+    }
+    const updates = {
+      slots: migratedSlots,
+      landPurchased: true, // Tự động mở đất miễn phí cho tài khoản cũ đã có cây
+      unlockedTrees: gardenState.unlockedTrees || ["phuong"],
+      activeMascotSlot: gardenState.activeMascotSlot !== undefined ? gardenState.activeMascotSlot : 0,
+      petalCoins: gardenState.petalCoins || 0
+    };
+    try {
+      await updateDoc(doc(db, "garden", "state"), updates);
+    } catch (err) {
+      console.error("Error migrating garden state:", err);
+    }
+    return;
+  }
+
   const cntWater = document.getElementById("cntWater");
   if (cntWater) {
     cntWater.textContent = `${gardenState.waterCount || 0} 💧`;
   }
   verifyGardenStateLocally();
   if (typeof updateMascotState === "function") updateMascotState();
+  
+  if (overlay.classList.contains("show") && openView === "garden") {
+    renderGarden();
+  }
 });
 
 async function seedWords(){
@@ -1716,12 +1905,14 @@ function gradeStep(ok,it,prompt,given,answer){
 function finishQuiz(){
   if (gardenState) {
     const newWater = (gardenState.waterCount || 0) + 1;
+    const newCoins = (gardenState.petalCoins || 0) + 15;
     updateDoc(doc(db, "garden", "state"), {
       waterCount: newWater,
+      petalCoins: newCoins,
       updatedAt: serverTimestamp()
     }).then(() => {
-      toast("🎉 Nhận được 1 💧 nước tưới cây phượng!");
-    }).catch(err => console.error("Error rewarding water:", err));
+      toast("🎉 Nhận được 1 💧 nước và 15 🌸 xu!");
+    }).catch(err => console.error("Error rewarding water and coins:", err));
   }
 
   const total=quiz.items.length, pct=Math.round(quiz.score/total*100);
@@ -1730,7 +1921,7 @@ function finishQuiz(){
     <div class="glass center" style="padding:26px;margin:14px 0">
       <div class="big" style="font-size:40px">${quiz.score}/${total}</div>
       <div style="font-size:20px;color:${pct>=70?'var(--good)':pct>=40?'var(--accent2)':'var(--bad)'}">${pct}% ${pct>=70?'🎉 Giỏi lắm!':pct>=40?'💪 Cố lên!':'📖 Ôn thêm nhé!'}</div>
-      <div style="margin-top:10px; font-size:14px; font-weight:700; color:var(--accent);">🎁 Thưởng: +1 💧 Nước tưới cây</div>
+      <div style="margin-top:10px; font-size:14px; font-weight:700; color:var(--accent);">🎁 Thưởng: +1 💧 Nước & +15 🌸 Xu cánh hoa</div>
     </div>
     ${quiz.wrong.length?`<h3>Câu sai (${quiz.wrong.length})</h3><div class="scroll">${wrong}</div>`:`<p class="center res-good">Tuyệt vời, không sai câu nào!</p>`}
     <div class="row" style="margin-top:16px"><button class="btn primary" onclick="window.__back('quiz')">Làm lại</button><button class="btn ghost" onclick="window.__close()">Đóng</button></div>`);
@@ -1800,6 +1991,65 @@ async function cleanupDuplicateWords() {
 let gardenAnimId = null;
 let mascotAnimId = null;
 let mascotDrag = { active: false, startX: 0, startY: 0, elemX: 0, elemY: 0 };
+let gardenSubView = "main";
+let selectedSlotIdx = 0;
+let manualTreeZoom = 1.0;
+const DEFAULT_TREE_ZOOMS = {
+  1: 1.8,
+  2: 1.4,
+  3: 1.1,
+  4: 1.0,
+  5: 0.9
+};
+
+const TREE_CONTENT_OFFSETS = {
+  phuong: { 1: -82.2, 2: -55.8, 3: -27.5, 4: -4.1, 5: 0 },
+  anhdao: { 1: -82.2, 2: -55.6, 3: -27.5, 4: -4.1, 5: 9.4 },
+  hoagiay: { 1: -82.3, 2: -55.6, 3: -27.5, 4: -4.1, 5: 7.3 },
+  huongduong: { 1: -82.2, 2: -2.7, 3: -3.9, 4: -2.8, 5: -9.5 }
+};
+
+const TREE_SPECIES = {
+  phuong: { name: "Phượng Vĩ", price: 0, desc: "Biểu tượng học trò và tình yêu lãng mạn." },
+  anhdao: { name: "Anh Đào", price: 100, desc: "Màu hồng lãng mạn của mùa xuân nước Nhật." },
+  hoagiay: { name: "Hoa Giấy", price: 200, desc: "Bền bỉ, rực rỡ và tràn đầy sức sống dưới nắng." },
+  huongduong: { name: "Hướng Dương", price: 300, desc: "Luôn hướng về mặt trời, lòng thủy chung son sắt." }
+};
+
+const SPECIES_PARTICLES = {
+  phuong: ["#f43f5e", "#fb7185", "#fda4af"],
+  anhdao: ["#ffb7c5", "#ffc0cb", "#fda4af"],
+  hoagiay: ["#d946ef", "#f472b6", "#c084fc"],
+  huongduong: ["#eab308", "#facc15", "#fef08a"]
+};
+
+// Lưu trữ bộ nhớ cache ảnh
+const imgCache = {};
+function getCachedImage(src, callback) {
+  if (imgCache[src]) {
+    if (imgCache[src].loaded) {
+      if (callback) callback(imgCache[src]);
+    } else if (callback) {
+      imgCache[src].callbacks.push(callback);
+    }
+  } else {
+    const img = new Image();
+    img.loaded = false;
+    img.callbacks = callback ? [callback] : [];
+    img.onload = () => {
+      img.loaded = true;
+      img.callbacks.forEach(cb => cb(img));
+      img.callbacks = [];
+    };
+    img.onerror = () => {
+      console.error("Failed to load image:", src);
+    };
+    img.src = src;
+    imgCache[src] = img;
+  }
+}
+
+
 
 function getLocalDateStr(date = new Date()) {
   const offset = date.getTimezoneOffset();
@@ -1860,83 +2110,165 @@ async function verifyGardenStateLocally() {
   }
 }
 
-function startGardenAnimation(canvas, ctx, treeImgSrc) {
-  if (gardenAnimId) {
-    cancelAnimationFrame(gardenAnimId);
+function showLargeTreeModal(slot) {
+  const name = TREE_SPECIES[slot.species] ? TREE_SPECIES[slot.species].name : slot.species;
+  const treeSrc = `Assets/tree_${slot.species}_${slot.level}.png`;
+  
+  let lvlLabel = "";
+  switch(slot.level) {
+    case 1: lvlLabel = "Hạt mầm"; break;
+    case 2: lvlLabel = "Cây non"; break;
+    case 3: lvlLabel = "Cây lớn"; break;
+    case 4: lvlLabel = "Đơm nụ"; break;
+    case 5: lvlLabel = "Nở rộ"; break;
   }
   
-  const offscreenCanvas = document.createElement("canvas");
-  const offCtx = offscreenCanvas.getContext("2d");
+  const subModal = document.createElement("div");
+  subModal.id = "treeDetailSubModal";
+  subModal.style = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  `;
   
-  const img = new Image();
-  img.onload = () => {
-    offscreenCanvas.width = img.width;
-    offscreenCanvas.height = img.height;
-    offCtx.drawImage(img, 0, 0);
-    
-    canvas.width = img.width;
-    canvas.height = img.height;
-    
-    const particles = [];
-    const isDead = gardenState && gardenState.treeState === "dead";
-    const maxParticles = isDead ? 0 : 35;
-    
-    for (let i = 0; i < maxParticles; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * (canvas.height - 40),
-        r: Math.random() * 3 + 2,
-        d: Math.random() * maxParticles,
-        color: Math.random() > 0.3 ? "#f43f5e" : "#fb7185",
-        speedY: Math.random() * 1.2 + 0.6,
-        speedX: Math.random() * 0.8 - 0.2
-      });
+  subModal.innerHTML = `
+    <div class="glass" style="
+      background: white;
+      padding: 24px;
+      border-radius: 24px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      transform: scale(0.9);
+      transition: transform 0.25s ease;
+      position: relative;
+    ">
+      <button style="
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: #f1f5f9;
+        border: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748b;
+      " onclick="window.__closeTreeDetail()">×</button>
+      
+      <h3 style="margin-top: 10px; margin-bottom: 4px; font-size: 18px; color: var(--text);">🌳 Chi tiết cây: ${name}</h3>
+      <span style="font-size: 12.5px; font-weight: 700; color: var(--violet); background: #f5f3ff; padding: 4px 10px; border-radius: 99px; display: inline-block; margin-bottom: 16px;">
+        Cấp ${slot.level}: ${lvlLabel}
+      </span>
+      
+      <div style="background: radial-gradient(circle, #f8fafc 0%, #f1f5f9 100%); border-radius: 16px; padding: 20px; margin-bottom: 16px; display: flex; justify-content: center; align-items: center; min-height: 220px; border: 1.5px solid var(--border-soft);">
+        <img src="${treeSrc}" style="max-width: 100%; max-height: 200px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.12)); animation: swayLarge 6s ease-in-out infinite;" onerror="this.src='Assets/soil_empty.png'">
+      </div>
+      
+      <p style="font-size: 13px; color: var(--muted); line-height: 1.5; margin: 0 0 18px;">
+        ${TREE_SPECIES[slot.species] ? TREE_SPECIES[slot.species].desc : ''}
+      </p>
+      
+      <button class="btn primary" style="width: 100%; padding: 10px 0; border-radius: 12px; font-weight: 700;" onclick="window.__closeTreeDetail()">
+        Đóng xem chi tiết
+      </button>
+    </div>
+  `;
+  
+  if (!document.getElementById("swayLargeStyle")) {
+    const style = document.createElement("style");
+    style.id = "swayLargeStyle";
+    style.innerHTML = `
+      @keyframes swayLarge {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(1.5deg); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  document.body.appendChild(subModal);
+  
+  setTimeout(() => {
+    subModal.style.opacity = "1";
+    subModal.querySelector("div").style.transform = "scale(1)";
+  }, 10);
+  
+  window.__closeTreeDetail = () => {
+    subModal.style.opacity = "0";
+    subModal.querySelector("div").style.transform = "scale(0.9)";
+    setTimeout(() => {
+      if (subModal.parentNode) {
+        subModal.parentNode.removeChild(subModal);
+      }
+    }, 250);
+  };
+  
+  subModal.addEventListener("click", e => {
+    if (e.target === subModal) window.__closeTreeDetail();
+  });
+}
+
+function startCSSPetals(viewport) {
+  if (window.__petalsInterval) {
+    clearInterval(window.__petalsInterval);
+  }
+  
+  const currentSlot = gardenState && gardenState.slots && gardenState.slots[selectedSlotIdx];
+  if (!currentSlot || !currentSlot.species) return;
+  
+  const colors = SPECIES_PARTICLES[currentSlot.species] || ["#f43f5e", "#fb7185"];
+  
+  window.__petalsInterval = setInterval(() => {
+    const vp = document.getElementById("gardenViewport");
+    if (!vp) {
+      clearInterval(window.__petalsInterval);
+      window.__petalsInterval = null;
+      return;
     }
     
-    let time = 0;
-    const tick = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.01;
-      
-      ctx.save();
-      const originX = canvas.width / 2;
-      const originY = canvas.height - 20;
-      ctx.translate(originX, originY);
-      
-      const swayAngle = Math.sin(time * 1.5) * 0.018 + Math.cos(time * 0.5) * 0.005;
-      ctx.rotate(swayAngle);
-      
-      const skewX = Math.sin(time * 1.2) * 0.01;
-      ctx.transform(1, 0, skewX, 1, 0, 0);
-      
-      ctx.drawImage(offscreenCanvas, -originX, -originY);
-      ctx.restore();
-      
-      if (particles.length > 0) {
-        particles.forEach(p => {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-          
-          p.y += p.speedY;
-          p.x += p.speedX + Math.sin(time * 2 + p.d) * 0.3;
-          
-          if (p.y > canvas.height) {
-            p.y = -10;
-            p.x = Math.random() * canvas.width;
-          }
-          if (p.x > canvas.width || p.x < 0) {
-            p.x = Math.random() * canvas.width;
-          }
-        });
+    if (vp.querySelectorAll(".petal-particle").length >= 12) {
+      return;
+    }
+    
+    const petal = document.createElement("div");
+    petal.className = "petal-particle";
+    
+    const size = Math.random() * 6 + 4;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    
+    petal.style.width = size + "px";
+    petal.style.height = size + "px";
+    petal.style.background = color;
+    petal.style.left = Math.random() * 90 + 5 + "%";
+    
+    const duration = Math.random() * 3 + 3;
+    petal.style.animationDuration = duration + "s";
+    
+    vp.appendChild(petal);
+    
+    setTimeout(() => {
+      if (petal.parentNode === vp) {
+        vp.removeChild(petal);
       }
-      
-      gardenAnimId = requestAnimationFrame(tick);
-    };
-    tick();
-  };
-  img.src = treeImgSrc;
+    }, duration * 1000);
+  }, 500);
 }
 
 function initMascotDraggable(el) {
@@ -2013,12 +2345,20 @@ function updateMascotState() {
       
       const savedX = localStorage.getItem("mascotX");
       const savedY = localStorage.getItem("mascotY");
-      if (savedX && savedY) {
+      
+      // Đảm bảo không bị văng khỏi màn hình Mobile
+      let x = parseInt(savedX);
+      let y = parseInt(savedY);
+      if (savedX && savedY && x < window.innerWidth - 250 && y < window.innerHeight - 250 && x >= 0 && y >= 0) {
         widget.style.left = savedX;
         widget.style.top = savedY;
+        widget.style.right = "auto";
+        widget.style.bottom = "auto";
       } else {
         widget.style.right = "24px";
         widget.style.bottom = "120px";
+        widget.style.left = "auto";
+        widget.style.top = "auto";
       }
       
       initMascotDraggable(widget);
@@ -2026,35 +2366,33 @@ function updateMascotState() {
     widget.style.display = "block";
     
     const canvas = document.getElementById("mascotCanvas");
-    if (canvas && gardenState) {
+    if (canvas && gardenState && gardenState.slots) {
       const ctx = canvas.getContext("2d");
-      const state = gardenState.treeState || "healthy";
-      const imgName = `tree_${state}.png`;
+      const isDead = gardenState.treeState === "dead";
+      const mascotSlotIdx = gardenState.activeMascotSlot || 0;
+      const slot = gardenState.slots[mascotSlotIdx];
       
+      const treeSrc = (slot && slot.species && !isDead)
+        ? `Assets/tree_${slot.species}_${slot.level}.png`
+        : `Assets/soil_empty.png`;
+        
       if (mascotAnimId) cancelAnimationFrame(mascotAnimId);
       
-      const offCanvas = document.createElement("canvas");
-      const offCtx = offCanvas.getContext("2d");
-      
-      const img = new Image();
-      img.onload = () => {
-        offCanvas.width = img.width;
-        offCanvas.height = img.height;
-        offCtx.drawImage(img, 0, 0);
-        
+      getCachedImage(treeSrc, (img) => {
         canvas.width = img.width;
         canvas.height = img.height;
         
         const particles = [];
-        const isDead = state === "dead";
-        const maxParticles = isDead ? 0 : 15;
+        const maxParticles = (isDead || !slot || !slot.species) ? 0 : 15;
+        const colors = (slot && slot.species) ? (SPECIES_PARTICLES[slot.species] || ["#f43f5e", "#fb7185"]) : ["#f43f5e", "#fb7185"];
+        
         for (let i = 0; i < maxParticles; i++) {
           particles.push({
             x: Math.random() * canvas.width,
             y: Math.random() * (canvas.height - 40),
             r: Math.random() * 2 + 1.5,
             d: Math.random() * maxParticles,
-            color: Math.random() > 0.3 ? "#f43f5e" : "#fb7185",
+            color: colors[Math.floor(Math.random() * colors.length)],
             speedY: Math.random() * 1.0 + 0.5,
             speedX: Math.random() * 0.6 - 0.2
           });
@@ -2074,10 +2412,11 @@ function updateMascotState() {
           const swayAngle = Math.sin(time * 1.6) * 0.02 + Math.cos(time * 0.6) * 0.005;
           ctx.rotate(swayAngle);
           
-          const skewX = Math.sin(time * 1.3) * 0.012;
-          ctx.transform(1, 0, skewX, 1, 0, 0);
+          if (gardenState.treeState === "wilted" && slot && slot.species && !isDead) {
+            ctx.filter = "saturate(0.55) sepia(0.3) brightness(0.9)";
+          }
           
-          ctx.drawImage(offCanvas, -originX, -originY);
+          ctx.drawImage(img, -originX, -originY);
           ctx.restore();
           
           if (particles.length > 0) {
@@ -2094,16 +2433,12 @@ function updateMascotState() {
                 p.y = -10;
                 p.x = Math.random() * canvas.width;
               }
-              if (p.x > canvas.width || p.x < 0) {
-                p.x = Math.random() * canvas.width;
-              }
             });
           }
           mascotAnimId = requestAnimationFrame(tick);
         };
         tick();
-      };
-      img.src = imgName;
+      });
     }
   } else {
     const widget = document.getElementById("mascotWidget");
@@ -2128,80 +2463,225 @@ function renderGarden() {
     return;
   }
   
+  if (gardenSubView === "shop") {
+    renderNurseryShop();
+    return;
+  }
+  
+  const coins = gardenState.petalCoins || 0;
   const water = gardenState.waterCount || 0;
   const streak = gardenState.streak || 0;
   const state = gardenState.treeState || "healthy";
+  const isLandBought = gardenState.landPurchased;
+  const currentSlot = gardenState.slots ? gardenState.slots[selectedSlotIdx] : null;
   
   let stateLabel = "Tươi tốt 💖";
-  let stateDesc = "Cây phượng đang nở hoa rực rỡ! Hãy tiếp tục chăm sóc cây nhé.";
-  let treeImg = "tree_healthy.png";
+  let stateDesc = "Khu vườn của chúng ta đang rất xanh tươi! Chăm sóc hàng ngày để duy trì chuỗi nhé.";
   let cardBorderColor = "var(--good)";
   
   if (state === "wilted") {
     stateLabel = "Héo úa 🍂";
-    stateDesc = "Cây phượng đã 1 ngày chưa được tưới nước nên hơi héo. Hãy tưới ngay!";
-    treeImg = "tree_wilted.png";
+    stateDesc = "Khu vườn đã 1 ngày chưa được tưới nước. Hãy tưới ngay để phục hồi sự tươi tốt!";
     cardBorderColor = "var(--accent-2)";
   } else if (state === "dead") {
     stateLabel = "Trơ trụi 🪵";
-    stateDesc = "Cây phượng đã bị khô héo rụng hết hoa lá do 2 ngày chưa tưới. Hãy tưới nước để hồi sinh cây!";
-    treeImg = "tree_dead.png";
+    stateDesc = "Khu vườn bị khô héo trơ trụi do >= 2 ngày chưa tưới. Tưới bất kỳ cây nào để hồi sinh cả vườn!";
     cardBorderColor = "var(--muted)";
+  }
+  
+  // Viewport HTML
+  let viewportHtml = "";
+  
+  if (!isLandBought) {
+    viewportHtml = `
+      <div class="garden-viewport" id="gardenViewport">
+        <div class="empty-plant-card" style="margin-bottom: 30px;">
+          <span style="font-weight:700; font-size:15px; color:var(--text); display:block; margin-bottom: 6px;">🔒 Mảnh đất tình yêu đang khóa</span>
+          <p style="margin: 0 0 14px; font-size: 12.5px; color: var(--muted); line-height:1.4;">Bạn cần mở khóa mảnh đất này để bắt đầu gieo trồng cây xanh của riêng hai người nhé.</p>
+          <button class="btn primary" id="btnBuyLand" ${coins < 150 ? 'disabled style="opacity: 0.6; cursor: not-allowed; width:80%; padding:10px 0;"' : 'style="width:80%; padding:10px 0;"'}>
+            Mua mảnh đất (Giá: 150 🌸 xu)
+          </button>
+        </div>
+      </div>
+    `;
+  } else {
+    // Determine the tree image or seed list
+    let treeImgHtml = "";
+    let zoomToolbarHtml = "";
+    if (currentSlot && currentSlot.species) {
+      const treeSrc = `Assets/tree_${currentSlot.species}_${currentSlot.level}.png`;
+      let filterClass = "";
+      if (state === "wilted") filterClass = "single-tree-wilted";
+      else if (state === "dead") filterClass = "single-tree-dead";
+      
+      const level = currentSlot.level || 1;
+      const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+      const finalZoom = defaultZoom * manualTreeZoom;
+      
+      const species = currentSlot.species || "phuong";
+      const offsetVal = (TREE_CONTENT_OFFSETS[species] && TREE_CONTENT_OFFSETS[species][level]) !== undefined
+        ? TREE_CONTENT_OFFSETS[species][level]
+        : 0;
+      
+      treeImgHtml = `<img src="${treeSrc}" class="single-tree-img ${filterClass}" style="--tree-zoom: ${finalZoom}; --tree-offset-y: ${offsetVal};" onerror="this.src='Assets/soil_empty.png'">`;
+      
+      zoomToolbarHtml = `
+        <div style="position: absolute; top: 12px; right: 12px; z-index: 10; display: flex; gap: 5px;">
+          <button class="btn sm" style="padding: 4px 8px; font-size: 11px; border-radius: 8px; background: rgba(255, 255, 255, 0.95); border: 1px solid var(--border-soft); font-weight: 700; color: var(--text); cursor: pointer;" onclick="window.__zoomTreeIn()">➕</button>
+          <button class="btn sm" style="padding: 4px 8px; font-size: 11px; border-radius: 8px; background: rgba(255, 255, 255, 0.95); border: 1px solid var(--border-soft); font-weight: 700; color: var(--text); cursor: pointer;" onclick="window.__zoomTreeOut()">➖</button>
+          <button class="btn sm" style="padding: 4px 8px; font-size: 11px; border-radius: 8px; background: rgba(255, 255, 255, 0.95); border: 1px solid var(--border-soft); font-weight: 700; color: var(--muted); cursor: pointer;" onclick="window.__zoomTreeReset()">🔄</button>
+        </div>
+      `;
+    } else {
+      let seedsHtml = "";
+      const unlockedSeeds = gardenState.unlockedTrees || ["phuong"];
+      unlockedSeeds.forEach(species => {
+        const name = TREE_SPECIES[species] ? TREE_SPECIES[species].name : species;
+        seedsHtml += `
+          <button class="btn cyan sm" style="padding: 6px 12px; font-size:12px; margin: 4px;" onclick="window.__plantSeed('${species}')">
+            🌱 Gieo ${name}
+          </button>
+        `;
+      });
+      treeImgHtml = `
+        <div class="empty-plant-card">
+          <span style="font-weight:700; font-size:14.5px; color:var(--text); display:block; margin-bottom: 6px;">🌱 Ô đất số ${selectedSlotIdx + 1} trống</span>
+          <p style="font-size:12px; color:var(--muted); margin:0 0 10px;">Chọn một hạt giống đã mở khóa bên dưới để gieo trồng:</p>
+          <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:4px;">
+            ${seedsHtml}
+          </div>
+          <div style="font-size: 11px; color: var(--muted); margin-top: 8px;">
+            Mua giống mới tại <a href="javascript:void(0)" onclick="window.__openShop()" style="color:var(--accent); font-weight:700; text-decoration:underline;">🛒 Vườn ươm</a>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Viewport with slide navigation arrows
+    const slotName = currentSlot && currentSlot.species ? (TREE_SPECIES[currentSlot.species]?.name || currentSlot.species) : "Đất trống";
+    viewportHtml = `
+      <div class="garden-viewport" id="gardenViewport">
+        <div class="garden-title-badge">Vị trí ${selectedSlotIdx + 1}/5: ${slotName}</div>
+        <button class="slider-arrow prev" onclick="window.__prevSlot()">◀</button>
+        <button class="slider-arrow next" onclick="window.__nextSlot()">▶</button>
+        ${zoomToolbarHtml}
+        ${treeImgHtml}
+      </div>
+    `;
+  }
+
+  
+  // Dot indicators below viewport
+  let dotsHtml = "";
+  if (isLandBought) {
+    dotsHtml = `<div style="display:flex; justify-content:center; gap:6px; margin-bottom:14px;">`;
+    for (let i = 0; i < 5; i++) {
+      const isSelected = i === selectedSlotIdx;
+      const dotColor = isSelected ? "var(--accent)" : "#cbd5e1";
+      dotsHtml += `<div style="width: 8px; height: 8px; border-radius: 50%; background: ${dotColor}; transition: background 0.2s;"></div>`;
+    }
+    dotsHtml += `</div>`;
+  }
+  
+  // Control board for the active slot (only shown if land is bought and slot has a tree)
+  let dashboardHtml = "";
+  if (isLandBought && currentSlot && currentSlot.species) {
+    const name = TREE_SPECIES[currentSlot.species] ? TREE_SPECIES[currentSlot.species].name : currentSlot.species;
+    const isMascot = gardenState.activeMascotSlot === selectedSlotIdx;
+    const isMaxLevel = currentSlot.level >= 5;
+    const nextLevelExp = 100;
+    const expPct = Math.min(100, Math.round((currentSlot.exp / nextLevelExp) * 100));
+    
+    let lvlLabel = "";
+    switch(currentSlot.level) {
+      case 1: lvlLabel = "Hạt mầm"; break;
+      case 2: lvlLabel = "Cây non"; break;
+      case 3: lvlLabel = "Cây lớn"; break;
+      case 4: lvlLabel = "Đơm nụ"; break;
+      case 5: lvlLabel = "Nở rộ"; break;
+    }
+    
+    dashboardHtml = `
+      <div class="glass" style="padding: 14px 18px; margin-bottom: 14px; background:#fff;">
+        <div class="row between" style="margin-bottom: 6px;">
+          <span style="font-weight:700; font-size:15px; color:var(--text);">🌳 ${name}</span>
+          <span style="font-size:12.5px; font-weight:700; color:var(--violet);">Cấp ${currentSlot.level}: ${lvlLabel}</span>
+        </div>
+        
+        <div style="margin-bottom: 12px;">
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-bottom:3px;">
+            <span>Tiến trình tiến hóa:</span>
+            <span>${isMaxLevel ? 'TỐI ĐA 🌟' : `${currentSlot.exp}/100 EXP`}</span>
+          </div>
+          <div style="width: 100%; height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden;">
+            <div style="width: ${expPct}%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 99px; transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+        
+        <div class="row between" style="gap:8px;">
+          <button class="btn primary sm" id="btnWaterTreeSlot" ${water <= 0 ? 'disabled style="opacity: 0.65; cursor: not-allowed;"' : ''} style="flex:1; padding:8px 0; font-size:13px;">
+            💧 Tưới nước (-1 💧)
+          </button>
+          
+          <button class="btn sm ${isMascot ? 'ghost' : 'cyan'}" id="btnMascotSlot" ${isMascot ? 'disabled style="opacity: 0.7;"' : ''} style="padding:8px 12px; font-size:13px; min-width:110px;">
+            ${isMascot ? '📌 Đang là linh vật' : '📌 Đặt linh vật'}
+          </button>
+          
+          <button class="btn ghost sm" id="btnDigTreeSlot" style="padding:8px 10px; font-size:13px; border-color:#fee2e2; color:#ef4444;" title="Nhổ bỏ cây này">
+            🗑️ Nhổ cây
+          </button>
+        </div>
+      </div>
+    `;
   }
   
   openModal(`
     <button class="close" onclick="window.__close()">×</button>
     <div class="center">
       <h2>🌸 Love Garden</h2>
-      <p class="muted" style="font-size:13px;margin:4px 0 14px;">Khu vườn nhỏ trồng cây phượng tình yêu của chúng ta</p>
+      <p class="muted" style="font-size:12.5px; margin:4px 0 12px;">Khu vườn nhỏ gieo trồng cây xanh của chúng ta</p>
     </div>
     
-    <div class="glass center" style="padding: 10px; position: relative; overflow: hidden; background: #fff; border: 1px solid var(--border-soft); margin-bottom: 14px;">
-      <canvas id="gardenCanvas" style="max-width: 100%; height: auto; display: block; margin: 0 auto; background: transparent;"></canvas>
+    <div class="row between" style="margin-bottom: 10px; padding: 0 4px;">
+      <span style="font-size:14px; font-weight:700; color:var(--text);"><span style="color:var(--accent);">🌸</span> Xu hiện có: <b style="font-size:16px;">${coins} xu</b></span>
+      <span style="font-size:14px; font-weight:700; color:var(--text);"><span style="color:var(--violet);">🔥</span> Chuỗi: <b style="font-size:15px; color:var(--accent);">${streak} ngày</b></span>
     </div>
     
-    <div class="glass" style="padding: 14px 18px; margin-bottom: 14px; border-left: 5px solid ${cardBorderColor};">
-      <div class="row between" style="margin-bottom: 6px;">
-        <span style="font-weight:700; font-size:16px; color:var(--text);">${stateLabel}</span>
-        <span style="font-size:13px; font-weight:700; color:var(--accent);">🔥 Chuỗi: ${streak} ngày</span>
+    ${viewportHtml}
+    ${dotsHtml}
+    
+    <div class="glass" style="padding: 10px 14px; margin-bottom: 12px; border-left: 4.5px solid ${cardBorderColor};">
+      <div class="row between" style="margin-bottom: 2px;">
+        <span style="font-weight:700; font-size:13.5px; color:var(--text);">${stateLabel}</span>
+        <span style="font-size:11.5px; font-weight:700; color:var(--muted);">Tưới nước để giữ vườn luôn xanh tươi</span>
       </div>
-      <p style="margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--muted);">${stateDesc}</p>
+      <p style="margin: 0; font-size: 12px; line-height: 1.35; color: var(--muted);">${stateDesc}</p>
     </div>
     
-    <div class="grid2" style="margin-bottom: 14px;">
-      <div class="glass center" style="padding: 12px;">
-        <div class="muted" style="font-size: 11px; font-weight: 700; text-transform: uppercase;">Nước hiện có</div>
-        <div style="font-size: 26px; font-weight: 800; color: var(--text); margin-top: 4px;">${water} 💧</div>
-      </div>
-      <div class="glass center" style="padding: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <button class="btn primary" id="btnWaterTree" ${water <= 0 ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''} style="width: 100%; padding: 10px 0; font-size:14px;">
-          💧 Tưới nước
-        </button>
-      </div>
+    ${dashboardHtml}
+    
+    <div class="row" style="margin-top: 10px;">
+      <button class="btn cyan sm" onclick="window.__openShop()" style="width:100%; padding:10px 0; font-size:13.5px; font-weight:700;">
+        🛒 Ghé thăm Vườn ươm (Cửa hàng hạt giống)
+      </button>
     </div>
     
-    <div class="glass" style="padding: 12px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; background: #fff;">
+    <div class="glass" style="padding: 10px 14px; margin-top: 12px; display: flex; justify-content: space-between; align-items: center; background: #fff;">
       <div style="text-align: left;">
-        <span style="font-weight:700; font-size:13.5px; color:var(--text); display:block;">
-          🔮 Linh vật phượng ngoài màn hình
-        </span>
-        <span style="font-size:10.5px; color:var(--muted); display:block; margin-top:2px;">
-          (Nhấp giữ/chạm để di chuyển ngoài màn hình chính)
+        <span style="font-weight:700; font-size:13px; color:var(--text); display:block;">
+          🔮 Hiển thị linh vật ngoài màn hình chính
         </span>
       </div>
-      <button class="btn sm" id="btnToggleMascot" style="padding: 6px 12px; font-size:12px; font-weight:700; border-radius:10px;"></button>
-    </div>
-    
-    <div class="glass" style="padding: 12px 14px; text-align: center; font-size: 12.5px; color: var(--muted); line-height: 1.4;">
-      💡 <i>Làm bài <b>Kiểm tra</b> để nhận thêm nước 💧 (Mỗi ngày tưới 1 lần để giữ cây luôn xanh tươi).</i>
+      <button class="btn sm" id="btnToggleMascot" style="padding: 5px 12px; font-size:11px; font-weight:700; border-radius:10px;"></button>
     </div>
   `);
+  
   bindClose();
   
-  const canvas = document.getElementById("gardenCanvas");
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
-    startGardenAnimation(canvas, ctx, treeImg);
+  // Start particle system if land is bought and slot is occupied and garden is not dead
+  const viewport = document.getElementById("gardenViewport");
+  if (viewport && isLandBought && currentSlot && currentSlot.species && state !== "dead") {
+    startCSSPetals(viewport);
   }
   
   const btnMascot = document.getElementById("btnToggleMascot");
@@ -2222,49 +2702,315 @@ function renderGarden() {
     };
   }
   
-  const btnWater = document.getElementById("btnWaterTree");
-  if (btnWater) {
-    btnWater.onclick = async () => {
-      if (!gardenState || (gardenState.waterCount || 0) <= 0) return;
+  // Buy land button logic
+  const btnBuyLand = document.getElementById("btnBuyLand");
+  if (btnBuyLand) {
+    btnBuyLand.onclick = async () => {
+      const price = 150;
+      if (coins < price) return;
       
-      const todayStr = getLocalDateStr();
-      const lastWatered = gardenState.lastWateredDate;
-      
-      let newStreak = gardenState.streak || 0;
-      if (lastWatered) {
-        const diff = getDaysBetween(lastWatered, todayStr);
-        if (diff === 1) {
-          newStreak += 1;
-        } else if (diff === 0) {
-          toast("Hôm nay em đã tưới nước rồi mà! Cảm ơn em bé nhé 💖");
+      btnBuyLand.disabled = true;
+      try {
+        await updateDoc(doc(db, "garden", "state"), {
+          landPurchased: true,
+          petalCoins: coins - price,
+          updatedAt: serverTimestamp()
+        });
+        toast("🎉 Mở khóa thành công mảnh đất tình yêu! Bắt đầu gieo hạt nào em bé!");
+        renderGarden();
+      } catch (err) {
+        console.error("Buy land error:", err);
+        btnBuyLand.disabled = false;
+        toast("Lỗi khi mua đất!");
+      }
+    };
+  }
+  
+  // Water button logic
+  const btnWaterSlot = document.getElementById("btnWaterTreeSlot");
+  if (btnWaterSlot) {
+    btnWaterSlot.onclick = async () => {
+      try {
+        if (water <= 0) {
+          toast("Bạn không còn nước để tưới!");
           return;
+        }
+        if (!currentSlot || !currentSlot.species) {
+          toast("Không có cây ở vị trí này!");
+          return;
+        }
+        
+        const todayStr = getLocalDateStr();
+        const lastWatered = gardenState.lastWateredDate;
+        
+        let newStreak = gardenState.streak || 0;
+        if (lastWatered) {
+          const diff = getDaysBetween(lastWatered, todayStr);
+          if (diff === 1) {
+            newStreak += 1;
+          } else if (diff > 1) {
+            newStreak = 1;
+          }
         } else {
           newStreak = 1;
         }
-      } else {
-        newStreak = 1;
-      }
-      
-      const updates = {
-        waterCount: gardenState.waterCount - 1,
-        lastWateredDate: todayStr,
-        treeState: "healthy",
-        streak: newStreak,
-        updatedAt: serverTimestamp()
-      };
-      
-      try {
-        btnWater.disabled = true;
+        
+        btnWaterSlot.disabled = true;
+        
+        let lvl = currentSlot.level || 1;
+        let xp = (currentSlot.exp || 0) + 15;
+        let levelUp = false;
+        
+        if (xp >= 100 && lvl < 5) {
+          lvl += 1;
+          xp = 0;
+          levelUp = true;
+        } else if (lvl >= 5) {
+          xp = 100;
+        }
+        
+        const updatedSlots = [...gardenState.slots];
+        updatedSlots[selectedSlotIdx] = {
+          ...currentSlot,
+          level: lvl,
+          exp: xp
+        };
+        
+        const updates = {
+          slots: updatedSlots,
+          waterCount: water - 1,
+          petalCoins: coins + 5,
+          lastWateredDate: todayStr,
+          treeState: "healthy",
+          streak: newStreak,
+          updatedAt: serverTimestamp()
+        };
+        
         await updateDoc(doc(db, "garden", "state"), updates);
-        toast("💖 Cây phượng đã được tưới nước xanh tươi! Chuỗi: " + newStreak + " ngày");
+        if (levelUp) {
+          toast(`🎉 Chúc mừng! Cây ở vị trí ${selectedSlotIdx + 1} đã thăng lên Cấp ${lvl}!`);
+        } else {
+          toast(`💖 Đã tưới nước! Cây nhận +15 EXP, nhận +5 🌸 xu.`);
+        }
+        renderGarden();
       } catch (err) {
-        console.error("Error watering tree:", err);
-        toast("Có lỗi xảy ra khi tưới cây");
-        btnWater.disabled = false;
+        console.error("Water tree error:", err);
+        if (btnWaterSlot) btnWaterSlot.disabled = false;
+        toast("Lỗi tưới cây: " + err.message);
+      }
+    };
+  }
+  
+  // Mascot button logic
+  const btnMascotSlot = document.getElementById("btnMascotSlot");
+  if (btnMascotSlot) {
+    btnMascotSlot.onclick = async () => {
+      btnMascotSlot.disabled = true;
+      try {
+        await updateDoc(doc(db, "garden", "state"), {
+          activeMascotSlot: selectedSlotIdx,
+          updatedAt: serverTimestamp()
+        });
+        toast(`📌 Đã đổi linh vật sang cây ở vị trí số ${selectedSlotIdx + 1}!`);
+        renderGarden();
+      } catch (err) {
+        console.error("Mascot slot update error:", err);
+        btnMascotSlot.disabled = false;
+      }
+    };
+  }
+  
+  // Dig button logic
+  const btnDigSlot = document.getElementById("btnDigTreeSlot");
+  if (btnDigSlot) {
+    btnDigSlot.onclick = async () => {
+      try {
+        if (!currentSlot || !currentSlot.species) {
+          toast("Không có cây ở vị trí này!");
+          return;
+        }
+        const name = TREE_SPECIES[currentSlot.species] ? TREE_SPECIES[currentSlot.species].name : currentSlot.species;
+        if (!confirm(`Nhổ cây ${name} này sẽ xóa vĩnh viễn tiến trình cấp độ. Bạn có chắc chắn muốn dọn trống vị trí này?`)) {
+          return;
+        }
+        
+        btnDigSlot.disabled = true;
+        const updatedSlots = [...gardenState.slots];
+        updatedSlots[selectedSlotIdx] = { species: "", level: 0, exp: 0 };
+        
+        await updateDoc(doc(db, "garden", "state"), {
+          slots: updatedSlots,
+          updatedAt: serverTimestamp()
+        });
+        toast("🗑️ Đã nhổ cây và dọn trống vị trí gieo hạt!");
+        renderGarden();
+      } catch (err) {
+        console.error("Dig tree error:", err);
+        if (btnDigSlot) btnDigSlot.disabled = false;
+        toast("Lỗi nhổ cây: " + err.message);
       }
     };
   }
 }
+
+window.__prevSlot = () => {
+  manualTreeZoom = 1.0;
+  selectedSlotIdx = (selectedSlotIdx - 1 + 5) % 5;
+  renderGarden();
+};
+
+window.__nextSlot = () => {
+  manualTreeZoom = 1.0;
+  selectedSlotIdx = (selectedSlotIdx + 1) % 5;
+  renderGarden();
+};
+
+window.__selectSlot = (idx) => {
+  manualTreeZoom = 1.0;
+  selectedSlotIdx = idx;
+  renderGarden();
+};
+
+window.__zoomTreeIn = () => {
+  manualTreeZoom = Math.min(3.0, manualTreeZoom + 0.15);
+  const treeImg = document.querySelector(".single-tree-img");
+  if (treeImg && gardenState && gardenState.slots) {
+    const currentSlot = gardenState.slots[selectedSlotIdx];
+    const level = currentSlot ? currentSlot.level : 1;
+    const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+    treeImg.style.setProperty("--tree-zoom", defaultZoom * manualTreeZoom);
+  }
+};
+
+window.__zoomTreeOut = () => {
+  manualTreeZoom = Math.max(0.5, manualTreeZoom - 0.15);
+  const treeImg = document.querySelector(".single-tree-img");
+  if (treeImg && gardenState && gardenState.slots) {
+    const currentSlot = gardenState.slots[selectedSlotIdx];
+    const level = currentSlot ? currentSlot.level : 1;
+    const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+    treeImg.style.setProperty("--tree-zoom", defaultZoom * manualTreeZoom);
+  }
+};
+
+window.__zoomTreeReset = () => {
+  manualTreeZoom = 1.0;
+  const treeImg = document.querySelector(".single-tree-img");
+  if (treeImg && gardenState && gardenState.slots) {
+    const currentSlot = gardenState.slots[selectedSlotIdx];
+    const level = currentSlot ? currentSlot.level : 1;
+    const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+    treeImg.style.setProperty("--tree-zoom", defaultZoom * manualTreeZoom);
+  }
+};
+
+window.__plantSeed = async (species) => {
+  if (selectedSlotIdx >= 5 || gardenState.slots[selectedSlotIdx].species) return;
+  
+  const name = TREE_SPECIES[species] ? TREE_SPECIES[species].name : species;
+  const updatedSlots = [...gardenState.slots];
+  updatedSlots[selectedSlotIdx] = { species: species, level: 1, exp: 0 };
+  
+  try {
+    await updateDoc(doc(db, "garden", "state"), {
+      slots: updatedSlots,
+      updatedAt: serverTimestamp()
+    });
+    toast(`🌱 Đã gieo giống cây ${name} tại ô đất số ${selectedSlotIdx + 1}!`);
+    renderGarden();
+  } catch (err) {
+    console.error("Plant seed error:", err);
+    toast("Có lỗi xảy ra khi gieo hạt!");
+  }
+};
+
+window.__openShop = () => {
+  gardenSubView = "shop";
+  renderGarden();
+};
+
+window.__closeShop = () => {
+  gardenSubView = "main";
+  renderGarden();
+};
+
+function renderNurseryShop() {
+  const coins = gardenState.petalCoins || 0;
+  const unlockedSeeds = gardenState.unlockedTrees || ["phuong"];
+  
+  let shopItemsHtml = "";
+  Object.keys(TREE_SPECIES).forEach(species => {
+    const item = TREE_SPECIES[species];
+    const isUnlocked = unlockedSeeds.includes(species);
+    const canAfford = coins >= item.price;
+    
+    let actionBtn = "";
+    if (isUnlocked) {
+      actionBtn = `<button class="btn sm ghost" disabled style="width:100%; border-radius:10px; font-weight:700;">🏷️ Đã sở hữu</button>`;
+    } else {
+      actionBtn = `
+        <button class="btn primary sm" style="width:100%; padding:6px 0; border-radius:10px; font-size:12.5px;"
+          onclick="window.__buySeed('${species}')" ${!canAfford ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''}>
+          Mở khóa (${item.price} 🌸)
+        </button>
+      `;
+    }
+    
+    shopItemsHtml += `
+      <div class="glass" style="padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center; background: #fff;">
+        <div style="width: 80px; height: 80px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; position: relative;">
+          <img src="Assets/tree_${species}_1.png" style="position: absolute; width: 280px; height: 280px; bottom: -34px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.08));" onerror="this.src='Assets/soil_empty.png'">
+        </div>
+        <span style="font-weight:700; font-size:13.5px; color:var(--text); display:block; margin-bottom:2px;">${item.name}</span>
+        <p style="margin: 0 8px 10px; font-size: 11px; color: var(--muted); height: 32px; overflow: hidden; line-height:1.25;">${item.desc}</p>
+        <div style="width:100%; margin-top:auto;">
+          ${actionBtn}
+        </div>
+      </div>
+    `;
+  });
+  
+  openModal(`
+    <button class="close" onclick="window.__close()">×</button>
+    <div class="center">
+      <h2>🛒 Vườn ươm Hạt giống</h2>
+      <p class="muted" style="font-size:12.5px; margin:4px 0 14px;">Mua thêm nhiều giống hoa mới bằng xu cánh hoa 🌸 của bạn</p>
+    </div>
+    
+    <div class="row between" style="margin-bottom: 14px; padding: 0 4px;">
+      <span style="font-size:14px; font-weight:700; color:var(--text);"><span style="color:var(--accent);">🌸</span> Xu hiện có: <b style="font-size:16px;">${coins} xu</b></span>
+      <button class="btn sm ghost" onclick="window.__closeShop()" style="font-size:12px; padding: 5px 12px; border-radius:10px;">← Quay lại vườn</button>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 56vh; overflow-y: auto; padding: 2px;">
+      ${shopItemsHtml}
+    </div>
+  `);
+  
+  bindClose();
+}
+
+window.__buySeed = async (species) => {
+  const item = TREE_SPECIES[species];
+  const coins = gardenState.petalCoins || 0;
+  if (coins < item.price || gardenState.unlockedTrees.includes(species)) return;
+  
+  const updatedSeeds = [...(gardenState.unlockedTrees || ["phuong"]), species];
+  const updates = {
+    unlockedTrees: updatedSeeds,
+    petalCoins: coins - item.price,
+    updatedAt: serverTimestamp()
+  };
+  
+  try {
+    await updateDoc(doc(db, "garden", "state"), updates);
+    toast(`🎉 Đã mở khóa thành công giống hoa ${item.name}!`);
+    renderNurseryShop();
+  } catch (err) {
+    console.error("Buy seed error:", err);
+    toast("Có lỗi xảy ra khi mua hạt giống!");
+  }
+};
 
 /* ---------- modal global helpers ---------- */
 window.__close=closeModal;
