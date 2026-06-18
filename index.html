@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>English — Tặng em bé của anh</title>
@@ -36,7 +36,7 @@
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
   .gift{font-size:13px;font-style:italic;color:var(--accent);font-weight:500;margin-top:4px;
     font-family:'Playfair Display',serif;}
-  .sync{font-size:11px;color:var(--muted);margin-top:6px;display:flex;gap:6px;justify-content:center;align-items:center;}
+  .sync{font-size:12px;color:var(--muted);margin-top:6px;display:flex;gap:6px;justify-content:center;align-items:center;}
   .dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1;display:inline-block;}
   .dot.on{background:var(--good);box-shadow:0 0 8px var(--good);}
   .dot.off{background:var(--bad);}
@@ -56,14 +56,33 @@
     padding:22px 16px;text-align:center;cursor:pointer;
     transition:transform .15s ease, box-shadow .2s;
     display:flex;flex-direction:column;align-items:center;gap:8px;
+    width:100%;
   }
   .tab:active{transform:scale(.96);}
+  .tab:hover{box-shadow:0 10px 28px rgba(244,63,94,.12);}
   .tab .ic{font-size:30px;}
   .tab .nm{font-weight:700;font-size:16px;color:var(--text);}
-  .tab .sub{font-size:11px;color:var(--muted);}
+  .tab .sub{font-size:12px;color:var(--muted);}
+
+  .daily-hero{
+    width:100%;margin:0 0 16px;padding:18px 20px;text-align:left;
+    display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
+    cursor:pointer;transition:transform .15s ease,box-shadow .2s;
+  }
+  .daily-hero:hover{box-shadow:0 12px 32px rgba(244,63,94,.14);}
+  .daily-hero:active{transform:scale(.985);}
+  .daily-kicker{font-size:12px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+  .daily-title{font-size:20px;font-weight:800;margin:4px 0;color:var(--text);}
+  .daily-meta{font-size:13px;color:var(--muted);}
+  .daily-progress{height:8px;background:#ffe4e6;border-radius:999px;margin-top:12px;overflow:hidden;}
+  .daily-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:inherit;transition:width .35s ease;}
+  .daily-arrow{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-size:22px;}
 
   /* Buttons */
   button{font-family:inherit;color:var(--text);cursor:pointer;border:none;}
+  button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
+    outline:3px solid rgba(139,92,246,.5);outline-offset:3px;
+  }
   .btn{
     background:#fff;border:1px solid var(--border);color:var(--accent);
     border-radius:14px;padding:11px 16px;font-size:15px;font-weight:700;
@@ -99,7 +118,7 @@
   .overlay.show{display:flex;}
   @keyframes fade{from{opacity:0}to{opacity:1}}
   .modal{
-    width:100%;max-width:560px;max-height:86vh;overflow:auto;
+    width:100%;max-width:560px;max-height:86vh;overflow:hidden;position:relative;
     background:var(--card-strong);border:1px solid var(--border);
     box-shadow:0 20px 50px rgba(15,23,42,0.2);
     padding:20px;animation:pop .25s cubic-bezier(.2,.9,.3,1.3);
@@ -107,8 +126,11 @@
   @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
   .modal h2{margin:0 0 4px;font-size:20px;color:var(--text);}
   .modal h3{color:var(--text);}
-  .modal .close{position:sticky;top:0;float:right;font-size:22px;line-height:1;
-    background:transparent;border:none;color:#94a3b8;padding:2px 6px;margin:-6px -6px 0 0;}
+  .modal .close{position:absolute;top:12px;right:12px;z-index:3;font-size:22px;line-height:1;
+    background:#fff;border:1px solid var(--border-soft);color:#64748b;padding:6px 9px;border-radius:10px;}
+  #modalBody{max-height:calc(86vh - 40px);overflow-y:auto;padding:2px 6px 2px 2px;overscroll-behavior:contain;}
+  #modalBody>h2{padding-right:44px;}
+  #modalBody>.close{display:none;}
 
   /* Premium Word Cards */
   .item {
@@ -239,7 +261,7 @@
   .big{font-size:28px;font-weight:800;margin:10px 0;color:var(--text);}
   .muted{color:var(--muted);}
   .hidden{display:none!important;}
-  .scroll{max-height:58vh;overflow:auto;margin-top:8px;}
+  .scroll{max-height:none;overflow:visible;margin-top:8px;}
   .field{margin-bottom:6px;}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .res-good{color:var(--good);font-weight:700;}
@@ -269,7 +291,7 @@
   .pairside:active{transform:scale(.97);}
   .pairside .w{font-weight:700;font-size:15px;color:var(--text);}
   .pairside .ipa{color:var(--violet);font-size:12px;font-style:italic;}
-  .pairside .mean{color:var(--muted);font-size:11px;}
+  .pairside .mean{color:var(--muted);font-size:12px;}
   .pairside .spk{color:var(--accent);font-size:16px;flex-shrink:0;}
   .speak{cursor:pointer;}
 
@@ -433,6 +455,13 @@
     transition: transform 0.1s ease;
   }
   @media (max-width: 600px) {
+    .app{padding:14px 14px 92px;}
+    .tabs{gap:12px;}
+    .tab{padding:18px 10px;}
+    .daily-hero{padding:16px;}
+    .daily-title{font-size:18px;}
+    .modal{max-height:92dvh;padding:18px 14px;}
+    #modalBody{max-height:calc(92dvh - 36px);}
     .mascot-widget {
       width: 280px;
       height: 280px;
@@ -722,7 +751,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 11px;
+    font-size: 12px;
   }
   .calendar-dot {
     width: 14px;
@@ -778,29 +807,44 @@
     <div class="sync"><span id="syncDot" class="dot"></span><span id="syncText">Đang kết nối…</span></div>
   </header>
 
+  <button type="button" class="daily-hero glass" data-open="daily" aria-label="Tiếp tục bài học hôm nay">
+    <div>
+      <div class="daily-kicker">Bài học hôm nay</div>
+      <div class="daily-title">Tiếp tục học từ vựng</div>
+      <div class="daily-meta"><span id="dailyHeroCount">0/10 từ</span> · Hoàn thành để nhận 1 💧</div>
+      <div class="daily-progress" aria-hidden="true"><span id="dailyHeroProgress"></span></div>
+    </div>
+    <span class="daily-arrow" aria-hidden="true">→</span>
+  </button>
+
   <div class="tabs">
-    <div class="tab glass" data-open="vocab"><div class="ic">📚</div><div class="nm">Từ vựng</div><div class="sub" id="cntVocab">0 từ</div></div>
-    <div class="tab glass" data-open="sentences"><div class="ic">📝</div><div class="nm">Câu dài</div><div class="sub" id="cntSent">0 câu</div></div>
-    <div class="tab glass" data-open="quiz"><div class="ic">🎯</div><div class="nm">Kiểm tra</div><div class="sub">Trắc nghiệm & điền từ</div></div>
-    <div class="tab glass" data-open="pron"><div class="ic">🔊</div><div class="nm">Phát âm</div><div class="sub">Chuẩn IPA</div></div>
-    <div class="tab glass" data-open="listen"><div class="ic">🎧</div><div class="nm">Luyện nghe</div><div class="sub">Nghe liên tục</div></div>
-    <div class="tab glass" data-open="garden"><div class="ic">🌸</div><div class="nm">Love Garden</div><div class="sub" id="cntWater">0 💧</div></div>
-    <div class="tab glass" data-open="daily"><div class="ic">📅</div><div class="nm">Hôm nay</div><div class="sub" id="cntDaily">0/10 từ</div></div>
-    <div class="tab glass" data-open="stats"><div class="ic">📊</div><div class="nm">Tiến trình</div><div class="sub" id="cntStreak">0 ngày 🔥</div></div>
+    <button type="button" class="tab glass" data-open="vocab"><span class="ic" aria-hidden="true">📚</span><span class="nm">Từ vựng</span><span class="sub" id="cntVocab">0 từ</span></button>
+    <button type="button" class="tab glass" data-open="sentences"><span class="ic" aria-hidden="true">📝</span><span class="nm">Câu dài</span><span class="sub" id="cntSent">0 câu</span></button>
+    <button type="button" class="tab glass" data-open="quiz"><span class="ic" aria-hidden="true">🎯</span><span class="nm">Kiểm tra</span><span class="sub">Chọn theo kỹ năng</span></button>
+    <button type="button" class="tab glass" data-open="pron"><span class="ic" aria-hidden="true">🔊</span><span class="nm">Phát âm</span><span class="sub">Chuẩn IPA</span></button>
+    <button type="button" class="tab glass" data-open="listen"><span class="ic" aria-hidden="true">🎧</span><span class="nm">Luyện nghe</span><span class="sub">Nghe liên tục</span></button>
+    <button type="button" class="tab glass" data-open="garden"><span class="ic" aria-hidden="true">🌸</span><span class="nm">Love Garden</span><span class="sub" id="cntWater">0 💧</span></button>
+    <button type="button" class="tab glass" data-open="stats" style="grid-column:1/-1"><span class="ic" aria-hidden="true">📊</span><span class="nm">Tiến trình</span><span class="sub" id="cntStreak">0 ngày 🔥</span></button>
   </div>
 
   <div class="glass" style="padding:16px;">
     <div class="row between">
-      <span class="count">☁️ Dữ liệu đồng bộ qua Firebase</span>
-      <button class="btn sm ghost" id="btnBackup">Sao lưu JSON</button>
+      <div>
+        <div class="count">☁️ Dữ liệu đồng bộ qua Firebase</div>
+        <div class="count" id="syncTime" aria-live="polite">Chưa có lần đồng bộ</div>
+      </div>
+      <div class="row">
+        <button class="btn sm ghost hidden" id="btnRetrySync">Thử lại</button>
+        <button class="btn sm ghost" id="btnBackup">Sao lưu JSON</button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Modal -->
-<div class="overlay" id="overlay">
-  <div class="modal glass" id="modal">
-    <button class="close" id="modalClose">×</button>
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal glass" id="modal" role="dialog" aria-modal="true" tabindex="-1">
+    <button type="button" class="close" id="modalClose" aria-label="Đóng cửa sổ">×</button>
     <div id="modalBody"></div>
   </div>
 </div>
@@ -1000,10 +1044,22 @@ const SEED_SENTENCES = [
 
 /* ---------- DOM helpers ---------- */
 const $ = (s)=>document.querySelector(s);
-const overlay=$("#overlay"), modalBody=$("#modalBody");
-function openModal(html){ modalBody.innerHTML=html; overlay.classList.add("show"); }
+const overlay=$("#overlay"), modal=$("#modal"), modalBody=$("#modalBody");
+let lastFocusedElement = null;
+function openModal(html){
+  if(!overlay.classList.contains("show")) lastFocusedElement=document.activeElement;
+  modalBody.innerHTML=html;
+  const title=modalBody.querySelector("h2");
+  if(title){ title.id="modalTitle"; modal.setAttribute("aria-labelledby","modalTitle"); }
+  overlay.classList.add("show");
+  overlay.setAttribute("aria-hidden","false");
+  $(".app").inert=true;
+  requestAnimationFrame(()=>modal.focus());
+}
 function closeModal(){
   overlay.classList.remove("show");
+  overlay.setAttribute("aria-hidden","true");
+  $(".app").inert=false;
   if (typeof stopListening === "function") stopListening();
   if (gardenAnimId) {
     cancelAnimationFrame(gardenAnimId);
@@ -1015,10 +1071,20 @@ function closeModal(){
     gardenPanX = 0;
     gardenPanY = 0;
   }
+  if(lastFocusedElement && document.contains(lastFocusedElement)) lastFocusedElement.focus();
 }
 $("#modalClose").onclick=closeModal;
 overlay.addEventListener("click",e=>{ if(e.target===overlay) closeModal(); });
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape" && overlay.classList.contains("show")) closeModal();
+  if(e.key!=="Tab" || !overlay.classList.contains("show")) return;
+  const focusable=[...modal.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')]
+    .filter(el=>el.offsetParent!==null);
+  if(!focusable.length){ e.preventDefault(); modal.focus(); return; }
+  const first=focusable[0], last=focusable[focusable.length-1];
+  if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+  else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+});
 function esc(s){ return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 let toastT;
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),1800); }
@@ -1134,12 +1200,25 @@ function setOnline(on){
   online=on;
   $("#syncDot").className="dot "+(on?"on":"off");
   $("#syncText").textContent = on ? "Đã đồng bộ" : "Offline (sẽ tự đồng bộ)";
+  const retry=$("#btnRetrySync");
+  if(retry) retry.classList.toggle("hidden",on);
+  const syncTime=$("#syncTime");
+  if(syncTime){
+    if(on){
+      const now=new Date();
+      localStorage.setItem("lastSyncAt",now.toISOString());
+      syncTime.textContent=`Đã lưu lúc ${now.toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})}`;
+    } else {
+      const saved=localStorage.getItem("lastSyncAt");
+      syncTime.textContent=saved?`Bản gần nhất: ${new Date(saved).toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})}`:"Chưa có lần đồng bộ";
+    }
+  }
 }
 
 function updateTabCounters() {
-  if (document.getElementById("cntDaily") && gardenState) {
-    document.getElementById("cntDaily").textContent = `${gardenState.dailyWordDoneIds?.length || 0}/10 từ`;
-  }
+  const dailyDone=gardenState?.dailyWordDoneIds?.length || 0;
+  if($("#dailyHeroCount")) $("#dailyHeroCount").textContent=`${dailyDone}/10 từ`;
+  if($("#dailyHeroProgress")) $("#dailyHeroProgress").style.width=`${Math.min(100,dailyDone*10)}%`;
   if (document.getElementById("cntStreak") && gardenState) {
     document.getElementById("cntStreak").textContent = `${gardenState.studyStreakDays || 0} ngày 🔥`;
   }
@@ -1279,16 +1358,16 @@ const delSent=(id)=>deleteDoc(doc(db,"sentences",id));
 
 /* ---------- Open tabs ---------- */
 let openView=null;
-document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>open(t.dataset.open));
+document.querySelectorAll("[data-open]").forEach(t=>t.onclick=()=>open(t.dataset.open));
 function open(view){
   if (typeof stopListening === "function") stopListening();
   if (gardenAnimId) {
     cancelAnimationFrame(gardenAnimId);
     gardenAnimId = null;
   }
+  if(view==="quiz") quizCategory=null;
   openView=view;
   render();
-  overlay.classList.add("show");
 }
 function refreshOpen(){ if(overlay.classList.contains("show") && openView) render(); }
 function render(){
@@ -2075,7 +2154,8 @@ function renderListenActiveCard(it) {
 }
 
 /* ---------- VOCAB ---------- */
-let vocabFilter="all", vocabSearch="";
+let vocabFilter="all", vocabSearch="", vocabPage=1, vocabSearchTimer=null;
+const VOCAB_PAGE_SIZE=24;
 function topics(){ return ["all", "nature", "life", "food", "emotion", "travel", "career", "tech", "art", "other"]; }
 const TOPIC_LABEL = {
   all: "🌈 Tất cả",
@@ -2106,7 +2186,11 @@ function renderVocab(){
   let list=words.filter(w=>vocabFilter==="all"||w.topic===vocabFilter);
   if(vocabSearch){ const q=vocabSearch.toLowerCase();
     list=list.filter(w=>(w.word||"").toLowerCase().includes(q)||(w.meaning||"").toLowerCase().includes(q)); }
-  const pills=topics().map(t=>`<span class="pill ${t===vocabFilter?'active':''}" data-topic="${t}">${TOPIC_LABEL[t]||t}</span>`).join("");
+  const totalFiltered=list.length;
+  const totalPages=Math.max(1,Math.ceil(totalFiltered/VOCAB_PAGE_SIZE));
+  vocabPage=Math.min(Math.max(1,vocabPage),totalPages);
+  list=list.slice((vocabPage-1)*VOCAB_PAGE_SIZE,vocabPage*VOCAB_PAGE_SIZE);
+  const pills=topics().map(t=>`<button type="button" class="pill ${t===vocabFilter?'active':''}" data-topic="${t}" aria-pressed="${t===vocabFilter}">${TOPIC_LABEL[t]||t}</button>`).join("");
   const items=list.map(w=>{
     const color = TOPIC_COLOR[w.topic] || "#64748b";
     const label = TOPIC_LABEL[w.topic] || w.topic;
@@ -2115,7 +2199,7 @@ function renderVocab(){
       <div class="item-content">
         <div class="item-title-row">
           <span class="w">${esc(w.word)}</span>
-          <button class="speak-badge" data-say="${esc(w.word)}">🔊</button>
+          <button class="speak-badge" data-say="${esc(w.word)}" aria-label="Nghe phát âm ${esc(w.word)}">🔊</button>
           <span class="topic-badge" style="background: ${color}15; color: ${color}">${label}</span>
           ${getSRSBadge(w.srsLevel)}
         </div>
@@ -2126,8 +2210,8 @@ function renderVocab(){
         ${w.example?`<div class="card-example">“${esc(w.example)}”</div>`:""}
       </div>
       <div class="acts">
-        <button class="iconbtn edit-btn" data-edit="${w.id}">✏️</button>
-        <button class="iconbtn del-btn" data-del="${w.id}">🗑️</button>
+        <button class="iconbtn edit-btn" data-edit="${w.id}" aria-label="Sửa từ ${esc(w.word)}">✏️</button>
+        <button class="iconbtn del-btn" data-del="${w.id}" aria-label="Xóa từ ${esc(w.word)}">🗑️</button>
       </div>
     </div>`;
   }).join("") || `<div class="center muted" style="padding:24px">Không có từ nào.</div>`;
@@ -2135,15 +2219,25 @@ function renderVocab(){
   openModal(`
     <button class="close" onclick="window.__close()">×</button>
     <h2>📚 Từ vựng</h2>
-    <div class="count">${list.length}/${words.length} từ</div>
+    <div class="count">${totalFiltered}/${words.length} từ</div>
     <div style="margin:12px 0"><input id="vSearch" placeholder="🔍 Tìm từ hoặc nghĩa…" value="${esc(vocabSearch)}"></div>
-    <div style="max-height:85px; overflow-y:auto; padding-bottom:4px; margin-bottom:8px;">${pills}</div>
+    <div style="padding-bottom:4px; margin-bottom:8px;">${pills}</div>
     <div class="row" style="margin-top:10px"><button class="btn primary sm" id="vAdd">＋ Thêm từ</button></div>
     <div class="scroll" id="vList">${items}</div>
+    ${totalPages>1?`<div class="row between" style="margin-top:16px;align-items:center">
+      <button class="btn ghost sm" data-vpage="${vocabPage-1}" ${vocabPage===1?'disabled':''}>← Trước</button>
+      <span class="count">Trang ${vocabPage}/${totalPages}</span>
+      <button class="btn ghost sm" data-vpage="${vocabPage+1}" ${vocabPage===totalPages?'disabled':''}>Sau →</button>
+    </div>`:''}
   `);
   bindClose();
-  $("#vSearch").oninput=e=>{ vocabSearch=e.target.value; const p=$("#vSearch").selectionStart; renderVocab(); const el=$("#vSearch"); el.focus(); el.setSelectionRange(p,p); };
-  modalBody.querySelectorAll(".pill").forEach(p=>p.onclick=()=>{vocabFilter=p.dataset.topic;renderVocab();});
+  $("#vSearch").oninput=e=>{
+    const value=e.target.value;
+    clearTimeout(vocabSearchTimer);
+    vocabSearchTimer=setTimeout(()=>{vocabSearch=value;vocabPage=1;renderVocab();const el=$("#vSearch");el.focus();el.setSelectionRange(value.length,value.length);},180);
+  };
+  modalBody.querySelectorAll(".pill").forEach(p=>p.onclick=()=>{vocabFilter=p.dataset.topic;vocabPage=1;renderVocab();});
+  modalBody.querySelectorAll("[data-vpage]").forEach(b=>b.onclick=()=>{vocabPage=Number(b.dataset.vpage);renderVocab();modalBody.scrollTop=0;});
   modalBody.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>speak(b.dataset.say));
   modalBody.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{ if(confirm("Xóa từ này?")) delWord(b.dataset.del); });
   modalBody.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>wordForm(words.find(w=>w.id===b.dataset.edit)));
@@ -2340,41 +2434,45 @@ function renderPron(){
 }
 
 /* ---------- QUIZ ---------- */
-function renderQuizHome(){
+let quizCategory=null;
+function renderQuizHome(category=quizCategory){
+  quizCategory=category;
+  const categoryButtons=`
+    <div class="grid2" style="margin-top:14px">
+      <button class="btn ghost" data-qcat="vocab"><b>🧠 Từ vựng</b><br><span class="count">Trắc nghiệm & điền từ</span></button>
+      <button class="btn ghost" data-qcat="listen"><b>🎧 Luyện nghe</b><br><span class="count">Nghe hiểu & chính tả</span></button>
+      <button class="btn ghost" data-qcat="write"><b>✍️ Viết câu</b><br><span class="count">Dịch & sắp xếp từ</span></button>
+    </div>`;
+  const choices=category==="vocab"?`
+      <h3 style="margin:18px 0 8px">Chọn dạng bài từ vựng</h3>
+      <div class="row">
+        <button class="btn primary sm" data-q="mc:en-vi">Trắc nghiệm Anh → Việt</button>
+        <button class="btn primary sm" data-q="mc:vi-en">Trắc nghiệm Việt → Anh</button>
+        <button class="btn cyan sm" data-q="fill:en-vi">Điền nghĩa tiếng Việt</button>
+        <button class="btn cyan sm" data-q="fill:vi-en">Điền từ tiếng Anh</button>
+      </div>`:category==="listen"?`
+      <h3 style="margin:18px 0 8px">Chọn dạng bài nghe</h3>
+      <div class="row">
+        <button class="btn primary sm" data-q="audiomc:en-vi">Nghe → nghĩa Việt</button>
+        <button class="btn primary sm" data-q="audiomc:en-en">Nghe → từ tiếng Anh</button>
+        <button class="btn cyan sm" data-q="dictate:word">Chính tả từ vựng</button>
+        <button class="btn cyan sm" data-q="dictate:sent">Chính tả câu dài</button>
+      </div>`:category==="write"?`
+      <h3 style="margin:18px 0 8px">Chọn dạng bài viết</h3>
+      <div class="row">
+        <button class="btn ghost sm" data-q="sentfill:vi-en">Dịch viết câu</button>
+        <button class="btn ghost sm" style="border-color:#8b5cf6;color:#8b5cf6" data-q="scramble:vi-en">Sắp xếp khối từ</button>
+      </div>`:"";
   openModal(`
     <button class="close" onclick="window.__close()">×</button>
     <h2>🎯 Kiểm tra</h2>
-    <p class="muted" style="margin-top:4px">Chọn dạng và chế độ kiểm tra:</p>
-    
-    <h3 style="margin:14px 0 6px">Trắc nghiệm (từ vựng)</h3>
-    <div class="row">
-      <button class="btn primary sm" data-q="mc:en-vi">Anh → Việt</button>
-      <button class="btn primary sm" data-q="mc:vi-en">Việt → Anh</button>
-    </div>
-    
-    <h3 style="margin:18px 0 6px">Điền từ (từ vựng)</h3>
-    <div class="row">
-      <button class="btn cyan sm" data-q="fill:en-vi">Anh → Việt</button>
-      <button class="btn cyan sm" data-q="fill:vi-en">Việt → Anh</button>
-    </div>
-
-    <h3 style="margin:18px 0 6px">Luyện nghe (Âm thanh)</h3>
-    <div class="row" style="gap: 8px;">
-      <button class="btn primary sm" style="background: linear-gradient(90deg, #ec4899, #f43f5e); border:none; color:white;" data-q="audiomc:en-vi">Nghe → nghĩa Việt</button>
-      <button class="btn primary sm" style="background: linear-gradient(90deg, #ec4899, #f43f5e); border:none; color:white;" data-q="audiomc:en-en">Nghe → từ tiếng Anh</button>
-      <button class="btn cyan sm" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa); border:none; color:white;" data-q="dictate:word">Chính tả từ vựng</button>
-      <button class="btn cyan sm" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa); border:none; color:white;" data-q="dictate:sent">Chính tả câu dài</button>
-    </div>
-    
-    <h3 style="margin:18px 0 6px">Viết câu (câu dài)</h3>
-    <div class="row" style="gap: 8px;">
-      <button class="btn ghost sm" data-q="sentfill:vi-en">Dịch viết câu</button>
-      <button class="btn ghost sm" style="border-color: #8b5cf6; color: #8b5cf6;" data-q="scramble:vi-en">Sắp xếp khối từ</button>
-    </div>
-    
+    <p class="muted" style="margin-top:4px">Bạn muốn luyện kỹ năng nào?</p>
+    ${categoryButtons}
+    ${choices}
     <p class="muted" style="font-size:12px;margin-top:16px">Mỗi lượt tối đa 10 câu (hoặc ít hơn nếu chưa đủ), có chấm điểm.</p>
   `);
   bindClose();
+  modalBody.querySelectorAll("[data-qcat]").forEach(b=>b.onclick=()=>renderQuizHome(b.dataset.qcat));
   modalBody.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{
     const [type,dir]=b.dataset.q.split(":");
     if(type==="sentfill" || type==="scramble"){
@@ -2637,6 +2735,10 @@ $("#btnBackup").onclick=()=>{
   const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
   a.download="english-backup-"+Date.now()+".json"; a.click();
   toast("Đã tải file sao lưu");
+};
+$("#btnRetrySync").onclick=()=>{
+  $("#syncText").textContent="Đang kết nối lại…";
+  location.reload();
 };
 
 /* ---------- Cleanup Duplicates ---------- */
