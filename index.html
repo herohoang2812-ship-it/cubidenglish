@@ -1071,6 +1071,7 @@ function closeModal(){
     gardenPanX = 0;
     gardenPanY = 0;
   }
+  quiz = null;
   if(lastFocusedElement && document.contains(lastFocusedElement)) lastFocusedElement.focus();
 }
 $("#modalClose").onclick=closeModal;
@@ -1369,7 +1370,16 @@ function open(view){
   openView=view;
   render();
 }
-function refreshOpen(){ if(overlay.classList.contains("show") && openView) render(); }
+function refreshOpen(){
+  if(overlay.classList.contains("show") && openView) {
+    if(openView==="quiz" && quiz) return;
+    if(flashState && flashState.words && flashState.words.length > 0 && flashState.idx < flashState.words.length) return;
+    if(document.getElementById("fw") || document.getElementById("se")) return;
+    if(openView==="garden" && gardenSubView==="shop") return;
+    if(openView==="listen" && listenState && listenState.playing) return;
+    render();
+  }
+}
 function render(){
   if(openView==="vocab") renderVocab();
   else if(openView==="sentences") renderSentences();
@@ -2672,7 +2682,12 @@ function nextQuiz(){
       gradeStep(norm(val) === norm(answer), it, prompt || "[Nghe âm thanh]", val, answer);
     };
     $("#qOk").onclick = submit;
-    $("#qIn").addEventListener("keydown", e => { if (e.key === "Enter") submit(); });
+    $("#qIn").addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        submit();
+      }
+    });
     $("#qIn").focus();
   }
 
@@ -2694,7 +2709,13 @@ function gradeStep(ok,it,prompt,given,answer){
     <button class="btn primary" id="qNext" style="width:100%">${quiz.i+1>=quiz.items.length?"Xem kết quả":"Câu tiếp →"}</button>`;
   openModal(`<button class="close" onclick="window.__close()">×</button><h2>🎯 Kiểm tra</h2>${fb}`);
   bindClose();
-  $("#qNext").onclick=()=>{ quiz.i++; nextQuiz(); };
+  // Trì hoãn gán onclick để tránh sự kiện click-through hoặc Enter keyup kích hoạt lập tức
+  setTimeout(() => {
+    const nextBtn = $("#qNext");
+    if (nextBtn) {
+      nextBtn.onclick = () => { quiz.i++; nextQuiz(); };
+    }
+  }, 300);
 }
 function finishQuiz(){
   if (gardenState) {
@@ -3857,6 +3878,7 @@ window.__back=(v)=>{
     cancelAnimationFrame(gardenAnimId);
     gardenAnimId = null;
   }
+  quiz = null;
   openView=v;
   render();
 };
