@@ -453,6 +453,7 @@
     touch-action: none;
     filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12));
     transition: transform 0.1s ease;
+    clip-path: polygon(50% 0%, 95% 60%, 65% 100%, 35% 100%, 5% 60%);
   }
   @media (max-width: 600px) {
     .app{padding:14px 14px 92px;}
@@ -801,7 +802,8 @@
 </head>
 <body>
 <div class="app">
-  <header>
+  <header style="position: relative;">
+    <button type="button" id="btnSettings" style="position: absolute; top: 0; right: 8px; background: transparent; font-size: 22px; border: none; cursor: pointer; color: var(--muted); padding: 6px; line-height: 1; transition: transform 0.2s;" onmouseover="this.style.transform='rotate(45deg)'" onmouseout="this.style.transform='none'" aria-label="Cài đặt">⚙️</button>
     <h1>English Garden</h1>
     <div class="gift">Tặng em bé của anh 💛</div>
     <div class="sync"><span id="syncDot" class="dot"></span><span id="syncText">Đang kết nối…</span></div>
@@ -1095,10 +1097,20 @@ const TTS = "speechSynthesis" in window;
 let preferredVoice = null;
 
 function getBestVoice() {
-  if (preferredVoice) return preferredVoice;
   if (!TTS) return null;
   const voices = speechSynthesis.getVoices();
   if (voices.length === 0) return null;
+  
+  const savedVoiceName = localStorage.getItem("preferredVoiceName");
+  if (savedVoiceName && savedVoiceName !== "oxford") {
+    const foundSaved = voices.find(v => v.name === savedVoiceName);
+    if (foundSaved) {
+      preferredVoice = foundSaved;
+      return foundSaved;
+    }
+  }
+  
+  if (preferredVoice) return preferredVoice;
 
   // Preferred high-quality English voices
   const keywords = ["Google US English", "Microsoft Aria", "Microsoft Natural", "David", "Zira", "en-US", "en-GB"];
@@ -1156,7 +1168,9 @@ function speakPromise(text) {
   return new Promise((resolve) => {
     text = text.trim();
     const isSingleWord = /^[a-zA-Z-]+$/.test(text);
-    if (isSingleWord) {
+    const savedVoice = localStorage.getItem("preferredVoiceName") || "oxford";
+    
+    if (isSingleWord && savedVoice === "oxford") {
       const wordLower = text.toLowerCase();
       const url = `https://ssl.gstatic.com/dictionary/static/sounds/oxford/${wordLower}--_us_1.mp3`;
       const audio = new Audio(url);
@@ -1194,6 +1208,73 @@ function speakPromise(text) {
 
 function speak(text) {
   speakPromise(text);
+}
+
+function openSettings() {
+  if (!TTS) return toast("Thiết bị không hỗ trợ Text-to-Speech");
+  const voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith("en"));
+  const savedVoice = localStorage.getItem("preferredVoiceName") || "oxford";
+  
+  let voiceOptions = `<option value="oxford" ${savedVoice === "oxford" ? "selected" : ""}>Mặc định (Từ điển Oxford MP3)</option>`;
+  voices.forEach(v => {
+    voiceOptions += `<option value="${esc(v.name)}" ${savedVoice === v.name ? "selected" : ""}>${esc(v.name)} (${esc(v.lang)})</option>`;
+  });
+  
+  const showMascot = localStorage.getItem("showMascot") !== "false";
+
+  openModal(`
+    <button class="close" onclick="window.__close()">×</button>
+    <h2>⚙️ Cấu hình ứng dụng</h2>
+    <p class="muted" style="margin-top:-6px; font-size:13px; text-align:center;">Cấu hình giọng đọc và tùy chỉnh màn hình</p>
+    
+    <div class="glass" style="padding: 16px; margin-top: 14px; background: #fff; border: 1px solid var(--border-soft);">
+      <label for="settingsVoice" style="font-weight: 700; display: block; margin-top: 0;">🗣️ Giọng phát âm tiếng Anh</label>
+      <p class="muted" style="font-size: 11.5px; margin: 4px 0 8px 0; line-height: 1.35;">Chọn giọng đọc và ngữ điệu (Mỹ, Anh, Úc...) có sẵn trên trình duyệt/hệ điều hành của bé.</p>
+      <select id="settingsVoice" style="width: 100%;">
+        ${voiceOptions}
+      </select>
+    </div>
+    
+    <div class="glass" style="padding: 16px; margin-top: 12px; background: #fff; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-soft);">
+      <div>
+        <span style="font-weight:700; font-size:13px; color:var(--text); display:block;">
+          🔮 Hiển thị linh vật màn hình chính
+        </span>
+      </div>
+      <button class="btn sm ${showMascot ? 'primary' : 'ghost'}" id="settingsToggleMascot" style="padding: 5px 12px; font-size:11px; font-weight:700; border-radius:10px;">
+        ${showMascot ? 'Đang bật' : 'Đang tắt'}
+      </button>
+    </div>
+    
+    <div class="row" style="margin-top: 20px;">
+      <button class="btn primary" style="width: 100%; padding: 11px 0;" onclick="window.__close()">Hoàn tất</button>
+    </div>
+  `);
+  bindClose();
+  
+  const selectVoice = document.getElementById("settingsVoice");
+  selectVoice.onchange = () => {
+    localStorage.setItem("preferredVoiceName", selectVoice.value);
+    if (selectVoice.value === "oxford") {
+      preferredVoice = null;
+    } else {
+      const found = speechSynthesis.getVoices().find(v => v.name === selectVoice.value);
+      if (found) preferredVoice = found;
+    }
+    toast("Đã cập nhật giọng đọc mới!");
+  };
+  
+  const btnToggleMascot = document.getElementById("settingsToggleMascot");
+  btnToggleMascot.onclick = () => {
+    const currentlyEnabled = localStorage.getItem("showMascot") !== "false";
+    localStorage.setItem("showMascot", currentlyEnabled ? "false" : "true");
+    updateMascotState();
+    
+    const nowEnabled = !currentlyEnabled;
+    btnToggleMascot.textContent = nowEnabled ? "Đang bật" : "Đang tắt";
+    btnToggleMascot.className = nowEnabled ? "btn sm primary" : "btn sm ghost";
+    toast(nowEnabled ? "Đã hiện linh vật" : "Đã ẩn linh vật");
+  };
 }
 
 /* ---------- Firestore sync ---------- */
@@ -1360,6 +1441,7 @@ const delSent=(id)=>deleteDoc(doc(db,"sentences",id));
 /* ---------- Open tabs ---------- */
 let openView=null;
 document.querySelectorAll("[data-open]").forEach(t=>t.onclick=()=>open(t.dataset.open));
+$("#btnSettings").onclick = () => openSettings();
 function open(view){
   if (typeof stopListening === "function") stopListening();
   if (gardenAnimId) {
@@ -2831,22 +2913,48 @@ const TREE_CONTENT_OFFSETS = {
   phuong: { 1: -82.2, 2: -55.8, 3: -27.5, 4: -4.1, 5: 0 },
   anhdao: { 1: -82.2, 2: -55.6, 3: -27.5, 4: -4.1, 5: 9.4 },
   hoagiay: { 1: -82.3, 2: -55.6, 3: -27.5, 4: -4.1, 5: 7.3 },
-  huongduong: { 1: -82.2, 2: -2.7, 3: -3.9, 4: -2.8, 5: -9.5 }
+  huongduong: { 1: -82.2, 2: -2.7, 3: -3.9, 4: -2.8, 5: -9.5 },
+  sen: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  tulip: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  xuongrong: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  oaihuong: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
 };
 
 const TREE_SPECIES = {
   phuong: { name: "Phượng Vĩ", price: 0, desc: "Biểu tượng học trò và tình yêu lãng mạn." },
   anhdao: { name: "Anh Đào", price: 100, desc: "Màu hồng lãng mạn của mùa xuân nước Nhật." },
   hoagiay: { name: "Hoa Giấy", price: 200, desc: "Bền bỉ, rực rỡ và tràn đầy sức sống dưới nắng." },
-  huongduong: { name: "Hướng Dương", price: 300, desc: "Luôn hướng về mặt trời, lòng thủy chung son sắt." }
+  huongduong: { name: "Hướng Dương", price: 300, desc: "Luôn hướng về mặt trời, lòng thủy chung son sắt." },
+  sen: { name: "Hoa Sen", price: 200, desc: "Thanh tao, thuần khiết và tỏa ngát hương thơm giữa đầm bùn." },
+  tulip: { name: "Hoa Tulip", price: 200, desc: "Kiêu sa, rực rỡ đại diện cho tình yêu hoàn hảo." },
+  xuongrong: { name: "Xương Rồng", price: 200, desc: "Bền bỉ, mạnh mẽ vượt qua mọi khô cằn sỏi đá." },
+  oaihuong: { name: "Oải Hương", price: 200, desc: "Sắc tím thủy chung, đem lại cảm giác bình yên và thư thái." }
 };
 
 const SPECIES_PARTICLES = {
   phuong: ["#f43f5e", "#fb7185", "#fda4af"],
   anhdao: ["#ffb7c5", "#ffc0cb", "#fda4af"],
   hoagiay: ["#d946ef", "#f472b6", "#c084fc"],
-  huongduong: ["#eab308", "#facc15", "#fef08a"]
+  huongduong: ["#eab308", "#facc15", "#fef08a"],
+  sen: ["#fbcfe8", "#f472b6", "#ec4899"],
+  tulip: ["#fecaca", "#f87171", "#ef4444"],
+  xuongrong: ["#bbf7d0", "#4ade80", "#22c55e"],
+  oaihuong: ["#e9d5ff", "#c084fc", "#a855f7"]
 };
+
+function getTreeImgSrc(species, level) {
+  const jpegs = {
+    huongduong: [3, 4, 5],
+    oaihuong: [4, 5],
+    sen: [5],
+    tulip: [4, 5],
+    xuongrong: [4, 5]
+  };
+  if (jpegs[species] && jpegs[species].includes(Number(level))) {
+    return `Assets/tree_${species}_${level}.jpeg`;
+  }
+  return `Assets/tree_${species}_${level}.png`;
+}
 
 // Lưu trữ bộ nhớ cache ảnh
 const imgCache = {};
@@ -2948,7 +3056,7 @@ async function verifyGardenStateLocally() {
 
 function showLargeTreeModal(slot) {
   const name = TREE_SPECIES[slot.species] ? TREE_SPECIES[slot.species].name : slot.species;
-  const treeSrc = `Assets/tree_${slot.species}_${slot.level}.png`;
+  const treeSrc = getTreeImgSrc(slot.species, slot.level);
   
   let lvlLabel = "";
   switch(slot.level) {
@@ -3216,7 +3324,7 @@ function updateMascotState() {
       const isDead = slotState === "dead";
       
       const treeSrc = (slot && slot.species && !isDead)
-        ? `Assets/tree_${slot.species}_${slot.level}.png`
+        ? getTreeImgSrc(slot.species, slot.level)
         : `Assets/soil_empty.png`;
         
       if (mascotAnimId) cancelAnimationFrame(mascotAnimId);
@@ -3356,7 +3464,7 @@ function renderGarden() {
     let treeImgHtml = "";
     let zoomToolbarHtml = "";
     if (currentSlot && currentSlot.species) {
-      const treeSrc = `Assets/tree_${currentSlot.species}_${currentSlot.level}.png`;
+      const treeSrc = getTreeImgSrc(currentSlot.species, currentSlot.level);
       let filterClass = "";
       if (state === "wilted") filterClass = "single-tree-wilted";
       else if (state === "dead") filterClass = "single-tree-dead";
@@ -3804,10 +3912,15 @@ function renderNurseryShop() {
       `;
     }
     
+    const isNewSpecies = ["sen", "tulip", "xuongrong", "oaihuong"].includes(species);
+    const imgStyle = isNewSpecies
+      ? "width: 100%; height: 100%; object-fit: contain;"
+      : "position: absolute; width: 280px; height: 280px; bottom: -34px; object-fit: contain;";
+    
     shopItemsHtml += `
       <div class="glass" style="padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center; background: #fff;">
         <div style="width: 80px; height: 80px; overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; position: relative;">
-          <img src="Assets/tree_${species}_1.png" style="position: absolute; width: 280px; height: 280px; bottom: -34px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.08));" onerror="this.src='Assets/soil_empty.png'">
+          <img src="${getTreeImgSrc(species, 1)}" style="${imgStyle} filter: drop-shadow(0 2px 5px rgba(0,0,0,0.08));" onerror="this.src='Assets/soil_empty.png'">
         </div>
         <span style="font-weight:700; font-size:13.5px; color:var(--text); display:block; margin-bottom:2px;">${item.name}</span>
         <p style="margin: 0 8px 10px; font-size: 11px; color: var(--muted); height: 32px; overflow: hidden; line-height:1.25;">${item.desc}</p>
