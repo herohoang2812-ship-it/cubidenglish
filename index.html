@@ -445,15 +445,14 @@
   /* Mascot floating widget */
   .mascot-widget {
     position: fixed;
-    width: 280px;
-    height: 280px;
+    width: 180px;
+    height: 180px;
     z-index: 1000;
     cursor: grab;
     user-select: none;
     touch-action: none;
     filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12));
     transition: transform 0.1s ease;
-    clip-path: polygon(50% 0%, 95% 60%, 65% 100%, 35% 100%, 5% 60%);
   }
   @media (max-width: 600px) {
     .app{padding:14px 14px 92px;}
@@ -464,8 +463,8 @@
     .modal{max-height:92dvh;padding:18px 14px;}
     #modalBody{max-height:calc(92dvh - 36px);}
     .mascot-widget {
-      width: 280px;
-      height: 280px;
+      width: 140px;
+      height: 140px;
     }
   }
   .mascot-widget:active {
@@ -2923,6 +2922,17 @@ const TREE_CONTENT_OFFSETS = {
   oaihuong: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
 };
 
+const MASCOT_SCALES = {
+  phuong: { 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0 },
+  anhdao: { 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0 },
+  hoagiay: { 1: 1.0, 2: 1.0, 3: 1.0, 4: 1.0, 5: 1.0 },
+  huongduong: { 1: 1.0, 2: 1.0, 3: 0.75, 4: 0.75, 5: 0.75 },
+  sen: { 1: 0.35, 2: 0.5, 3: 0.65, 4: 0.75, 5: 0.85 },
+  tulip: { 1: 0.35, 2: 0.5, 3: 0.65, 4: 0.75, 5: 0.85 },
+  xuongrong: { 1: 0.35, 2: 0.5, 3: 0.65, 4: 0.75, 5: 0.85 },
+  oaihuong: { 1: 0.3, 2: 0.45, 3: 0.6, 4: 0.72, 5: 0.82 }
+};
+
 const TREE_SPECIES = {
   phuong: { name: "Phượng Vĩ", price: 0, desc: "Biểu tượng học trò và tình yêu lãng mạn." },
   anhdao: { name: "Anh Đào", price: 100, desc: "Màu hồng lãng mạn của mùa xuân nước Nhật." },
@@ -3288,8 +3298,9 @@ function updateMascotState() {
       
       let x = parseInt(savedX);
       let y = parseInt(savedY);
-      const widgetWidth = 280;
-      const widgetHeight = 280;
+      const isMobile = window.innerWidth <= 600;
+      const widgetWidth = isMobile ? 140 : 180;
+      const widgetHeight = isMobile ? 140 : 180;
       const minVisible = 60;
       
       if (savedX && savedY && x < window.innerWidth - minVisible && y < window.innerHeight - minVisible && x > -widgetWidth + minVisible && y > -widgetHeight + minVisible) {
@@ -3356,11 +3367,18 @@ function updateMascotState() {
           const swayAngle = Math.sin(time * 1.6) * 0.02 + Math.cos(time * 0.6) * 0.005;
           ctx.rotate(swayAngle);
           
+          const species = (slot && slot.species) ? slot.species : "";
+          const level = (slot && slot.level) ? slot.level : 1;
+          const scale = (MASCOT_SCALES[species] && MASCOT_SCALES[species][level]) !== undefined
+            ? MASCOT_SCALES[species][level]
+            : 1.0;
+          ctx.scale(scale, scale);
+          
           if (slotState === "wilted" && slot && slot.species && !isDead) {
             ctx.filter = "saturate(0.55) sepia(0.3) brightness(0.9)";
           }
           
-          ctx.drawImage(img, -originX, -originY);
+          ctx.drawImage(img, -img.width / 2, -(img.height - 20));
           ctx.restore();
           
           if (particles.length > 0) {
