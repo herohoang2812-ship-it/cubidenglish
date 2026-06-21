@@ -2902,11 +2902,14 @@ let gardenSubView = "main";
 let selectedSlotIdx = 0;
 let manualTreeZoom = 1.0;
 const DEFAULT_TREE_ZOOMS = {
-  1: 1.8,
-  2: 1.4,
-  3: 1.1,
-  4: 1.0,
-  5: 0.9
+  phuong: { 1: 1.8, 2: 1.4, 3: 1.1, 4: 1.0, 5: 0.9 },
+  anhdao: { 1: 1.8, 2: 1.4, 3: 1.1, 4: 1.0, 5: 0.9 },
+  hoagiay: { 1: 1.8, 2: 1.4, 3: 1.1, 4: 1.0, 5: 0.9 },
+  huongduong: { 1: 1.8, 2: 1.4, 3: 1.1, 4: 1.0, 5: 0.9 },
+  sen: { 1: 1.0, 2: 0.85, 3: 0.75, 4: 0.65, 5: 0.55 },
+  tulip: { 1: 1.0, 2: 0.85, 3: 0.75, 4: 0.65, 5: 0.55 },
+  xuongrong: { 1: 1.0, 2: 0.85, 3: 0.75, 4: 0.65, 5: 0.55 },
+  oaihuong: { 1: 1.0, 2: 0.85, 3: 0.75, 4: 0.65, 5: 0.55 }
 };
 
 const TREE_CONTENT_OFFSETS = {
@@ -2943,16 +2946,6 @@ const SPECIES_PARTICLES = {
 };
 
 function getTreeImgSrc(species, level) {
-  const jpegs = {
-    huongduong: [3, 4, 5],
-    oaihuong: [4, 5],
-    sen: [5],
-    tulip: [4, 5],
-    xuongrong: [4, 5]
-  };
-  if (jpegs[species] && jpegs[species].includes(Number(level))) {
-    return `Assets/tree_${species}_${level}.jpeg`;
-  }
   return `Assets/tree_${species}_${level}.png`;
 }
 
@@ -3469,11 +3462,11 @@ function renderGarden() {
       if (state === "wilted") filterClass = "single-tree-wilted";
       else if (state === "dead") filterClass = "single-tree-dead";
       
+      const species = currentSlot.species || "phuong";
       const level = currentSlot.level || 1;
-      const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+      const defaultZoom = (DEFAULT_TREE_ZOOMS[species] && DEFAULT_TREE_ZOOMS[species][level]) || 1.0;
       const finalZoom = defaultZoom * manualTreeZoom;
       
-      const species = currentSlot.species || "phuong";
       const offsetVal = (TREE_CONTENT_OFFSETS[species] && TREE_CONTENT_OFFSETS[species][level]) !== undefined
         ? TREE_CONTENT_OFFSETS[species][level]
         : 0;
@@ -3833,7 +3826,8 @@ window.__zoomTreeIn = () => {
   if (treeImg && gardenState && gardenState.slots) {
     const currentSlot = gardenState.slots[selectedSlotIdx];
     const level = currentSlot ? currentSlot.level : 1;
-    const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+    const species = currentSlot ? currentSlot.species : "phuong";
+    const defaultZoom = (DEFAULT_TREE_ZOOMS[species] && DEFAULT_TREE_ZOOMS[species][level]) || 1.0;
     treeImg.style.setProperty("--tree-zoom", defaultZoom * manualTreeZoom);
   }
 };
@@ -3844,7 +3838,8 @@ window.__zoomTreeOut = () => {
   if (treeImg && gardenState && gardenState.slots) {
     const currentSlot = gardenState.slots[selectedSlotIdx];
     const level = currentSlot ? currentSlot.level : 1;
-    const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+    const species = currentSlot ? currentSlot.species : "phuong";
+    const defaultZoom = (DEFAULT_TREE_ZOOMS[species] && DEFAULT_TREE_ZOOMS[species][level]) || 1.0;
     treeImg.style.setProperty("--tree-zoom", defaultZoom * manualTreeZoom);
   }
 };
@@ -3855,7 +3850,8 @@ window.__zoomTreeReset = () => {
   if (treeImg && gardenState && gardenState.slots) {
     const currentSlot = gardenState.slots[selectedSlotIdx];
     const level = currentSlot ? currentSlot.level : 1;
-    const defaultZoom = DEFAULT_TREE_ZOOMS[level] || 1.0;
+    const species = currentSlot ? currentSlot.species : "phuong";
+    const defaultZoom = (DEFAULT_TREE_ZOOMS[species] && DEFAULT_TREE_ZOOMS[species][level]) || 1.0;
     treeImg.style.setProperty("--tree-zoom", defaultZoom * manualTreeZoom);
   }
 };
